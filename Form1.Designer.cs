@@ -43,12 +43,12 @@
             this.dgvTradeList = new System.Windows.Forms.DataGridView();
             this.gbTradeDetails = new System.Windows.Forms.GroupBox();
             this.dgvTradeDetails = new System.Windows.Forms.DataGridView();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.pnlTradeEnrtyPanel = new System.Windows.Forms.Panel();
             this.tbxTargetedEntryPrice = new System.Windows.Forms.TextBox();
             this.lblTargetedEntryPrice = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btnDeleteTradeDetail = new System.Windows.Forms.Button();
+            this.btnSaveTradeDetail = new System.Windows.Forms.Button();
+            this.btnNewTradeDetail = new System.Windows.Forms.Button();
             this.tbxTradeEntryLotCount = new System.Windows.Forms.TextBox();
             this.lblTradeEntryLotCount = new System.Windows.Forms.Label();
             this.lblTradeType = new System.Windows.Forms.Label();
@@ -58,14 +58,14 @@
             this.lblTradeDetailIdLabel = new System.Windows.Forms.Label();
             this.lblTradeDetailId = new System.Windows.Forms.Label();
             this.lblTradeStarDate = new System.Windows.Forms.Label();
-            this.dateTradeDate = new System.Windows.Forms.DateTimePicker();
+            this.dateTradeDetailDate = new System.Windows.Forms.DateTimePicker();
             this.lblTradeDetailsArea = new System.Windows.Forms.Label();
             this.lblTradeArea = new System.Windows.Forms.Label();
             this.lblTradeIdLabel = new System.Windows.Forms.Label();
             this.lblTradeId = new System.Windows.Forms.Label();
             this.chckEndTrade = new System.Windows.Forms.CheckBox();
             this.btnTradeDelete = new System.Windows.Forms.Button();
-            this.btnTradeSave = new System.Windows.Forms.Button();
+            this.btnSaveTrade = new System.Windows.Forms.Button();
             this.btnNewTrade = new System.Windows.Forms.Button();
             this.lblTradeNote = new System.Windows.Forms.Label();
             this.rtbxTradeNote = new System.Windows.Forms.RichTextBox();
@@ -116,7 +116,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvTradeList)).BeginInit();
             this.gbTradeDetails.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTradeDetails)).BeginInit();
-            this.panel1.SuspendLayout();
+            this.pnlTradeEnrtyPanel.SuspendLayout();
             this.gbStatistics.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -238,7 +238,7 @@
             // scMainMenu.Panel2
             // 
             this.scMainMenu.Panel2.AutoScroll = true;
-            this.scMainMenu.Panel2.Controls.Add(this.panel1);
+            this.scMainMenu.Panel2.Controls.Add(this.pnlTradeEnrtyPanel);
             this.scMainMenu.Panel2.Controls.Add(this.gbStatistics);
             this.scMainMenu.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.scMainMenu.Panel2MinSize = 370;
@@ -294,6 +294,7 @@
             this.dgvTradeList.Size = new System.Drawing.Size(799, 455);
             this.dgvTradeList.TabIndex = 1;
             this.dgvTradeList.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTradeList_CellClick_1);
+            this.dgvTradeList.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dgvTradeList_RowPrePaint_1);
             // 
             // gbTradeDetails
             // 
@@ -318,51 +319,51 @@
             this.dgvTradeDetails.Size = new System.Drawing.Size(793, 281);
             this.dgvTradeDetails.TabIndex = 3;
             // 
-            // panel1
+            // pnlTradeEnrtyPanel
             // 
-            this.panel1.AutoScroll = true;
-            this.panel1.Controls.Add(this.tbxTargetedEntryPrice);
-            this.panel1.Controls.Add(this.lblTargetedEntryPrice);
-            this.panel1.Controls.Add(this.button1);
-            this.panel1.Controls.Add(this.button2);
-            this.panel1.Controls.Add(this.button3);
-            this.panel1.Controls.Add(this.tbxTradeEntryLotCount);
-            this.panel1.Controls.Add(this.lblTradeEntryLotCount);
-            this.panel1.Controls.Add(this.lblTradeType);
-            this.panel1.Controls.Add(this.cbxTradeType);
-            this.panel1.Controls.Add(this.lblTradeDetailTradeIdLabel);
-            this.panel1.Controls.Add(this.lblTradeDetailTradeId);
-            this.panel1.Controls.Add(this.lblTradeDetailIdLabel);
-            this.panel1.Controls.Add(this.lblTradeDetailId);
-            this.panel1.Controls.Add(this.lblTradeStarDate);
-            this.panel1.Controls.Add(this.dateTradeDate);
-            this.panel1.Controls.Add(this.lblTradeDetailsArea);
-            this.panel1.Controls.Add(this.lblTradeArea);
-            this.panel1.Controls.Add(this.lblTradeIdLabel);
-            this.panel1.Controls.Add(this.lblTradeId);
-            this.panel1.Controls.Add(this.chckEndTrade);
-            this.panel1.Controls.Add(this.btnTradeDelete);
-            this.panel1.Controls.Add(this.btnTradeSave);
-            this.panel1.Controls.Add(this.btnNewTrade);
-            this.panel1.Controls.Add(this.lblTradeNote);
-            this.panel1.Controls.Add(this.rtbxTradeNote);
-            this.panel1.Controls.Add(this.tbxTradeEntryPrice);
-            this.panel1.Controls.Add(this.lblTradeEntryPrice);
-            this.panel1.Controls.Add(this.tbxTakeProfitPrice);
-            this.panel1.Controls.Add(this.lblTakeProfitPrice);
-            this.panel1.Controls.Add(this.tbxStopPrice);
-            this.panel1.Controls.Add(this.lblStopPrice);
-            this.panel1.Controls.Add(this.lblLeverage);
-            this.panel1.Controls.Add(this.cbxLeverage);
-            this.panel1.Controls.Add(this.tbxTradeEntryBalance);
-            this.panel1.Controls.Add(this.lblTradeEntryBalance);
-            this.panel1.Controls.Add(this.lblPositionSide);
-            this.panel1.Controls.Add(this.cbxPositionSide);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 201);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(370, 577);
-            this.panel1.TabIndex = 1;
+            this.pnlTradeEnrtyPanel.AutoScroll = true;
+            this.pnlTradeEnrtyPanel.Controls.Add(this.tbxTargetedEntryPrice);
+            this.pnlTradeEnrtyPanel.Controls.Add(this.lblTargetedEntryPrice);
+            this.pnlTradeEnrtyPanel.Controls.Add(this.btnDeleteTradeDetail);
+            this.pnlTradeEnrtyPanel.Controls.Add(this.btnSaveTradeDetail);
+            this.pnlTradeEnrtyPanel.Controls.Add(this.btnNewTradeDetail);
+            this.pnlTradeEnrtyPanel.Controls.Add(this.tbxTradeEntryLotCount);
+            this.pnlTradeEnrtyPanel.Controls.Add(this.lblTradeEntryLotCount);
+            this.pnlTradeEnrtyPanel.Controls.Add(this.lblTradeType);
+            this.pnlTradeEnrtyPanel.Controls.Add(this.cbxTradeType);
+            this.pnlTradeEnrtyPanel.Controls.Add(this.lblTradeDetailTradeIdLabel);
+            this.pnlTradeEnrtyPanel.Controls.Add(this.lblTradeDetailTradeId);
+            this.pnlTradeEnrtyPanel.Controls.Add(this.lblTradeDetailIdLabel);
+            this.pnlTradeEnrtyPanel.Controls.Add(this.lblTradeDetailId);
+            this.pnlTradeEnrtyPanel.Controls.Add(this.lblTradeStarDate);
+            this.pnlTradeEnrtyPanel.Controls.Add(this.dateTradeDetailDate);
+            this.pnlTradeEnrtyPanel.Controls.Add(this.lblTradeDetailsArea);
+            this.pnlTradeEnrtyPanel.Controls.Add(this.lblTradeArea);
+            this.pnlTradeEnrtyPanel.Controls.Add(this.lblTradeIdLabel);
+            this.pnlTradeEnrtyPanel.Controls.Add(this.lblTradeId);
+            this.pnlTradeEnrtyPanel.Controls.Add(this.chckEndTrade);
+            this.pnlTradeEnrtyPanel.Controls.Add(this.btnTradeDelete);
+            this.pnlTradeEnrtyPanel.Controls.Add(this.btnSaveTrade);
+            this.pnlTradeEnrtyPanel.Controls.Add(this.btnNewTrade);
+            this.pnlTradeEnrtyPanel.Controls.Add(this.lblTradeNote);
+            this.pnlTradeEnrtyPanel.Controls.Add(this.rtbxTradeNote);
+            this.pnlTradeEnrtyPanel.Controls.Add(this.tbxTradeEntryPrice);
+            this.pnlTradeEnrtyPanel.Controls.Add(this.lblTradeEntryPrice);
+            this.pnlTradeEnrtyPanel.Controls.Add(this.tbxTakeProfitPrice);
+            this.pnlTradeEnrtyPanel.Controls.Add(this.lblTakeProfitPrice);
+            this.pnlTradeEnrtyPanel.Controls.Add(this.tbxStopPrice);
+            this.pnlTradeEnrtyPanel.Controls.Add(this.lblStopPrice);
+            this.pnlTradeEnrtyPanel.Controls.Add(this.lblLeverage);
+            this.pnlTradeEnrtyPanel.Controls.Add(this.cbxLeverage);
+            this.pnlTradeEnrtyPanel.Controls.Add(this.tbxTradeEntryBalance);
+            this.pnlTradeEnrtyPanel.Controls.Add(this.lblTradeEntryBalance);
+            this.pnlTradeEnrtyPanel.Controls.Add(this.lblPositionSide);
+            this.pnlTradeEnrtyPanel.Controls.Add(this.cbxPositionSide);
+            this.pnlTradeEnrtyPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlTradeEnrtyPanel.Location = new System.Drawing.Point(0, 201);
+            this.pnlTradeEnrtyPanel.Name = "pnlTradeEnrtyPanel";
+            this.pnlTradeEnrtyPanel.Size = new System.Drawing.Size(370, 577);
+            this.pnlTradeEnrtyPanel.TabIndex = 1;
             // 
             // tbxTargetedEntryPrice
             // 
@@ -382,44 +383,46 @@
             this.lblTargetedEntryPrice.TabIndex = 182;
             this.lblTargetedEntryPrice.Text = "Hedeflenen Giriş Fiyatı:";
             // 
-            // button1
+            // btnDeleteTradeDetail
             // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
-            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button1.Location = new System.Drawing.Point(207, 483);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(64, 28);
-            this.button1.TabIndex = 181;
-            this.button1.Text = "Sil";
-            this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnDeleteTradeDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnDeleteTradeDetail.Image = ((System.Drawing.Image)(resources.GetObject("btnDeleteTradeDetail.Image")));
+            this.btnDeleteTradeDetail.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnDeleteTradeDetail.Location = new System.Drawing.Point(207, 483);
+            this.btnDeleteTradeDetail.Name = "btnDeleteTradeDetail";
+            this.btnDeleteTradeDetail.Size = new System.Drawing.Size(64, 28);
+            this.btnDeleteTradeDetail.TabIndex = 181;
+            this.btnDeleteTradeDetail.Text = "Sil";
+            this.btnDeleteTradeDetail.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnDeleteTradeDetail.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // btnSaveTradeDetail
             // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.button2.Image = ((System.Drawing.Image)(resources.GetObject("button2.Image")));
-            this.button2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button2.Location = new System.Drawing.Point(275, 483);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(64, 28);
-            this.button2.TabIndex = 180;
-            this.button2.Text = "Kaydet";
-            this.button2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnSaveTradeDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnSaveTradeDetail.Image = ((System.Drawing.Image)(resources.GetObject("btnSaveTradeDetail.Image")));
+            this.btnSaveTradeDetail.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSaveTradeDetail.Location = new System.Drawing.Point(275, 483);
+            this.btnSaveTradeDetail.Name = "btnSaveTradeDetail";
+            this.btnSaveTradeDetail.Size = new System.Drawing.Size(64, 28);
+            this.btnSaveTradeDetail.TabIndex = 180;
+            this.btnSaveTradeDetail.Text = "Kaydet";
+            this.btnSaveTradeDetail.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnSaveTradeDetail.UseVisualStyleBackColor = true;
+            this.btnSaveTradeDetail.Click += new System.EventHandler(this.btnSaveTradeDetail_Click);
             // 
-            // button3
+            // btnNewTradeDetail
             // 
-            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.button3.Image = ((System.Drawing.Image)(resources.GetObject("button3.Image")));
-            this.button3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button3.Location = new System.Drawing.Point(138, 483);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(64, 28);
-            this.button3.TabIndex = 179;
-            this.button3.Text = "Yeni";
-            this.button3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnNewTradeDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnNewTradeDetail.Image = ((System.Drawing.Image)(resources.GetObject("btnNewTradeDetail.Image")));
+            this.btnNewTradeDetail.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnNewTradeDetail.Location = new System.Drawing.Point(138, 483);
+            this.btnNewTradeDetail.Name = "btnNewTradeDetail";
+            this.btnNewTradeDetail.Size = new System.Drawing.Size(64, 28);
+            this.btnNewTradeDetail.TabIndex = 179;
+            this.btnNewTradeDetail.Text = "Yeni";
+            this.btnNewTradeDetail.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnNewTradeDetail.UseVisualStyleBackColor = true;
+            this.btnNewTradeDetail.Click += new System.EventHandler(this.btnNewTradeDetail_Click);
             // 
             // tbxTradeEntryLotCount
             // 
@@ -511,13 +514,13 @@
             this.lblTradeStarDate.TabIndex = 170;
             this.lblTradeStarDate.Text = "Başlangıç Tarihi:";
             // 
-            // dateTradeDate
+            // dateTradeDetailDate
             // 
-            this.dateTradeDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.dateTradeDate.Location = new System.Drawing.Point(138, 344);
-            this.dateTradeDate.Name = "dateTradeDate";
-            this.dateTradeDate.Size = new System.Drawing.Size(201, 20);
-            this.dateTradeDate.TabIndex = 169;
+            this.dateTradeDetailDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.dateTradeDetailDate.Location = new System.Drawing.Point(138, 344);
+            this.dateTradeDetailDate.Name = "dateTradeDetailDate";
+            this.dateTradeDetailDate.Size = new System.Drawing.Size(201, 20);
+            this.dateTradeDetailDate.TabIndex = 169;
             // 
             // lblTradeDetailsArea
             // 
@@ -582,19 +585,19 @@
             this.btnTradeDelete.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnTradeDelete.UseVisualStyleBackColor = true;
             // 
-            // btnTradeSave
+            // btnSaveTrade
             // 
-            this.btnTradeSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnTradeSave.Image = ((System.Drawing.Image)(resources.GetObject("btnTradeSave.Image")));
-            this.btnTradeSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnTradeSave.Location = new System.Drawing.Point(275, 247);
-            this.btnTradeSave.Name = "btnTradeSave";
-            this.btnTradeSave.Size = new System.Drawing.Size(64, 28);
-            this.btnTradeSave.TabIndex = 162;
-            this.btnTradeSave.Text = "Kaydet";
-            this.btnTradeSave.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnTradeSave.UseVisualStyleBackColor = true;
-            this.btnTradeSave.Click += new System.EventHandler(this.btnTradeSave_Click_1);
+            this.btnSaveTrade.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnSaveTrade.Image = ((System.Drawing.Image)(resources.GetObject("btnSaveTrade.Image")));
+            this.btnSaveTrade.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSaveTrade.Location = new System.Drawing.Point(275, 247);
+            this.btnSaveTrade.Name = "btnSaveTrade";
+            this.btnSaveTrade.Size = new System.Drawing.Size(64, 28);
+            this.btnSaveTrade.TabIndex = 162;
+            this.btnSaveTrade.Text = "Kaydet";
+            this.btnSaveTrade.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnSaveTrade.UseVisualStyleBackColor = true;
+            this.btnSaveTrade.Click += new System.EventHandler(this.btnTradeSave_Click_1);
             // 
             // btnNewTrade
             // 
@@ -1018,8 +1021,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvTradeList)).EndInit();
             this.gbTradeDetails.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvTradeDetails)).EndInit();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.pnlTradeEnrtyPanel.ResumeLayout(false);
+            this.pnlTradeEnrtyPanel.PerformLayout();
             this.gbStatistics.ResumeLayout(false);
             this.gbStatistics.PerformLayout();
             this.ResumeLayout(false);
@@ -1064,14 +1067,14 @@
         private System.Windows.Forms.DataGridView dgvTradeList;
         private System.Windows.Forms.GroupBox gbTradeDetails;
         private System.Windows.Forms.DataGridView dgvTradeDetails;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel pnlTradeEnrtyPanel;
         private System.Windows.Forms.Label lblTradeDetailsArea;
         private System.Windows.Forms.Label lblTradeArea;
         private System.Windows.Forms.Label lblTradeIdLabel;
         private System.Windows.Forms.Label lblTradeId;
         private System.Windows.Forms.CheckBox chckEndTrade;
         private System.Windows.Forms.Button btnTradeDelete;
-        private System.Windows.Forms.Button btnTradeSave;
+        private System.Windows.Forms.Button btnSaveTrade;
         private System.Windows.Forms.Button btnNewTrade;
         private System.Windows.Forms.Label lblTradeNote;
         private System.Windows.Forms.RichTextBox rtbxTradeNote;
@@ -1092,14 +1095,14 @@
         private System.Windows.Forms.Label lblTradeDetailIdLabel;
         private System.Windows.Forms.Label lblTradeDetailId;
         private System.Windows.Forms.Label lblTradeStarDate;
-        private System.Windows.Forms.DateTimePicker dateTradeDate;
+        private System.Windows.Forms.DateTimePicker dateTradeDetailDate;
         private System.Windows.Forms.Label lblTradeType;
         private System.Windows.Forms.ComboBox cbxTradeType;
         private System.Windows.Forms.TextBox tbxTradeEntryLotCount;
         private System.Windows.Forms.Label lblTradeEntryLotCount;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnDeleteTradeDetail;
+        private System.Windows.Forms.Button btnSaveTradeDetail;
+        private System.Windows.Forms.Button btnNewTradeDetail;
         private System.Windows.Forms.TextBox tbxTargetedEntryPrice;
         private System.Windows.Forms.Label lblTargetedEntryPrice;
     }

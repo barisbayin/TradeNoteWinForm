@@ -18,10 +18,10 @@ namespace TradeNote.Entities
         [DisplayName("İşlem Türü")]
         public TradeType TradeType { get; set; }
 
-        [DisplayName("Giriş Bakiyesi")]
+        [DisplayName("Giriş Bakiyesi $")]
         public decimal EntryBalance { get; set; }
 
-        [DisplayName("Giriş Fiyatı")]
+        [DisplayName("Giriş Fiyatı $")]
         public decimal EntryPrice { get; set; }
 
         [DisplayName("Adet")]

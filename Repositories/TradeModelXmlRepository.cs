@@ -115,7 +115,7 @@ namespace TradeNote.Repositories
                 trade.AverageEntryBalance = updatedTrade.AverageEntryBalance;
                 trade.Leverage = updatedTrade.Leverage;
                 trade.AverageEntryPrice = updatedTrade.AverageEntryPrice;
-                trade.TargetedEntryPrice=updatedTrade.TargetedEntryPrice;
+                trade.TargetedEntryPrice = updatedTrade.TargetedEntryPrice;
                 trade.StopLossPrice = updatedTrade.StopLossPrice;
                 trade.TakeProfitPrice = updatedTrade.TakeProfitPrice;
                 trade.AveragePositionClosePrice = updatedTrade.AveragePositionClosePrice;
@@ -265,7 +265,7 @@ namespace TradeNote.Repositories
             return trade.TradeDetails;
         }
 
-        public int FindLastTradeId(string xmlFilePath)
+        public int GetNewTradeId(string xmlFilePath)
         {
             TradeModel tradeModel = DeserializeTradeModel(xmlFilePath);
 
@@ -275,12 +275,12 @@ namespace TradeNote.Repositories
             }
 
             // Find the highest existing Trade Id
-            int lastId = tradeModel.Trades.Max(t => t.Id);
+            int newTradeId = tradeModel.Trades.Max(t => t.Id) + 1;
 
-            return lastId;
+            return newTradeId;
         }
 
-        public int FindLastTradeDetailId(int tradeId, string xmlFilePath)
+        public int GetNewTradeDetailId(int tradeId, string xmlFilePath)
         {
             TradeModel tradeModel = DeserializeTradeModel(xmlFilePath);
 
@@ -291,9 +291,9 @@ namespace TradeNote.Repositories
                 return 1;
             }
             // Find the highest existing Trade Id
-            int lastId = trade.TradeDetails.Max(t => t.Id);
+            int newTradeDetailId = trade.TradeDetails.Max(t => t.Id) + 1;
 
-            return lastId;
+            return newTradeDetailId;
         }
 
 

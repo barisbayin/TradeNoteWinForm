@@ -37,7 +37,7 @@ namespace TradeNote
         [DisplayName("TP Fiyatı")]
         public decimal TakeProfitPrice { get; set; }
 
-        [DisplayName("Giriş Fiyatı")]
+        [DisplayName("Giriş Fiyatı $")]
         public decimal AverageEntryPrice { get; set; }
 
         [DisplayName("Poz. Kap. Fiyatı")]

@@ -23,9 +23,9 @@ namespace TradeNote.Business
 
         public void AddTrade(Trade trade, string xmlFilePath)
         {
-            int lastId = _tradeModelXmlRepository.FindLastTradeId(xmlFilePath);
+            int newTradeId = _tradeModelXmlRepository.GetNewTradeId(xmlFilePath);
 
-            trade.Id = lastId + 1;
+            trade.Id = newTradeId;
 
             _tradeModelXmlRepository.AddTrade(trade, xmlFilePath);
         }
@@ -48,9 +48,9 @@ namespace TradeNote.Business
 
         public void AddTradeDetail(int tradeId, TradeDetail tradeDetail, string xmlFilePath)
         {
-            int lastId = _tradeModelXmlRepository.FindLastTradeDetailId(tradeId, xmlFilePath);
+            int newTradeDetailId = _tradeModelXmlRepository.GetNewTradeDetailId(tradeId, xmlFilePath);
 
-            tradeDetail.Id = lastId + 1;
+            tradeDetail.Id = newTradeDetailId;
 
             _tradeModelXmlRepository.AddTradeDetail(tradeId, tradeDetail, xmlFilePath);
         }

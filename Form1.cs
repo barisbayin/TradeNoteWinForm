@@ -7,6 +7,8 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using TradeNote.Business;
+using TradeNote.Entities;
+using TradeNote.Enums;
 using TradeNote.Helpers;
 using TradeNote.Repositories;
 
@@ -76,7 +78,7 @@ namespace TradeNote
             PopulateComboBoxWithXmlFiles();
         }
 
-        private void LoadDataGridView()
+        private void LoadTradeDataGridView()
         {
 
             var xmlFilePath = GeneralHelper.GetXmlFilePath(cbxListOfTradeXmls.Text);
@@ -113,14 +115,41 @@ namespace TradeNote
             {
                 MessageBox.Show(e.Message, "Hata", MessageBoxButtons.OK);
             }
+        }
 
+        private void LoadTradeDetailDataGridView(int tradeId)
+        {
+            var xmlFilePath = GeneralHelper.GetXmlFilePath(cbxListOfTradeXmls.Text);
+
+            if (cbxListOfTradeXmls.Text != null)
+            {
+                gbStatistics.Text = cbxListOfTradeXmls.Text + "İşlem Detayları..";
+
+                var dataList = _tradeModelManager.GetTradeDetailList(tradeId, xmlFilePath);
+
+                dgvTradeDetails.DataSource = dataList;
+                //dgvTradeList.Columns["AverageEntryBalance"].DefaultCellStyle.Format = "$#.##";
+                //dgvTradeList.Columns["TargetedEntryPrice"].DefaultCellStyle.Format = "$#.##";
+                //dgvTradeList.Columns[6].DefaultCellStyle.Format = "$#.##";
+                //dgvTradeList.Columns[7].DefaultCellStyle.Format = "$#.##";
+                //dgvTradeList.Columns[8].DefaultCellStyle.Format = "$#.##";
+                //dgvTradeList.Columns[9].DefaultCellStyle.Format = "#.##%";
+                //dgvTradeList.Columns[10].DefaultCellStyle.Format = "#.##%";
+                //dgvTradeList.Columns[12].DefaultCellStyle.Format = "$#.##";
+                //dgvTradeList.Columns[13].DefaultCellStyle.Format = "$#.##";
+                //dgvTradeList.Columns[15].DefaultCellStyle.Format = "$#.##";
+                //dgvTradeList.Columns[16].DefaultCellStyle.Format = "#.##%";
+
+                // _tradeModelManager.CalculateGeneralInformation(xmlFilePath);
+                // LoadGeneralInformation(GetGeneralInformation());
+            }
 
         }
 
 
         private void cbxListOfTradeXmls_SelectedValueChanged_1(object sender, EventArgs e)
         {
-            LoadDataGridView();
+            LoadTradeDataGridView();
         }
 
         private void btnDeleteXmlFile_Click(object sender, EventArgs e)
@@ -147,7 +176,7 @@ namespace TradeNote
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            LoadDataGridView();
+            LoadTradeDataGridView();
             PopulateComboBoxWithXmlFiles();
             _tradeModelManager.CalculateGeneralInformation(GeneralHelper.GetXmlFilePath(cbxListOfTradeXmls.Text));
         }
@@ -166,6 +195,9 @@ namespace TradeNote
                 tbxStopPrice.Text = dgvTradeList.Rows[e.RowIndex].Cells["StopLossPrice"].Value.ToString();
                 tbxTakeProfitPrice.Text = dgvTradeList.Rows[e.RowIndex].Cells["TakeProfitPrice"].Value.ToString();
                 rtbxTradeNote.Text = dgvTradeList.Rows[e.RowIndex].Cells["Note"].Value.ToString();
+                lblTradeDetailTradeIdLabel.Text = dgvTradeList.Rows[e.RowIndex].Cells["Id"].Value.ToString();
+
+                LoadTradeDetailDataGridView((int)dgvTradeList.Rows[e.RowIndex].Cells["Id"].Value);
             }
             catch (Exception exception)
             {
@@ -187,7 +219,7 @@ namespace TradeNote
         {
             lblTradeDetailIdLabel.Text = "";
             lblTradeDetailTradeIdLabel.Text = "";
-            dateTradeDate.Value = DateTime.Now;
+            dateTradeDetailDate.Value = DateTime.Now;
             cbxTradeType.Text = "";
             tbxTradeEntryBalance.Text = "";
             tbxTradeEntryPrice.Text = "";
@@ -338,38 +370,9 @@ namespace TradeNote
             }
 
 
-            LoadDataGridView();
+            LoadTradeDataGridView();
 
         }
-
-
-
-        private void dgvTradeList_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
-        {
-
-            // Verileri Trade sınıfından oluşan bir liste olarak düşünün
-            var data = (List<Trade>)dgvTradeList.DataSource;
-
-            // Seçili satırın Trade nesnesini al
-            var trade = data[e.RowIndex];
-
-            // Eğer PositionResult "TP" ise, satırı yeşil olarak boya
-            if (trade.PositionResult == PositionResult.TP)
-            {
-                dgvTradeList.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightGreen;
-                dgvTradeList.Rows[e.RowIndex].DefaultCellStyle.SelectionBackColor = Color.LightGreen;
-            }
-            // Eğer PositionResult "SL" ise, satırı kırmızı olarak boya
-            else if (trade.PositionResult == PositionResult.SL)
-            {
-                dgvTradeList.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightCoral;
-                dgvTradeList.Rows[e.RowIndex].DefaultCellStyle.SelectionBackColor = Color.LightCoral;
-            }
-
-        }
-
-
-
 
 
         private void LoadGeneralInformation()
@@ -522,6 +525,81 @@ namespace TradeNote
         private void btnNewTrade_Click(object sender, EventArgs e)
         {
             ClearTrade();
+        }
+
+        private void dgvTradeList_RowPrePaint_1(object sender, DataGridViewRowPrePaintEventArgs e)
+        {
+
+            // Verileri Trade sınıfından oluşan bir liste olarak düşünün
+            var data = (List<Trade>)dgvTradeList.DataSource;
+
+            // Seçili satırın Trade nesnesini al
+            var trade = data[e.RowIndex];
+
+            // Eğer PositionResult "TP" ise, satırı yeşil olarak boya
+            if (trade.PositionResult == PositionResult.TP)
+            {
+                dgvTradeList.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightGreen;
+                dgvTradeList.Rows[e.RowIndex].DefaultCellStyle.SelectionBackColor = Color.DarkOliveGreen;
+            }
+            // Eğer PositionResult "SL" ise, satırı kırmızı olarak boya
+            else if (trade.PositionResult == PositionResult.SL)
+            {
+                dgvTradeList.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightCoral;
+                dgvTradeList.Rows[e.RowIndex].DefaultCellStyle.SelectionBackColor = Color.OrangeRed;
+            }
+            else if (trade.PositionResult == PositionResult.SO)
+            {
+                dgvTradeList.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightGray;
+                dgvTradeList.Rows[e.RowIndex].DefaultCellStyle.SelectionBackColor = Color.LightSlateGray;
+            }
+
+        }
+
+        private void btnSaveTradeDetail_Click(object sender, EventArgs e)
+        {
+            string xmlFilePath = GeneralHelper.GetXmlFilePath(cbxListOfTradeXmls.Text);
+
+            try
+            {
+                if (string.IsNullOrEmpty(lblTradeIdLabel.Text))
+                {
+                    MessageBox.Show("Lütfen işlem yapacağınız trade'i seçiniz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                TradeDetail newTradeDetail = new TradeDetail();
+                if (string.IsNullOrEmpty(lblTradeDetailIdLabel.Text))
+                {
+
+                   
+
+                    newTradeDetail.TradeId = Convert.ToInt32(lblTradeDetailTradeIdLabel.Text);
+                    newTradeDetail.TradeDate = Convert.ToDateTime(dateTradeDetailDate.Value);
+                    newTradeDetail.TradeType = (TradeType)Enum.Parse(typeof(TradeType), cbxTradeType.Text);
+                    newTradeDetail.EntryBalance = Convert.ToDecimal(tbxTradeEntryBalance.Text);
+                    newTradeDetail.EntryPrice = Convert.ToDecimal(tbxTradeEntryPrice.Text);
+                    newTradeDetail.EntryLotCount = Convert.ToDecimal(tbxTradeEntryLotCount.Text);
+
+                    _tradeModelManager.AddTradeDetail(newTradeDetail.TradeId, newTradeDetail, xmlFilePath);
+
+                }
+                else
+                {
+
+                }
+
+                LoadTradeDataGridView();
+                LoadTradeDetailDataGridView(newTradeDetail.TradeId);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
+        }
+
+        private void btnNewTradeDetail_Click(object sender, EventArgs e)
+        {
+            ClearTradeDetails();
         }
     }
 }
