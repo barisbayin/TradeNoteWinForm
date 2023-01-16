@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TradeNote.Entities;
+using TradeNote.Enums;
 using TradeNote.Repositories;
 
 namespace TradeNote.Business
@@ -66,6 +67,12 @@ namespace TradeNote.Business
             return tradeDetailList;
         }
 
+        public TradeDetail GetTradeDetailById(int tradeId, int tradeDetailId, string xmlFilePath)
+        {
+            var tradeDetail = _tradeModelXmlRepository.GetTradeDetailById(tradeId, tradeDetailId, xmlFilePath);
+            return tradeDetail;
+        }
+
         public GeneralInformation GetGeneralInformation(string xmlFilePath)
         {
             var generalInformation = _tradeModelXmlRepository.GetGeneralInformation(xmlFilePath);
@@ -124,6 +131,75 @@ namespace TradeNote.Business
 
                 UpdateGeneralInformation(currentGeneralInformation, xmlFilePath);
             }
+        }
+
+        public Trade CalculateTrade(int tradeId, string xmlFilePath)
+        {
+            decimal averageEntryBalance = 0;
+            decimal entryTotalCount = 0;
+            decimal averageEntryPrice = 0;
+            decimal averageCloseBalance = 0;
+            decimal closeTotalCount = 0;
+            decimal averagePositionClosePrice = 0;
+
+            var willCalculatedTrade = _tradeModelXmlRepository.GetTradeById(tradeId, xmlFilePath);
+
+            var tradeDetails = willCalculatedTrade.TradeDetails;
+
+            switch (willCalculatedTrade.PositionSide)
+            {
+                case PositionSide.Long:
+
+                    averageEntryBalance = tradeDetails.Where(x => x.TradeType == TradeType.OpenLong).Sum(x => x.EntryBalance);
+
+                    entryTotalCount = tradeDetails.Where(x => x.TradeType == TradeType.OpenLong)
+                        .Sum(x => x.EntryLotCount);
+
+                    averageEntryPrice = averageEntryBalance / entryTotalCount;
+
+                    if (tradeDetails.Count(x => x.TradeType == TradeType.CloseLong) > 0)
+                    {
+                        averageCloseBalance = tradeDetails.Where(x => x.TradeType == TradeType.CloseLong).Sum(x => x.EntryBalance);
+
+                        closeTotalCount = tradeDetails.Where(x => x.TradeType == TradeType.CloseLong)
+                            .Sum(x => x.EntryLotCount);
+
+                        averagePositionClosePrice = averageCloseBalance / closeTotalCount;
+                    }
+
+
+
+                    break;
+                case PositionSide.Short:
+
+                    averageEntryBalance = tradeDetails.Where(x => x.TradeType == TradeType.OpenShort).Sum(x => x.EntryBalance);
+
+                    entryTotalCount = tradeDetails.Where(x => x.TradeType == TradeType.OpenShort)
+                        .Sum(x => x.EntryLotCount);
+
+                    averageEntryPrice = averageEntryBalance / entryTotalCount;
+
+                    if (tradeDetails.Count(x => x.TradeType == TradeType.CloseShort) > 0)
+                    {
+                        averageCloseBalance = tradeDetails.Where(x => x.TradeType == TradeType.CloseShort)
+                            .Sum(x => x.EntryBalance);
+
+                        closeTotalCount = tradeDetails.Where(x => x.TradeType == TradeType.CloseShort)
+                            .Sum(x => x.EntryLotCount);
+
+                        averagePositionClosePrice = averageCloseBalance / closeTotalCount;
+                    }
+
+                    break;
+            }
+
+            willCalculatedTrade.AverageEntryBalance = averageEntryBalance;
+            willCalculatedTrade.AverageEntryPrice = averageEntryPrice;
+            willCalculatedTrade.AveragePositionClosePrice = averagePositionClosePrice;
+
+            return willCalculatedTrade;
+
+
         }
     }
 }

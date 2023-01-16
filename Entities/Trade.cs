@@ -13,7 +13,7 @@ namespace TradeNote
         [DisplayName("ID")]
         public int Id { get; set; }
 
-        [DisplayName("Başlangıç Tarihi")]
+        [DisplayName("Baş. Tarihi")]
         public DateTime TradeStartDate { get; set; }
 
         [DisplayName("Bitiş Tarihi")]
@@ -28,7 +28,7 @@ namespace TradeNote
         [DisplayName("Kaldıraç")]
         public int Leverage { get; set; }
 
-        [DisplayName("Hedeflenen Giriş Fiyatı")]
+        [DisplayName("Hdf.Giriş Fiyatı")]
         public decimal TargetedEntryPrice { get; set; }
 
         [DisplayName("Stop Fiyatı")]
@@ -37,10 +37,10 @@ namespace TradeNote
         [DisplayName("TP Fiyatı")]
         public decimal TakeProfitPrice { get; set; }
 
-        [DisplayName("Giriş Fiyatı $")]
+        [DisplayName("Ort.Giriş Fiyatı $")]
         public decimal AverageEntryPrice { get; set; }
 
-        [DisplayName("Poz. Kap. Fiyatı")]
+        [DisplayName("Ort. Poz.Kap. Fiyatı $")]
         public decimal AveragePositionClosePrice { get; set; }
 
         [DisplayName("Risk %")]
@@ -70,8 +70,13 @@ namespace TradeNote
         [DisplayName("Not")]
         public string Note { get; set; }
 
+        [DisplayName("Trade Durumu")]
+        public bool EndTrade { get; set; }
+
         [DisplayName("Posizyon Detayları")]
         public List<TradeDetail> TradeDetails { get; set; }
+
+        
 
     }
 }

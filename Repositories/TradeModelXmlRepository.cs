@@ -236,6 +236,8 @@ namespace TradeNote.Repositories
                     tradeDetail.EntryBalance = updatedTradeDetail.EntryBalance;
                     tradeDetail.EntryPrice = updatedTradeDetail.EntryPrice;
                     tradeDetail.EntryLotCount = updatedTradeDetail.EntryLotCount;
+                    tradeDetail.TradeType = updatedTradeDetail.TradeType;
+                    tradeDetail.TradeDate = updatedTradeDetail.TradeDate;
                 }
             }
             // Serialize the updated TradeModel object back to the XML file
@@ -246,7 +248,20 @@ namespace TradeNote.Repositories
                 serializer.Serialize(writer, tradeModel);
             }
         }
+        public TradeDetail GetTradeDetailById(int tradeId, int tradeDetailId, string xmlFilePath)
+        {
 
+            TradeModel tradeModel = DeserializeTradeModel(xmlFilePath);
+
+            var tradeDetail = tradeModel.Trades.FirstOrDefault(t => t.Id == tradeId)?.TradeDetails.FirstOrDefault(td => td.Id == tradeDetailId);
+
+            if (tradeDetail == null)
+            {
+                return null;
+            }
+
+            return tradeDetail;
+        }
         public List<TradeDetail> GetTradeDetailList(int tradeId, string xmlFilePath)
         {
             // Deserialize the XML file to a TradeModel object

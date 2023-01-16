@@ -44,6 +44,7 @@
             this.gbTradeDetails = new System.Windows.Forms.GroupBox();
             this.dgvTradeDetails = new System.Windows.Forms.DataGridView();
             this.pnlTradeEnrtyPanel = new System.Windows.Forms.Panel();
+            this.chckEntryLotCount = new System.Windows.Forms.CheckBox();
             this.tbxTargetedEntryPrice = new System.Windows.Forms.TextBox();
             this.lblTargetedEntryPrice = new System.Windows.Forms.Label();
             this.btnDeleteTradeDetail = new System.Windows.Forms.Button();
@@ -318,10 +319,13 @@
             this.dgvTradeDetails.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvTradeDetails.Size = new System.Drawing.Size(793, 281);
             this.dgvTradeDetails.TabIndex = 3;
+            this.dgvTradeDetails.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTradeDetails_CellClick);
+            this.dgvTradeDetails.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dgvTradeDetails_RowPrePaint);
             // 
             // pnlTradeEnrtyPanel
             // 
             this.pnlTradeEnrtyPanel.AutoScroll = true;
+            this.pnlTradeEnrtyPanel.Controls.Add(this.chckEntryLotCount);
             this.pnlTradeEnrtyPanel.Controls.Add(this.tbxTargetedEntryPrice);
             this.pnlTradeEnrtyPanel.Controls.Add(this.lblTargetedEntryPrice);
             this.pnlTradeEnrtyPanel.Controls.Add(this.btnDeleteTradeDetail);
@@ -364,6 +368,17 @@
             this.pnlTradeEnrtyPanel.Name = "pnlTradeEnrtyPanel";
             this.pnlTradeEnrtyPanel.Size = new System.Drawing.Size(370, 577);
             this.pnlTradeEnrtyPanel.TabIndex = 1;
+            // 
+            // chckEntryLotCount
+            // 
+            this.chckEntryLotCount.AutoSize = true;
+            this.chckEntryLotCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.chckEntryLotCount.Location = new System.Drawing.Point(145, 451);
+            this.chckEntryLotCount.Name = "chckEntryLotCount";
+            this.chckEntryLotCount.Size = new System.Drawing.Size(15, 14);
+            this.chckEntryLotCount.TabIndex = 184;
+            this.chckEntryLotCount.UseVisualStyleBackColor = true;
+            this.chckEntryLotCount.CheckedChanged += new System.EventHandler(this.chckEntryLotCount_CheckedChanged);
             // 
             // tbxTargetedEntryPrice
             // 
@@ -426,17 +441,18 @@
             // 
             // tbxTradeEntryLotCount
             // 
+            this.tbxTradeEntryLotCount.Enabled = false;
             this.tbxTradeEntryLotCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.tbxTradeEntryLotCount.Location = new System.Drawing.Point(138, 448);
+            this.tbxTradeEntryLotCount.Location = new System.Drawing.Point(169, 448);
             this.tbxTradeEntryLotCount.Name = "tbxTradeEntryLotCount";
-            this.tbxTradeEntryLotCount.Size = new System.Drawing.Size(201, 20);
+            this.tbxTradeEntryLotCount.Size = new System.Drawing.Size(170, 20);
             this.tbxTradeEntryLotCount.TabIndex = 178;
             // 
             // lblTradeEntryLotCount
             // 
             this.lblTradeEntryLotCount.AutoSize = true;
             this.lblTradeEntryLotCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblTradeEntryLotCount.Location = new System.Drawing.Point(90, 451);
+            this.lblTradeEntryLotCount.Location = new System.Drawing.Point(86, 451);
             this.lblTradeEntryLotCount.Name = "lblTradeEntryLotCount";
             this.lblTradeEntryLotCount.Size = new System.Drawing.Size(32, 13);
             this.lblTradeEntryLotCount.TabIndex = 177;
@@ -456,11 +472,6 @@
             // 
             this.cbxTradeType.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.cbxTradeType.FormattingEnabled = true;
-            this.cbxTradeType.Items.AddRange(new object[] {
-            "OpenLong",
-            "OpenShort",
-            "CloseLong",
-            "CloseShort"});
             this.cbxTradeType.Location = new System.Drawing.Point(138, 370);
             this.cbxTradeType.Name = "cbxTradeType";
             this.cbxTradeType.Size = new System.Drawing.Size(201, 21);
@@ -508,11 +519,11 @@
             // 
             this.lblTradeStarDate.AutoSize = true;
             this.lblTradeStarDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblTradeStarDate.Location = new System.Drawing.Point(37, 351);
+            this.lblTradeStarDate.Location = new System.Drawing.Point(59, 350);
             this.lblTradeStarDate.Name = "lblTradeStarDate";
-            this.lblTradeStarDate.Size = new System.Drawing.Size(85, 13);
+            this.lblTradeStarDate.Size = new System.Drawing.Size(63, 13);
             this.lblTradeStarDate.TabIndex = 170;
-            this.lblTradeStarDate.Text = "Başlangıç Tarihi:";
+            this.lblTradeStarDate.Text = "İşlem Tarihi:";
             // 
             // dateTradeDetailDate
             // 
@@ -1105,6 +1116,7 @@
         private System.Windows.Forms.Button btnNewTradeDetail;
         private System.Windows.Forms.TextBox tbxTargetedEntryPrice;
         private System.Windows.Forms.Label lblTargetedEntryPrice;
+        private System.Windows.Forms.CheckBox chckEntryLotCount;
     }
 }
 
