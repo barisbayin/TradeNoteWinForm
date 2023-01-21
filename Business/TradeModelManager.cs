@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using TradeNote.Entities;
 using TradeNote.Enums;
 using TradeNote.Repositories;
@@ -135,71 +136,131 @@ namespace TradeNote.Business
 
         public Trade CalculateTrade(int tradeId, string xmlFilePath)
         {
-            decimal averageEntryBalance = 0;
-            decimal entryTotalCount = 0;
-            decimal averageEntryPrice = 0;
-            decimal averageCloseBalance = 0;
-            decimal closeTotalCount = 0;
-            decimal averagePositionClosePrice = 0;
-
             var willCalculatedTrade = _tradeModelXmlRepository.GetTradeById(tradeId, xmlFilePath);
 
             var tradeDetails = willCalculatedTrade.TradeDetails;
 
-            switch (willCalculatedTrade.PositionSide)
+            try
             {
-                case PositionSide.Long:
+                decimal closeTotalCount = 0;
+                decimal averageEntryBalance = 0;
+                decimal entryTotalCount = 0;
+                decimal averageEntryPrice = 0;
+                decimal averageCloseBalance = 0;
+                decimal averagePositionClosePrice = 0;
+                decimal expectedRiskValue = 0;
+                decimal expectedRewardValue = 0;
 
-                    averageEntryBalance = tradeDetails.Where(x => x.TradeType == TradeType.OpenLong).Sum(x => x.EntryBalance);
 
-                    entryTotalCount = tradeDetails.Where(x => x.TradeType == TradeType.OpenLong)
-                        .Sum(x => x.EntryLotCount);
+                switch (willCalculatedTrade.PositionSide)
+                {
+                    case PositionSide.Long:
 
-                    averageEntryPrice = averageEntryBalance / entryTotalCount;
+                        averageEntryBalance = tradeDetails.Where(x => x.TradeType == TradeType.OpenLong).Sum(x => x.EntryBalance);
 
-                    if (tradeDetails.Count(x => x.TradeType == TradeType.CloseLong) > 0)
-                    {
-                        averageCloseBalance = tradeDetails.Where(x => x.TradeType == TradeType.CloseLong).Sum(x => x.EntryBalance);
-
-                        closeTotalCount = tradeDetails.Where(x => x.TradeType == TradeType.CloseLong)
+                        entryTotalCount = tradeDetails.Where(x => x.TradeType == TradeType.OpenLong)
                             .Sum(x => x.EntryLotCount);
 
-                        averagePositionClosePrice = averageCloseBalance / closeTotalCount;
-                    }
+                        averageEntryPrice = Math.Round(averageEntryBalance / entryTotalCount, 8);
+
+                        if (tradeDetails.Count(x => x.TradeType == TradeType.CloseLong) > 0)
+                        {
+                            averageCloseBalance = tradeDetails.Where(x => x.TradeType == TradeType.CloseLong).Sum(x => x.EntryBalance);
+
+                            closeTotalCount = tradeDetails.Where(x => x.TradeType == TradeType.CloseLong)
+                                .Sum(x => x.EntryLotCount);
+
+                            averagePositionClosePrice = Math.Round(averageCloseBalance / closeTotalCount, 8);
+                        }
+
+                        if (averageEntryBalance > 0)
+                        {
+                            willCalculatedTrade.RiskPercent = Math.Round((willCalculatedTrade.StopLossPrice / averageEntryPrice - 1) * 100, 2);
+                            willCalculatedTrade.RewardPercent = Math.Round((willCalculatedTrade.TakeProfitPrice / averageEntryPrice - 1) * 100, 2);
+                            willCalculatedTrade.RiskRewardRatio = Math.Abs(Math.Round(willCalculatedTrade.RewardPercent / willCalculatedTrade.RiskPercent, 2));
+
+                        }
 
 
+                        break;
 
-                    break;
-                case PositionSide.Short:
+                    case PositionSide.Short:
 
-                    averageEntryBalance = tradeDetails.Where(x => x.TradeType == TradeType.OpenShort).Sum(x => x.EntryBalance);
+                        averageEntryBalance = tradeDetails.Where(x => x.TradeType == TradeType.OpenShort).Sum(x => x.EntryBalance);
 
-                    entryTotalCount = tradeDetails.Where(x => x.TradeType == TradeType.OpenShort)
-                        .Sum(x => x.EntryLotCount);
-
-                    averageEntryPrice = averageEntryBalance / entryTotalCount;
-
-                    if (tradeDetails.Count(x => x.TradeType == TradeType.CloseShort) > 0)
-                    {
-                        averageCloseBalance = tradeDetails.Where(x => x.TradeType == TradeType.CloseShort)
-                            .Sum(x => x.EntryBalance);
-
-                        closeTotalCount = tradeDetails.Where(x => x.TradeType == TradeType.CloseShort)
+                        entryTotalCount = tradeDetails.Where(x => x.TradeType == TradeType.OpenShort)
                             .Sum(x => x.EntryLotCount);
 
-                        averagePositionClosePrice = averageCloseBalance / closeTotalCount;
-                    }
+                        averageEntryPrice = Math.Round(averageEntryBalance / entryTotalCount, 8);
 
-                    break;
+                        if (tradeDetails.Count(x => x.TradeType == TradeType.CloseShort) > 0)
+                        {
+                            averageCloseBalance = tradeDetails.Where(x => x.TradeType == TradeType.CloseShort)
+                                .Sum(x => x.EntryBalance);
+
+                            closeTotalCount = tradeDetails.Where(x => x.TradeType == TradeType.CloseShort)
+                                .Sum(x => x.EntryLotCount);
+
+                            averagePositionClosePrice = Math.Round(averageCloseBalance / closeTotalCount, 8);
+                        }
+
+                        if (averageEntryBalance > 0)
+                        {
+                            willCalculatedTrade.RiskPercent = Math.Round((1 - willCalculatedTrade.StopLossPrice / averageEntryPrice) * 100, 2);
+                            willCalculatedTrade.RewardPercent = Math.Round((1 - willCalculatedTrade.TakeProfitPrice / averageEntryPrice) * 100, 2);
+                            willCalculatedTrade.RiskRewardRatio = Math.Abs(Math.Round(willCalculatedTrade.RewardPercent / willCalculatedTrade.RiskPercent, 2));
+                        }
+
+                        break;
+                }
+
+                if (averageEntryBalance > 0)
+                {
+                    expectedRiskValue = Math.Round(averageEntryBalance * willCalculatedTrade.Leverage *
+                        willCalculatedTrade.RiskPercent / 100, 2);
+
+                    willCalculatedTrade.ExpectedRiskValue = expectedRiskValue;
+
+                    expectedRewardValue = Math.Round(averageEntryBalance * willCalculatedTrade.Leverage *
+                        willCalculatedTrade.RewardPercent / 100, 2);
+
+                    willCalculatedTrade.ExpectedRewardValue = expectedRewardValue;
+                }
+
+                willCalculatedTrade.AverageEntryBalance = averageEntryBalance;
+                willCalculatedTrade.AverageEntryPrice = averageEntryPrice;
+                willCalculatedTrade.AveragePositionClosePrice = averagePositionClosePrice;
+                willCalculatedTrade.AverageCloseBalance = averageCloseBalance;
+                willCalculatedTrade.AverageCloseLotCount = closeTotalCount;
+                willCalculatedTrade.AverageEntryLotCount = entryTotalCount;
+
+                if (willCalculatedTrade.EndTrade)
+                {
+                    if (Math.Abs(entryTotalCount - closeTotalCount) < 0.0005M)
+                    {
+                        var profit = (averageCloseBalance - averageEntryBalance) * willCalculatedTrade.Leverage;
+                        willCalculatedTrade.ProfitOrLoss = profit;
+                        willCalculatedTrade.ProfitOrLossPercent = Math.Round((averageCloseBalance / averageEntryBalance - 1) * 100 * willCalculatedTrade.Leverage, 2);
+                        willCalculatedTrade.TradeEndDate = DateTime.Now;
+                        if (profit < 0)
+                        {
+                            willCalculatedTrade.PositionResult = PositionResult.SL;
+                        }
+                        else
+                        {
+                            willCalculatedTrade.PositionResult = PositionResult.TP;
+                        }
+                    }
+                }
+
+                return willCalculatedTrade;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Hata oluştu!", MessageBoxButtons.OK);
             }
 
-            willCalculatedTrade.AverageEntryBalance = averageEntryBalance;
-            willCalculatedTrade.AverageEntryPrice = averageEntryPrice;
-            willCalculatedTrade.AveragePositionClosePrice = averagePositionClosePrice;
-
             return willCalculatedTrade;
-
-
         }
     }
 }

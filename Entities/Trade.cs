@@ -22,8 +22,11 @@ namespace TradeNote
         [DisplayName("Yön")]
         public PositionSide PositionSide { get; set; }
 
-        [DisplayName("Giriş Bakiyesi")]
+        [DisplayName("Giriş Bakiyesi $")]
         public decimal AverageEntryBalance { get; set; }
+
+        [DisplayName("Giriş Adet")]
+        public decimal AverageEntryLotCount { get; set; }
 
         [DisplayName("Kaldıraç")]
         public int Leverage { get; set; }
@@ -57,6 +60,12 @@ namespace TradeNote
 
         [DisplayName("Tahmini Kazanç $")]
         public decimal ExpectedRewardValue { get; set; }
+
+        [DisplayName("Kapatılan Bakiye $")]
+        public decimal AverageCloseBalance { get; set; }
+
+        [DisplayName("Kapatılan Adet")]
+        public decimal AverageCloseLotCount { get; set; }
 
         [DisplayName("Poz. Sonuç")]
         public PositionResult PositionResult { get; set; }

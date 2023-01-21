@@ -113,6 +113,7 @@ namespace TradeNote.Repositories
                 trade.TradeEndDate = updatedTrade.TradeEndDate;
                 trade.PositionSide = updatedTrade.PositionSide;
                 trade.AverageEntryBalance = updatedTrade.AverageEntryBalance;
+                trade.AverageEntryLotCount= updatedTrade.AverageEntryLotCount;
                 trade.Leverage = updatedTrade.Leverage;
                 trade.AverageEntryPrice = updatedTrade.AverageEntryPrice;
                 trade.TargetedEntryPrice = updatedTrade.TargetedEntryPrice;
@@ -124,9 +125,12 @@ namespace TradeNote.Repositories
                 trade.RiskRewardRatio = updatedTrade.RiskRewardRatio;
                 trade.ExpectedRiskValue = updatedTrade.ExpectedRiskValue;
                 trade.ExpectedRewardValue = updatedTrade.ExpectedRewardValue;
+                trade.AverageCloseBalance = updatedTrade.AverageCloseBalance;
+                trade.AverageCloseLotCount=updatedTrade.AverageCloseLotCount;
                 trade.PositionResult = updatedTrade.PositionResult;
                 trade.ProfitOrLoss = updatedTrade.ProfitOrLoss;
                 trade.ProfitOrLossPercent = updatedTrade.ProfitOrLossPercent;
+                trade.EndTrade=updatedTrade.EndTrade;
                 trade.Note = updatedTrade.Note;
             }
 

@@ -127,7 +127,7 @@ namespace TradeNote
 
             if (cbxListOfTradeXmls.Text != null)
             {
-                gbStatistics.Text = cbxListOfTradeXmls.Text + "İşlem Detayları..";
+                gbTradeDetails.Text = cbxListOfTradeXmls.Text + " İşlem Detayları..";
 
                 var dataList = _tradeModelManager.GetTradeDetailList(tradeId, xmlFilePath);
 
@@ -154,6 +154,7 @@ namespace TradeNote
         private void cbxListOfTradeXmls_SelectedValueChanged_1(object sender, EventArgs e)
         {
             LoadTradeDataGridView();
+            dgvTradeDetails.DataSource = null;
         }
 
         private void btnDeleteXmlFile_Click(object sender, EventArgs e)
@@ -297,103 +298,118 @@ namespace TradeNote
 
         private void btnTradeSave_Click_1(object sender, EventArgs e)
         {
-            string xmlFilePath = GeneralHelper.GetXmlFilePath(cbxListOfTradeXmls.Text);
-
-            try
+            if (!string.IsNullOrEmpty(cbxListOfTradeXmls.Text))
             {
-                if (string.IsNullOrEmpty(lblTradeIdLabel.Text))
+                string xmlFilePath = GeneralHelper.GetXmlFilePath(cbxListOfTradeXmls.Text);
+
+                try
                 {
-                    Trade newTrade = new Trade();
-
-                    newTrade.TradeStartDate = DateTime.Now;
-                    newTrade.PositionSide = (PositionSide)Enum.Parse(typeof(PositionSide), cbxPositionSide.Text);
-                    newTrade.AverageEntryBalance = 0;
-                    newTrade.Leverage = Convert.ToInt32(cbxLeverage.Text);
-                    newTrade.AverageEntryPrice = 0;
-                    newTrade.TargetedEntryPrice = Convert.ToDecimal(tbxTargetedEntryPrice.Text.Replace(".", ","));
-                    newTrade.StopLossPrice = Convert.ToDecimal(tbxStopPrice.Text.Replace(".", ","));
-                    newTrade.TakeProfitPrice = Convert.ToDecimal(tbxTakeProfitPrice.Text.Replace(".", ","));
-                    newTrade.AveragePositionClosePrice = 0;
-                    newTrade.PositionResult = PositionResult.SO;
-                    newTrade.Note = rtbxTradeNote.Text;
-
-
-                    switch (newTrade.PositionSide)
+                    if (string.IsNullOrEmpty(lblTradeIdLabel.Text))
                     {
-                        case PositionSide.Long:
-                            newTrade.RiskPercent = Math.Round((newTrade.StopLossPrice / newTrade.TargetedEntryPrice - 1) * 100, 2);
-                            newTrade.RewardPercent = Math.Round((newTrade.TakeProfitPrice / newTrade.TargetedEntryPrice - 1) * 100, 2);
-                            newTrade.RiskRewardRatio = Math.Abs(Math.Round(newTrade.RewardPercent / newTrade.RiskPercent, 2));
-                            break;
-                        case PositionSide.Short:
-                            newTrade.RiskPercent = Math.Round((1 - newTrade.StopLossPrice / newTrade.TargetedEntryPrice) * 100, 2);
-                            newTrade.RewardPercent = Math.Round((1 - newTrade.TakeProfitPrice / newTrade.TargetedEntryPrice) * 100, 2);
-                            newTrade.RiskRewardRatio = Math.Abs(Math.Round(newTrade.RewardPercent / newTrade.RiskPercent, 2));
-                            break;
-                    }
+                        Trade newTrade = new Trade();
 
-                    newTrade.ExpectedRiskValue =
-                        Math.Round(newTrade.AverageEntryBalance * newTrade.Leverage * newTrade.RiskPercent / 100, 2);
-                    newTrade.ExpectedRewardValue =
-                        Math.Round(newTrade.AverageEntryBalance * newTrade.Leverage * newTrade.RewardPercent / 100, 2);
+                        newTrade.TradeStartDate = DateTime.Now;
+                        newTrade.PositionSide = (PositionSide)Enum.Parse(typeof(PositionSide), cbxPositionSide.Text);
+                        newTrade.AverageEntryBalance = 0;
+                        newTrade.Leverage = Convert.ToInt32(cbxLeverage.Text);
+                        newTrade.AverageEntryPrice = 0;
+                        newTrade.TargetedEntryPrice = Convert.ToDecimal(tbxTargetedEntryPrice.Text.Replace(".", ","));
+                        newTrade.StopLossPrice = Convert.ToDecimal(tbxStopPrice.Text.Replace(".", ","));
+                        newTrade.TakeProfitPrice = Convert.ToDecimal(tbxTakeProfitPrice.Text.Replace(".", ","));
+                        newTrade.AveragePositionClosePrice = 0;
+                        newTrade.PositionResult = PositionResult.SO;
+                        newTrade.Note = rtbxTradeNote.Text;
 
-                    newTrade.EndTrade = chckEndTrade.Checked;
 
-                    _tradeModelManager.AddTrade(newTrade, xmlFilePath);
-
-                }
-                else
-                {
-                    var foundTrade = _tradeModelManager.GetTradeById(Convert.ToInt32(lblTradeIdLabel.Text), xmlFilePath);
-
-                    if (foundTrade.TradeDetails.Count == 0)
-                    {
-                        foundTrade.Leverage = Convert.ToInt32(cbxLeverage.Text);
-                        foundTrade.TargetedEntryPrice = Convert.ToDecimal(tbxTargetedEntryPrice.Text.Replace(".", ","));
-                        foundTrade.StopLossPrice = Convert.ToDecimal(tbxStopPrice.Text.Replace(".", ","));
-                        foundTrade.TakeProfitPrice = Convert.ToDecimal(tbxTakeProfitPrice.Text.Replace(".", ","));
-                        foundTrade.Note = rtbxTradeNote.Text;
-
-                        switch (foundTrade.PositionSide)
+                        switch (newTrade.PositionSide)
                         {
                             case PositionSide.Long:
-                                foundTrade.RiskPercent = Math.Round((foundTrade.StopLossPrice / foundTrade.TargetedEntryPrice - 1) * 100, 2);
-                                foundTrade.RewardPercent = Math.Round((foundTrade.TakeProfitPrice / foundTrade.TargetedEntryPrice - 1) * 100, 2);
-                                foundTrade.RiskRewardRatio = Math.Abs(Math.Round(foundTrade.RewardPercent / foundTrade.RiskPercent, 2));
+                                newTrade.RiskPercent = Math.Round((newTrade.StopLossPrice / newTrade.TargetedEntryPrice - 1) * 100, 2);
+                                newTrade.RewardPercent = Math.Round((newTrade.TakeProfitPrice / newTrade.TargetedEntryPrice - 1) * 100, 2);
+                                newTrade.RiskRewardRatio = Math.Abs(Math.Round(newTrade.RewardPercent / newTrade.RiskPercent, 2));
                                 break;
                             case PositionSide.Short:
-                                foundTrade.RiskPercent = Math.Round((1 - foundTrade.StopLossPrice / foundTrade.TargetedEntryPrice) * 100, 2);
-                                foundTrade.RewardPercent = Math.Round((1 - foundTrade.TakeProfitPrice / foundTrade.TargetedEntryPrice) * 100, 2);
-                                foundTrade.RiskRewardRatio = Math.Abs(Math.Round(foundTrade.RewardPercent / foundTrade.RiskPercent, 2));
+                                newTrade.RiskPercent = Math.Round((1 - newTrade.StopLossPrice / newTrade.TargetedEntryPrice) * 100, 2);
+                                newTrade.RewardPercent = Math.Round((1 - newTrade.TakeProfitPrice / newTrade.TargetedEntryPrice) * 100, 2);
+                                newTrade.RiskRewardRatio = Math.Abs(Math.Round(newTrade.RewardPercent / newTrade.RiskPercent, 2));
                                 break;
                         }
 
-                        foundTrade.ExpectedRiskValue =
-                            Math.Round(foundTrade.AverageEntryBalance * foundTrade.Leverage * foundTrade.RiskPercent / 100, 2);
-                        foundTrade.ExpectedRewardValue =
-                            Math.Round(foundTrade.AverageEntryBalance * foundTrade.Leverage * foundTrade.RewardPercent / 100, 2);
+                        newTrade.ExpectedRiskValue =
+                            Math.Round(newTrade.AverageEntryBalance * newTrade.Leverage * newTrade.RiskPercent / 100, 2);
+                        newTrade.ExpectedRewardValue =
+                            Math.Round(newTrade.AverageEntryBalance * newTrade.Leverage * newTrade.RewardPercent / 100, 2);
 
-                        foundTrade.EndTrade = chckEndTrade.Checked;
+                        newTrade.EndTrade = false;
 
-                        _tradeModelManager.UpdateTrade(foundTrade, xmlFilePath);
+                        _tradeModelManager.AddTrade(newTrade, xmlFilePath);
+
                     }
                     else
                     {
-                        if (cbxPositionSide.Text != foundTrade.PositionSide.ToString())
+                        var foundTrade = _tradeModelManager.GetTradeById(Convert.ToInt32(lblTradeIdLabel.Text), xmlFilePath);
+
+                        if (foundTrade.TradeDetails.Count == 0)
                         {
-                            MessageBox.Show("İşlem başladıktan sonra posizyon yönü değiştirilemez!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            return;
+                            foundTrade.Leverage = Convert.ToInt32(cbxLeverage.Text);
+                            foundTrade.TargetedEntryPrice = Convert.ToDecimal(tbxTargetedEntryPrice.Text.Replace(".", ","));
+                            foundTrade.StopLossPrice = Convert.ToDecimal(tbxStopPrice.Text.Replace(".", ","));
+                            foundTrade.TakeProfitPrice = Convert.ToDecimal(tbxTakeProfitPrice.Text.Replace(".", ","));
+                            foundTrade.Note = rtbxTradeNote.Text;
+
+                            switch (foundTrade.PositionSide)
+                            {
+                                case PositionSide.Long:
+                                    foundTrade.RiskPercent = Math.Round((foundTrade.StopLossPrice / foundTrade.TargetedEntryPrice - 1) * 100, 2);
+                                    foundTrade.RewardPercent = Math.Round((foundTrade.TakeProfitPrice / foundTrade.TargetedEntryPrice - 1) * 100, 2);
+                                    foundTrade.RiskRewardRatio = Math.Abs(Math.Round(foundTrade.RewardPercent / foundTrade.RiskPercent, 2));
+                                    break;
+                                case PositionSide.Short:
+                                    foundTrade.RiskPercent = Math.Round((1 - foundTrade.StopLossPrice / foundTrade.TargetedEntryPrice) * 100, 2);
+                                    foundTrade.RewardPercent = Math.Round((1 - foundTrade.TakeProfitPrice / foundTrade.TargetedEntryPrice) * 100, 2);
+                                    foundTrade.RiskRewardRatio = Math.Abs(Math.Round(foundTrade.RewardPercent / foundTrade.RiskPercent, 2));
+                                    break;
+                            }
+
+                            foundTrade.ExpectedRiskValue =
+                                Math.Round(foundTrade.AverageEntryBalance * foundTrade.Leverage * foundTrade.RiskPercent / 100, 2);
+                            foundTrade.ExpectedRewardValue =
+                                Math.Round(foundTrade.AverageEntryBalance * foundTrade.Leverage * foundTrade.RewardPercent / 100, 2);
+
+
+                            _tradeModelManager.UpdateTrade(foundTrade, xmlFilePath);
+
                         }
+                        else
+                        {
+                            foundTrade.EndTrade = chckEndTrade.Checked;
+                            _tradeModelManager.UpdateTrade(foundTrade, xmlFilePath);
+                            var calculatedTrade = _tradeModelManager.CalculateTrade(foundTrade.Id, xmlFilePath);
+                            _tradeModelManager.UpdateTrade(calculatedTrade, xmlFilePath);
+
+                            if (cbxPositionSide.Text != foundTrade.PositionSide.ToString())
+                            {
+                                MessageBox.Show("İşlem başladıktan sonra posizyon yönü değiştirilemez!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }
+                        }
+
+
                     }
+
                 }
+                catch (Exception exception)
+                {
+                    MessageBox.Show("Lütfen yeni bir trade girişi için tüm alanları doldurunuz. Mevcut bir trade'i güncellemek için ilgili trade satırını seçiniz." + "\n(Sistem mesajı: " + exception.Message + ")", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
+
+                LoadTradeDataGridView();
             }
-            catch (Exception exception)
+            else
             {
-                MessageBox.Show(exception.Message);
+                MessageBox.Show("Lütfen trade listesini yükleyiniz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-
-
-            LoadTradeDataGridView();
 
         }
 
@@ -702,7 +718,7 @@ namespace TradeNote
                 tbxTradeEntryBalance.Text = dgvTradeDetails.Rows[e.RowIndex].Cells["EntryBalance"].Value.ToString();
                 tbxTradeEntryLotCount.Text = dgvTradeDetails.Rows[e.RowIndex].Cells["EntryLotCount"].Value.ToString();
                 tbxTradeEntryPrice.Text = dgvTradeDetails.Rows[e.RowIndex].Cells["EntryPrice"].Value.ToString();
-                lblTradeDetailTradeIdLabel.Text= dgvTradeDetails.Rows[e.RowIndex].Cells["TradeId"].Value.ToString();
+                lblTradeDetailTradeIdLabel.Text = dgvTradeDetails.Rows[e.RowIndex].Cells["TradeId"].Value.ToString();
 
             }
             catch
