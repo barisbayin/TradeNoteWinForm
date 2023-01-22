@@ -60,9 +60,14 @@ namespace TradeNote.Repositories
             tradeModel.GeneralInformation.WinCount = updatedGeneralInformation.WinCount;
             tradeModel.GeneralInformation.LossCount = updatedGeneralInformation.LossCount;
             tradeModel.GeneralInformation.TradeWinRate = updatedGeneralInformation.TradeWinRate;
+            tradeModel.GeneralInformation.MakerCommission = updatedGeneralInformation.MakerCommission;
+            tradeModel.GeneralInformation.TakerCommission = updatedGeneralInformation.TakerCommission;
+            tradeModel.GeneralInformation.TotalCommission = updatedGeneralInformation.TotalCommission;
+            tradeModel.GeneralInformation.TotalFundingFee = updatedGeneralInformation.TotalFundingFee;
 
             // Serialize the updated TradeModel object back to the XML file
             XmlSerializer serializer = new XmlSerializer(typeof(TradeModel));
+
             using (TextWriter writer = new StreamWriter(xmlFilePath))
             {
                 serializer.Serialize(writer, tradeModel);
@@ -113,7 +118,7 @@ namespace TradeNote.Repositories
                 trade.TradeEndDate = updatedTrade.TradeEndDate;
                 trade.PositionSide = updatedTrade.PositionSide;
                 trade.AverageEntryBalance = updatedTrade.AverageEntryBalance;
-                trade.AverageEntryLotCount= updatedTrade.AverageEntryLotCount;
+                trade.AverageEntryLotCount = updatedTrade.AverageEntryLotCount;
                 trade.Leverage = updatedTrade.Leverage;
                 trade.AverageEntryPrice = updatedTrade.AverageEntryPrice;
                 trade.TargetedEntryPrice = updatedTrade.TargetedEntryPrice;
@@ -126,13 +131,13 @@ namespace TradeNote.Repositories
                 trade.ExpectedRiskValue = updatedTrade.ExpectedRiskValue;
                 trade.ExpectedRewardValue = updatedTrade.ExpectedRewardValue;
                 trade.AverageCloseBalance = updatedTrade.AverageCloseBalance;
-                trade.AverageCloseLotCount=updatedTrade.AverageCloseLotCount;
+                trade.AverageCloseLotCount = updatedTrade.AverageCloseLotCount;
                 trade.PositionResult = updatedTrade.PositionResult;
                 trade.ProfitOrLoss = updatedTrade.ProfitOrLoss;
                 trade.ProfitOrLossPercent = updatedTrade.ProfitOrLossPercent;
-                trade.TotalCommission = updatedTrade.TotalCommission;
-                trade.TotalFundingFee = updatedTrade.TotalFundingFee;
-                trade.EndTrade=updatedTrade.EndTrade;
+                trade.CommissionSum = updatedTrade.CommissionSum;
+                trade.FundingFeeSum = updatedTrade.FundingFeeSum;
+                trade.EndTrade = updatedTrade.EndTrade;
                 trade.Note = updatedTrade.Note;
             }
 

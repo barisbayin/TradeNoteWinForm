@@ -136,6 +136,8 @@ namespace TradeNote.Business
 
         public Trade CalculateTrade(int tradeId, string xmlFilePath)
         {
+            var generalInformation = _tradeModelXmlRepository.GetGeneralInformation(xmlFilePath);
+
             var willCalculatedTrade = _tradeModelXmlRepository.GetTradeById(tradeId, xmlFilePath);
 
             var tradeDetails = willCalculatedTrade.TradeDetails;
@@ -146,17 +148,24 @@ namespace TradeNote.Business
                 decimal averageEntryBalance = 0;
                 decimal entryTotalCount = 0;
                 decimal averageEntryPrice = 0;
+                decimal entryPriceMaker = 0;
+                decimal entryPriceTaker = 0;
                 decimal averageCloseBalance = 0;
                 decimal averagePositionClosePrice = 0;
                 decimal expectedRiskValue = 0;
                 decimal expectedRewardValue = 0;
+                decimal commissionSum = 0;
 
 
                 switch (willCalculatedTrade.PositionSide)
                 {
                     case PositionSide.Long:
 
-                        averageEntryBalance = tradeDetails.Where(x => x.TradeType == TradeType.OpenLong).Sum(x => x.EntryBalance);
+                        entryPriceMaker = tradeDetails.Where(x => x.TradeType == TradeType.OpenLong && x.OrderType == OrderType.Maker).Sum(x => x.EntryBalance);
+
+                        entryPriceTaker = tradeDetails.Where(x => x.TradeType == TradeType.OpenLong && x.OrderType == OrderType.Taker).Sum(x => x.EntryBalance);
+
+                        averageEntryBalance = entryPriceMaker + entryPriceTaker;
 
                         entryTotalCount = tradeDetails.Where(x => x.TradeType == TradeType.OpenLong)
                             .Sum(x => x.EntryLotCount);
@@ -186,7 +195,11 @@ namespace TradeNote.Business
 
                     case PositionSide.Short:
 
-                        averageEntryBalance = tradeDetails.Where(x => x.TradeType == TradeType.OpenShort).Sum(x => x.EntryBalance);
+                        entryPriceMaker = tradeDetails.Where(x => x.TradeType == TradeType.OpenShort && x.OrderType == OrderType.Maker).Sum(x => x.EntryBalance);
+
+                        entryPriceTaker = tradeDetails.Where(x => x.TradeType == TradeType.OpenShort && x.OrderType == OrderType.Taker).Sum(x => x.EntryBalance);
+
+                        averageEntryBalance = entryPriceMaker + entryPriceTaker;
 
                         entryTotalCount = tradeDetails.Where(x => x.TradeType == TradeType.OpenShort)
                             .Sum(x => x.EntryLotCount);
@@ -233,6 +246,11 @@ namespace TradeNote.Business
                 willCalculatedTrade.AverageCloseBalance = averageCloseBalance;
                 willCalculatedTrade.AverageCloseLotCount = closeTotalCount;
                 willCalculatedTrade.AverageEntryLotCount = entryTotalCount;
+
+
+                commissionSum = entryPriceMaker * willCalculatedTrade.Leverage * generalInformation.MakerCommission / 100 + entryPriceTaker * willCalculatedTrade.Leverage * generalInformation.TakerCommission / 100;
+
+                willCalculatedTrade.CommissionSum = commissionSum;
 
                 if (willCalculatedTrade.EndTrade)
                 {

@@ -31,5 +31,18 @@ namespace TradeNote
         [DisplayName("Kazanma Yüzdesi")]
         public decimal TradeWinRate { get; set; }
 
+        [DisplayName("Maker Komisyon")]
+        public decimal MakerCommission { get; set; }
+
+        [DisplayName("Taker Komisyon")]
+        public decimal TakerCommission { get; set; }
+
+        [DisplayName("Komisyon")]
+        public decimal TotalCommission { get; set; }
+
+        [DisplayName("Fonlama Maliyeti")]
+        public decimal TotalFundingFee { get; set; }
+
+
     }
 }

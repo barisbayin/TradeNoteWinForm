@@ -77,10 +77,10 @@ namespace TradeNote
         public decimal ProfitOrLossPercent { get; set; }
 
         [DisplayName("Komisyon")]
-        public decimal TotalCommission { get; set; }
+        public decimal CommissionSum { get; set; }
 
         [DisplayName("Fonlama Maliyeti")]
-        public decimal TotalFundingFee { get; set; }
+        public decimal FundingFeeSum { get; set; }
 
         [DisplayName("Not")]
         public string Note { get; set; }

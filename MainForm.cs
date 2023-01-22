@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -21,6 +22,7 @@ namespace TradeNote
             InitializeComponent();
         }
 
+
         private readonly TradeModelManager _tradeModelManager = new TradeModelManager(new TradeModelXmlRepository());
 
         private int tradeClickedColumnIndex;
@@ -34,6 +36,7 @@ namespace TradeNote
         }
 
 
+
         public void PopulateComboBoxWithXmlFiles()
         {
             cbxListOfTradeXmls.Items.Clear();
@@ -44,9 +47,14 @@ namespace TradeNote
             if (Directory.Exists(subDirectory))
             {
                 string[] xmlFiles = Directory.GetFiles(subDirectory, "*.xml");
+
                 List<string> xmlFileList = xmlFiles.Select(Path.GetFileNameWithoutExtension).ToList();
 
                 cbxListOfTradeXmls.Items.AddRange(xmlFileList.OrderBy(x => x).ToArray());
+            }
+            else
+            {
+                Directory.CreateDirectory(subDirectory);
             }
         }
 
@@ -94,8 +102,9 @@ namespace TradeNote
                     List<Trade> tradeList = new List<Trade>(dataList);
 
                     dgvTradeList.DataSource = tradeList;
-                    dgvTradeList.ReadOnly=true;
+                    dgvTradeList.ReadOnly = true;
                     dgvTradeList.Columns["EndTrade"].Visible = false;
+
                     //dgvTradeList.Columns["AverageEntryBalance"].DefaultCellStyle.Format = "$#.##";
                     //dgvTradeList.Columns["TargetedEntryPrice"].DefaultCellStyle.Format = "$#.##";
                     //dgvTradeList.Columns[6].DefaultCellStyle.Format = "$#.##";
@@ -132,7 +141,8 @@ namespace TradeNote
                 var dataList = _tradeModelManager.GetTradeDetailList(tradeId, xmlFilePath);
 
                 dgvTradeDetails.DataSource = dataList;
-                dgvTradeDetails.ReadOnly=true;
+                dgvTradeDetails.ReadOnly = true;
+
                 //dgvTradeList.Columns["AverageEntryBalance"].DefaultCellStyle.Format = "$#.##";
                 //dgvTradeList.Columns["TargetedEntryPrice"].DefaultCellStyle.Format = "$#.##";
                 //dgvTradeList.Columns[6].DefaultCellStyle.Format = "$#.##";
@@ -155,6 +165,7 @@ namespace TradeNote
         private void cbxListOfTradeXmls_SelectedValueChanged_1(object sender, EventArgs e)
         {
             LoadTradeDataGridView();
+            LoadGeneralInformation();
             dgvTradeDetails.DataSource = null;
         }
 
@@ -184,41 +195,49 @@ namespace TradeNote
         {
             LoadTradeDataGridView();
             PopulateComboBoxWithXmlFiles();
-            _tradeModelManager.CalculateGeneralInformation(GeneralHelper.GetXmlFilePath(cbxListOfTradeXmls.Text));
         }
 
         private void dgvTradeList_CellClick_1(object sender, DataGridViewCellEventArgs e)
         {
+            var xmlFilePath = GeneralHelper.GetXmlFilePath(cbxListOfTradeXmls.Text);
             try
             {
                 tradeClickedColumnIndex = e.ColumnIndex;
                 tradeClickedRowIndex = e.RowIndex;
 
-                lblTradeIdLabel.Text = dgvTradeList.Rows[e.RowIndex].Cells["Id"].Value.ToString();
-                cbxPositionSide.Text = dgvTradeList.Rows[e.RowIndex].Cells["PositionSide"].Value.ToString();
-                cbxLeverage.Text = dgvTradeList.Rows[e.RowIndex].Cells["Leverage"].Value.ToString();
-                tbxTargetedEntryPrice.Text = dgvTradeList.Rows[e.RowIndex].Cells["TargetedEntryPrice"].Value.ToString();
-                tbxStopPrice.Text = dgvTradeList.Rows[e.RowIndex].Cells["StopLossPrice"].Value.ToString();
-                tbxTakeProfitPrice.Text = dgvTradeList.Rows[e.RowIndex].Cells["TakeProfitPrice"].Value.ToString();
-                rtbxTradeNote.Text = dgvTradeList.Rows[e.RowIndex].Cells["Note"].Value.ToString();
-                lblTradeDetailTradeIdLabel.Text = dgvTradeList.Rows[e.RowIndex].Cells["Id"].Value.ToString();
+                int tradeId = (int)dgvTradeList.Rows[e.RowIndex].Cells["Id"].Value;
 
-                LoadTradeDetailDataGridView((int)dgvTradeList.Rows[e.RowIndex].Cells["Id"].Value);
+                var tradeData = _tradeModelManager.GetTradeById(tradeId, xmlFilePath);
 
+                lblTradeIdLabel.Text = tradeData.Id.ToString();
+                cbxPositionSide.Text = tradeData.PositionSide.ToString();
+                cbxLeverage.Text = tradeData.Leverage.ToString();
+                tbxTargetedEntryPrice.Text = tradeData.TargetedEntryPrice.ToString();
+                tbxStopPrice.Text = tradeData.StopLossPrice.ToString(CultureInfo.InvariantCulture);
+                tbxTakeProfitPrice.Text = tradeData.TakeProfitPrice.ToString(CultureInfo.InvariantCulture);
+                tbxTotalFundingFee.Text = tradeData.FundingFeeSum.ToString(CultureInfo.InvariantCulture);
+                rtbxTradeNote.Text = tradeData.Note;
+                lblTradeDetailTradeIdLabel.Text = tradeData.Id.ToString();
 
-                if (dgvTradeList.Rows[e.RowIndex].Cells["PositionSide"].Value.ToString() == "Long")
+                LoadTradeDetailDataGridView(tradeData.Id);
+
+                if (tradeData.PositionSide == PositionSide.Long)
                 {
                     cbxTradeType.Items.Clear();
                     cbxTradeType.Items.Add("OpenLong");
                     cbxTradeType.Items.Add("CloseLong");
                 }
-                if (dgvTradeList.Rows[e.RowIndex].Cells["PositionSide"].Value.ToString() == "Short")
+                if (tradeData.PositionSide == PositionSide.Short)
                 {
                     cbxTradeType.Items.Clear();
                     cbxTradeType.Items.Add("OpenShort");
                     cbxTradeType.Items.Add("CloseShort");
                 }
 
+                if (tradeData.TradeDetails.Count > 0)
+                {
+                    chckEndTrade.Enabled = true;
+                }
             }
             catch (Exception exception)
             {
@@ -234,6 +253,7 @@ namespace TradeNote
             tbxTargetedEntryPrice.Text = "";
             tbxStopPrice.Text = "";
             tbxTakeProfitPrice.Text = "";
+            tbxTotalFundingFee.Text = "";
             rtbxTradeNote.Text = "";
         }
         private void ClearTradeDetails()
@@ -242,24 +262,13 @@ namespace TradeNote
             lblTradeDetailTradeIdLabel.Text = "";
             dateTradeDetailDate.Value = DateTime.Now;
             cbxTradeType.Text = "";
+            cbxOrderType.Text = "";
             tbxTradeEntryBalance.Text = "";
             tbxTradeEntryPrice.Text = "";
             tbxTradeEntryLotCount.Text = "";
         }
 
-        private void chckPlusMinus_CheckedChanged(object sender, EventArgs e)
-        {
-            if (chckPlusMinus.CheckState == CheckState.Checked)
-            {
-                tbxPlusMinus.Enabled = true;
-                btnPlusMinus.Enabled = true;
-            }
-            else
-            {
-                tbxPlusMinus.Enabled = false;
-                btnPlusMinus.Enabled = false;
-            }
-        }
+
 
         private GeneralInformation GetGeneralInformation()
         {
@@ -271,33 +280,35 @@ namespace TradeNote
                 {
                     generalInformation = _tradeModelManager.GetGeneralInformation(xmlFilePath);
                 }
-
-                ClearTrade();
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message, "Hata", MessageBoxButtons.OK);
+                MessageBox.Show("Genel istatistik Bilgisi okunamadı." + "\nSistem Mesajı: " + e.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             return generalInformation;
 
         }
 
-        private void LoadGeneralInformation(GeneralInformation generalInformation)
+        private void LoadGeneralInformation()
         {
-            lblStartBalanceText.Text = "$" + generalInformation.StartingBalance.ToString();
-            lblLastBalanceLabel.Text = "$" + generalInformation.LastBalance.ToString();
-            lblProfitsSumLabel.Text = "$" + generalInformation.ProfitsSum.ToString();
-            lblLossesSumLabel.Text = "$" + generalInformation.LossesSum.ToString();
-            lblTotalPnLLabel.Text = "$" + generalInformation.TotalPnL.ToString();
+            var generalInformation = GetGeneralInformation();
+
+            lblStartBalanceText.Text = "$" + generalInformation.StartingBalance.ToString(CultureInfo.InvariantCulture);
+            lblLastBalanceLabel.Text = "$" + generalInformation.LastBalance.ToString(CultureInfo.InvariantCulture);
+            lblProfitsSumLabel.Text = "$" + generalInformation.ProfitsSum.ToString(CultureInfo.InvariantCulture);
+            lblLossesSumLabel.Text = "$" + generalInformation.LossesSum.ToString(CultureInfo.InvariantCulture);
+            lblTotalPnLLabel.Text = "$" + generalInformation.TotalPnL.ToString(CultureInfo.InvariantCulture);
             lblWinCountLabel.Text = generalInformation.WinCount.ToString();
             lblLossCountLabel.Text = generalInformation.LossCount.ToString();
-            lblWinrateLabel.Text = "% " + generalInformation.TradeWinRate.ToString();
-            lblTotalPnLPercentLabel.Text = "% " + generalInformation.TotalPnLPercent.ToString();
+            lblWinrateLabel.Text = "%" + generalInformation.TradeWinRate.ToString(CultureInfo.InvariantCulture);
+            lblTotalPnLPercentLabel.Text = "%" + generalInformation.TotalPnLPercent.ToString(CultureInfo.InvariantCulture);
+            tbxMakerCommission.Text = generalInformation.MakerCommission.ToString(CultureInfo.InvariantCulture);
+            tbxTakerCommission.Text = generalInformation.TakerCommission.ToString(CultureInfo.InvariantCulture);
+            lblTotalCommissionLabel.Text = "$" + generalInformation.TotalCommission.ToString(CultureInfo.InvariantCulture);
+            lblTotalFundingFeeLabel.Text = "$" + generalInformation.TotalFundingFee.ToString(CultureInfo.InvariantCulture);
         }
 
-
-
-        private void btnTradeSave_Click_1(object sender, EventArgs e)
+        private void btnSaveTrade_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(cbxListOfTradeXmls.Text))
             {
@@ -320,6 +331,7 @@ namespace TradeNote
                         newTrade.AveragePositionClosePrice = 0;
                         newTrade.PositionResult = PositionResult.SO;
                         newTrade.Note = rtbxTradeNote.Text;
+                        newTrade.FundingFeeSum = 0;
 
 
                         switch (newTrade.PositionSide)
@@ -357,6 +369,7 @@ namespace TradeNote
                             foundTrade.StopLossPrice = Convert.ToDecimal(tbxStopPrice.Text.Replace(".", ","));
                             foundTrade.TakeProfitPrice = Convert.ToDecimal(tbxTakeProfitPrice.Text.Replace(".", ","));
                             foundTrade.Note = rtbxTradeNote.Text;
+                            foundTrade.FundingFeeSum = Convert.ToDecimal(tbxTotalFundingFee.Text.Replace(".", ","));
 
                             switch (foundTrade.PositionSide)
                             {
@@ -411,17 +424,10 @@ namespace TradeNote
             {
                 MessageBox.Show("Lütfen trade listesini yükleyiniz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-
         }
 
 
-        private void LoadGeneralInformation()
-        {
-
-        }
-
-
-        private void btnPlusMinus_Click(object sender, EventArgs e)
+        private void btnPlusMinus_Click_1(object sender, EventArgs e)
         {
             try
             {
@@ -445,7 +451,7 @@ namespace TradeNote
                     };
 
                     _tradeModelManager.UpdateGeneralInformation(newGeneralInformation, GeneralHelper.GetXmlFilePath(cbxListOfTradeXmls.Text));
-                    LoadGeneralInformation(newGeneralInformation);
+                    LoadGeneralInformation();
 
                     tbxPlusMinus.Text = "";
                     chckPlusMinus.CheckState = CheckState.Unchecked;
@@ -461,9 +467,234 @@ namespace TradeNote
                 MessageBox.Show(ex.Message, "Hata!", MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
+        }
+
+        private void btnNewTrade_Click_1(object sender, EventArgs e)
+        {
+            ClearTrade();
+        }
+
+
+        private void dgvTradeList_RowPrePaint_1(object sender, DataGridViewRowPrePaintEventArgs e)
+        {
+
+            // Verileri Trade sınıfından oluşan bir liste olarak düşünün
+            var data = (List<Trade>)dgvTradeList.DataSource;
+
+            // Seçili satırın Trade nesnesini al
+            var trade = data[e.RowIndex];
+
+            switch (trade.PositionResult)
+            {
+                // Eğer PositionResult "TP" ise, satırı yeşil olarak boya
+                case PositionResult.TP:
+                    dgvTradeList.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightGreen;
+                    dgvTradeList.Rows[e.RowIndex].DefaultCellStyle.SelectionBackColor = Color.DarkOliveGreen;
+                    break;
+                // Eğer PositionResult "SL" ise, satırı kırmızı olarak boya
+                case PositionResult.SL:
+                    dgvTradeList.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightCoral;
+                    dgvTradeList.Rows[e.RowIndex].DefaultCellStyle.SelectionBackColor = Color.OrangeRed;
+                    break;
+                case PositionResult.SO:
+                    dgvTradeList.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightGray;
+                    dgvTradeList.Rows[e.RowIndex].DefaultCellStyle.SelectionBackColor = Color.LightSlateGray;
+                    break;
+            }
 
         }
 
+        private void btnSaveTradeDetail_Click_1(object sender, EventArgs e)
+        {
+            string xmlFilePath = GeneralHelper.GetXmlFilePath(cbxListOfTradeXmls.Text);
+
+            try
+            {
+                int tradeId = 0;
+                int tradeDetailId = 0;
+
+
+                if (string.IsNullOrEmpty(lblTradeDetailTradeIdLabel.Text))
+                {
+                    MessageBox.Show("Lütfen işlem yapacağınız trade'i seçiniz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                else
+                {
+                    tradeId = Convert.ToInt32(lblTradeDetailTradeIdLabel.Text);
+                }
+
+
+                if (!string.IsNullOrEmpty(lblTradeDetailIdLabel.Text))
+                {
+                    tradeDetailId = Convert.ToInt32(lblTradeDetailIdLabel.Text);
+                }
+
+                TradeDetail newTradeDetail = new TradeDetail();
+
+                if (string.IsNullOrEmpty(lblTradeDetailIdLabel.Text))
+                {
+
+                    newTradeDetail.TradeId = Convert.ToInt32(lblTradeDetailTradeIdLabel.Text);
+                    newTradeDetail.TradeDate = Convert.ToDateTime(dateTradeDetailDate.Value);
+                    newTradeDetail.TradeType = (TradeType)Enum.Parse(typeof(TradeType), cbxTradeType.Text);
+                    newTradeDetail.EntryPrice = Convert.ToDecimal(tbxTradeEntryPrice.Text.Replace(".", ","));
+                    newTradeDetail.OrderType = (OrderType)Enum.Parse(typeof(OrderType), cbxOrderType.Text);
+
+                    if (!chckEntryLotCount.Checked)
+                    {
+                        newTradeDetail.EntryBalance = Convert.ToDecimal(tbxTradeEntryBalance.Text.Replace(".", ","));
+                        newTradeDetail.EntryLotCount = Math.Round(Convert.ToDecimal(tbxTradeEntryBalance.Text.Replace(".", ",")) / Convert.ToDecimal(tbxTradeEntryPrice.Text.Replace(".", ",")), 8);
+                    }
+                    else
+                    {
+                        newTradeDetail.EntryLotCount = Convert.ToDecimal(tbxTradeEntryLotCount.Text.Replace(".", ","));
+                        newTradeDetail.EntryBalance = Math.Round(Convert.ToDecimal(tbxTradeEntryPrice.Text.Replace(".", ",")) *
+                                                      Convert.ToDecimal(tbxTradeEntryLotCount.Text.Replace(".", ",")), 2);
+                    }
+
+                    _tradeModelManager.AddTradeDetail(newTradeDetail.TradeId, newTradeDetail, xmlFilePath);
+
+                    var updatedTrade = _tradeModelManager.CalculateTrade(tradeId, xmlFilePath);
+
+                    _tradeModelManager.UpdateTrade(updatedTrade, xmlFilePath);
+                }
+                else
+                {
+                    TradeDetail foundTradeDetail = _tradeModelManager.GetTradeDetailById(tradeId, tradeDetailId, xmlFilePath);
+
+                    foundTradeDetail.TradeId = Convert.ToInt32(lblTradeDetailTradeIdLabel.Text);
+                    foundTradeDetail.TradeDate = Convert.ToDateTime(dateTradeDetailDate.Value);
+                    foundTradeDetail.TradeType = (TradeType)Enum.Parse(typeof(TradeType), cbxTradeType.Text);
+                    foundTradeDetail.EntryPrice = Convert.ToDecimal(tbxTradeEntryPrice.Text.Replace(".", ","));
+                    newTradeDetail.OrderType = (OrderType)Enum.Parse(typeof(OrderType), cbxOrderType.Text);
+
+                    if (!chckEntryLotCount.Checked)
+                    {
+                        foundTradeDetail.EntryBalance = Convert.ToDecimal(tbxTradeEntryBalance.Text.Replace(".", ","));
+                        foundTradeDetail.EntryLotCount = Math.Round(Convert.ToDecimal(tbxTradeEntryBalance.Text.Replace(".", ",")) / Convert.ToDecimal(tbxTradeEntryPrice.Text.Replace(".", ",")), 8);
+                    }
+                    else
+                    {
+                        foundTradeDetail.EntryLotCount = Convert.ToDecimal(tbxTradeEntryLotCount.Text.Replace(".", ","));
+                        foundTradeDetail.EntryBalance = Math.Round(Convert.ToDecimal(tbxTradeEntryPrice.Text.Replace(".", ",")) * Convert.ToDecimal(tbxTradeEntryLotCount.Text.Replace(".", ",")), 2);
+                    }
+
+                    _tradeModelManager.UpdateTradeDetail(foundTradeDetail.TradeId, foundTradeDetail, xmlFilePath);
+
+
+                    var updatedTrade = _tradeModelManager.CalculateTrade(tradeId, xmlFilePath);
+
+                    _tradeModelManager.UpdateTrade(updatedTrade, xmlFilePath);
+                }
+
+                LoadTradeDataGridView();
+                LoadTradeDetailDataGridView(tradeId);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
+        }
+        private void btnNewTradeDetail_Click_1(object sender, EventArgs e)
+        {
+            ClearTradeDetails();
+        }
+
+        private void chckPlusMinus_CheckedChanged_1(object sender, EventArgs e)
+        {
+            if (chckPlusMinus.CheckState == CheckState.Checked)
+            {
+                tbxPlusMinus.Enabled = true;
+                btnPlusMinus.Enabled = true;
+            }
+            else
+            {
+                tbxPlusMinus.Enabled = false;
+                btnPlusMinus.Enabled = false;
+            }
+        }
+
+        private void chckEntryLotCount_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chckEntryLotCount.Checked)
+            {
+                tbxTradeEntryLotCount.Enabled = true;
+                tbxTradeEntryBalance.Enabled = false;
+            }
+            else
+            {
+                tbxTradeEntryLotCount.Enabled = false;
+                tbxTradeEntryBalance.Enabled = true;
+            }
+        }
+
+
+        private void dgvTradeDetails_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var xmlFilePath = GeneralHelper.GetXmlFilePath(cbxListOfTradeXmls.Text);
+            try
+            {
+
+                tradeClickedColumnIndex = e.ColumnIndex;
+                tradeDetailClickedRowIndex = e.RowIndex;
+
+                int tradeId = (int)dgvTradeDetails.Rows[e.RowIndex].Cells["TradeId"].Value;
+                int tradeDetailId = (int)dgvTradeDetails.Rows[e.RowIndex].Cells["Id"].Value;
+
+                var tradeDetailData = _tradeModelManager.GetTradeDetailById(tradeId, tradeDetailId, xmlFilePath);
+
+                lblTradeDetailIdLabel.Text = tradeDetailData.Id.ToString();
+                dateTradeDetailDate.Text = tradeDetailData.TradeDate.ToString(CultureInfo.CurrentCulture);
+                cbxTradeType.Text = tradeDetailData.TradeType.ToString();
+                cbxOrderType.Text = tradeDetailData.OrderType.ToString();
+                tbxTradeEntryBalance.Text = tradeDetailData.EntryBalance.ToString(CultureInfo.InvariantCulture);
+                tbxTradeEntryLotCount.Text = tradeDetailData.EntryLotCount.ToString(CultureInfo.InvariantCulture);
+                tbxTradeEntryPrice.Text = tradeDetailData.EntryPrice.ToString(CultureInfo.InvariantCulture);
+                lblTradeDetailTradeIdLabel.Text = tradeDetailData.TradeId.ToString();
+
+
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void dgvTradeDetails_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        {
+            var data = (List<TradeDetail>)dgvTradeDetails.DataSource;
+            var trade = data[e.RowIndex];
+
+            switch (trade.TradeType)
+            {
+                case TradeType.OpenLong:
+                    dgvTradeDetails.Rows[e.RowIndex].Cells["TradeType"].Style.BackColor = Color.LightGreen;
+                    dgvTradeDetails.Rows[e.RowIndex].Cells["TradeType"].Style.SelectionBackColor = Color.DarkOliveGreen;
+                    break;
+                case TradeType.OpenShort:
+                    dgvTradeDetails.Rows[e.RowIndex].Cells["TradeType"].Style.BackColor = Color.LightGreen;
+                    dgvTradeDetails.Rows[e.RowIndex].Cells["TradeType"].Style.SelectionBackColor = Color.DarkOliveGreen;
+                    break;
+                case TradeType.CloseLong:
+                    dgvTradeDetails.Rows[e.RowIndex].Cells["TradeType"].Style.BackColor = Color.LightCoral;
+                    dgvTradeDetails.Rows[e.RowIndex].Cells["TradeType"].Style.SelectionBackColor = Color.OrangeRed;
+                    break;
+                case TradeType.CloseShort:
+                    dgvTradeDetails.Rows[e.RowIndex].Cells["TradeType"].Style.BackColor = Color.LightCoral;
+                    dgvTradeDetails.Rows[e.RowIndex].Cells["TradeType"].Style.SelectionBackColor = Color.OrangeRed;
+                    break;
+            }
+        }
+
+        private void TradeList_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.F9)
+            {
+                var settingsForm = new SettingsForm();
+                settingsForm.Show();
+            }
+        }
 
         private void SetDataGridColumns()
         {
@@ -562,198 +793,101 @@ namespace TradeNote
             */
         }
 
-        private void btnNewTrade_Click(object sender, EventArgs e)
+        private void btnTradeDelete_Click(object sender, EventArgs e)
         {
-            ClearTrade();
-        }
-
-        private void dgvTradeList_RowPrePaint_1(object sender, DataGridViewRowPrePaintEventArgs e)
-        {
-
-            // Verileri Trade sınıfından oluşan bir liste olarak düşünün
-            var data = (List<Trade>)dgvTradeList.DataSource;
-
-            // Seçili satırın Trade nesnesini al
-            var trade = data[e.RowIndex];
-
-            switch (trade.PositionResult)
-            {
-                // Eğer PositionResult "TP" ise, satırı yeşil olarak boya
-                case PositionResult.TP:
-                    dgvTradeList.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightGreen;
-                    dgvTradeList.Rows[e.RowIndex].DefaultCellStyle.SelectionBackColor = Color.DarkOliveGreen;
-                    break;
-                // Eğer PositionResult "SL" ise, satırı kırmızı olarak boya
-                case PositionResult.SL:
-                    dgvTradeList.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightCoral;
-                    dgvTradeList.Rows[e.RowIndex].DefaultCellStyle.SelectionBackColor = Color.OrangeRed;
-                    break;
-                case PositionResult.SO:
-                    dgvTradeList.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightGray;
-                    dgvTradeList.Rows[e.RowIndex].DefaultCellStyle.SelectionBackColor = Color.LightSlateGray;
-                    break;
-            }
 
         }
 
-        private void btnSaveTradeDetail_Click(object sender, EventArgs e)
+        private void btnDeleteTradeDetail_Click(object sender, EventArgs e)
         {
-            string xmlFilePath = GeneralHelper.GetXmlFilePath(cbxListOfTradeXmls.Text);
 
-            try
-            {
-                int tradeId = 0;
-                int tradeDetailId = 0;
-
-                if (string.IsNullOrEmpty(lblTradeDetailTradeIdLabel.Text))
-                {
-                    MessageBox.Show("Lütfen işlem yapacağınız trade'i seçiniz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                else
-                {
-                    tradeId = Convert.ToInt32(lblTradeDetailTradeIdLabel.Text);
-                }
-
-
-                if (!string.IsNullOrEmpty(lblTradeDetailIdLabel.Text))
-                {
-                    tradeDetailId = Convert.ToInt32(lblTradeDetailIdLabel.Text);
-                }
-
-                TradeDetail newTradeDetail = new TradeDetail();
-
-                if (string.IsNullOrEmpty(lblTradeDetailIdLabel.Text))
-                {
-
-                    newTradeDetail.TradeId = Convert.ToInt32(lblTradeDetailTradeIdLabel.Text);
-                    newTradeDetail.TradeDate = Convert.ToDateTime(dateTradeDetailDate.Value);
-                    newTradeDetail.TradeType = (TradeType)Enum.Parse(typeof(TradeType), cbxTradeType.Text);
-                    newTradeDetail.EntryPrice = Convert.ToDecimal(tbxTradeEntryPrice.Text.Replace(".", ","));
-
-                    if (!chckEntryLotCount.Checked)
-                    {
-                        newTradeDetail.EntryBalance = Convert.ToDecimal(tbxTradeEntryBalance.Text.Replace(".", ","));
-                        newTradeDetail.EntryLotCount = Math.Round(Convert.ToDecimal(tbxTradeEntryBalance.Text.Replace(".", ",")) / Convert.ToDecimal(tbxTradeEntryPrice.Text.Replace(".", ",")), 8);
-                    }
-                    else
-                    {
-                        newTradeDetail.EntryLotCount = Convert.ToDecimal(tbxTradeEntryLotCount.Text.Replace(".", ","));
-                        newTradeDetail.EntryBalance = Math.Round(Convert.ToDecimal(tbxTradeEntryPrice.Text.Replace(".", ",")) *
-                                                      Convert.ToDecimal(tbxTradeEntryLotCount.Text.Replace(".", ",")), 2);
-                    }
-
-                    _tradeModelManager.AddTradeDetail(newTradeDetail.TradeId, newTradeDetail, xmlFilePath);
-
-                    var updatedTrade = _tradeModelManager.CalculateTrade(tradeId, xmlFilePath);
-
-                    _tradeModelManager.UpdateTrade(updatedTrade, xmlFilePath);
-                }
-                else
-                {
-                    TradeDetail foundTradeDetail = _tradeModelManager.GetTradeDetailById(tradeId, tradeDetailId, xmlFilePath);
-
-                    foundTradeDetail.TradeId = Convert.ToInt32(lblTradeDetailTradeIdLabel.Text);
-                    foundTradeDetail.TradeDate = Convert.ToDateTime(dateTradeDetailDate.Value);
-                    foundTradeDetail.TradeType = (TradeType)Enum.Parse(typeof(TradeType), cbxTradeType.Text);
-                    foundTradeDetail.EntryPrice = Convert.ToDecimal(tbxTradeEntryPrice.Text.Replace(".", ","));
-
-                    if (!chckEntryLotCount.Checked)
-                    {
-                        foundTradeDetail.EntryBalance = Convert.ToDecimal(tbxTradeEntryBalance.Text.Replace(".", ","));
-                        foundTradeDetail.EntryLotCount = Math.Round(Convert.ToDecimal(tbxTradeEntryBalance.Text.Replace(".", ",")) / Convert.ToDecimal(tbxTradeEntryPrice.Text.Replace(".", ",")), 8);
-                    }
-                    else
-                    {
-                        foundTradeDetail.EntryLotCount = Convert.ToDecimal(tbxTradeEntryLotCount.Text.Replace(".", ","));
-                        foundTradeDetail.EntryBalance = Math.Round(Convert.ToDecimal(tbxTradeEntryPrice.Text.Replace(".", ",")) *
-                                                                   Convert.ToDecimal(tbxTradeEntryLotCount.Text.Replace(".", ",")), 2);
-                    }
-
-                    _tradeModelManager.UpdateTradeDetail(foundTradeDetail.TradeId, foundTradeDetail, xmlFilePath);
-
-
-                    var updatedTrade = _tradeModelManager.CalculateTrade(tradeId, xmlFilePath);
-
-                    _tradeModelManager.UpdateTrade(updatedTrade, xmlFilePath);
-                }
-
-                LoadTradeDataGridView();
-                LoadTradeDetailDataGridView(tradeId);
-            }
-            catch (Exception exception)
-            {
-                MessageBox.Show(exception.Message);
-            }
         }
 
-        private void btnNewTradeDetail_Click(object sender, EventArgs e)
+        private void chckMakerCommission_CheckedChanged(object sender, EventArgs e)
         {
-            ClearTradeDetails();
-        }
-
-        private void chckEntryLotCount_CheckedChanged(object sender, EventArgs e)
-        {
-            if (chckEntryLotCount.Checked)
+            if (chckMakerCommission.CheckState == CheckState.Checked)
             {
-                tbxTradeEntryLotCount.Enabled = true;
-                tbxTradeEntryBalance.Enabled = false;
+                tbxMakerCommission.Enabled = true;
+                btnUpdateMakerCommission.Enabled = true;
             }
             else
             {
-                tbxTradeEntryLotCount.Enabled = false;
-                tbxTradeEntryBalance.Enabled = true;
+                tbxMakerCommission.Enabled = false;
+                btnUpdateMakerCommission.Enabled = false;
             }
         }
 
-        private void dgvTradeDetails_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void chckTakerCommission_CheckedChanged(object sender, EventArgs e)
         {
-            try
+            if (chckTakerCommission.CheckState == CheckState.Checked)
             {
-                tradeClickedColumnIndex = e.ColumnIndex;
-                tradeDetailClickedRowIndex = e.RowIndex;
-
-                lblTradeDetailIdLabel.Text = dgvTradeDetails.Rows[e.RowIndex].Cells["Id"].Value.ToString();
-                dateTradeDetailDate.Text = dgvTradeDetails.Rows[e.RowIndex].Cells["TradeDate"].Value.ToString();
-                cbxTradeType.Text = dgvTradeDetails.Rows[e.RowIndex].Cells["TradeType"].Value.ToString();
-                tbxTradeEntryBalance.Text = dgvTradeDetails.Rows[e.RowIndex].Cells["EntryBalance"].Value.ToString();
-                tbxTradeEntryLotCount.Text = dgvTradeDetails.Rows[e.RowIndex].Cells["EntryLotCount"].Value.ToString();
-                tbxTradeEntryPrice.Text = dgvTradeDetails.Rows[e.RowIndex].Cells["EntryPrice"].Value.ToString();
-                lblTradeDetailTradeIdLabel.Text = dgvTradeDetails.Rows[e.RowIndex].Cells["TradeId"].Value.ToString();
-
+                tbxTakerCommission.Enabled = true;
+                btnUpdateTakerCommission.Enabled = true;
             }
-            catch
+            else
             {
-
+                tbxTakerCommission.Enabled = false;
+                btnUpdateTakerCommission.Enabled = false;
             }
         }
 
-        private void dgvTradeDetails_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        private void btnUpdateMakerCommission_Click(object sender, EventArgs e)
         {
-            var data = (List<TradeDetail>)dgvTradeDetails.DataSource;
-            var trade = data[e.RowIndex];
-
-            switch (trade.TradeType)
+            if (!string.IsNullOrEmpty(cbxListOfTradeXmls.Text))
             {
-                case TradeType.OpenLong:
-                    dgvTradeDetails.Rows[e.RowIndex].Cells["TradeType"].Style.BackColor = Color.LightGreen;
-                    dgvTradeDetails.Rows[e.RowIndex].Cells["TradeType"].Style.SelectionBackColor = Color.DarkOliveGreen;
-                    break;
-                case TradeType.OpenShort:
-                    dgvTradeDetails.Rows[e.RowIndex].Cells["TradeType"].Style.BackColor = Color.LightGreen;
-                    dgvTradeDetails.Rows[e.RowIndex].Cells["TradeType"].Style.SelectionBackColor = Color.DarkOliveGreen;
-                    break;
-                case TradeType.CloseLong:
-                    dgvTradeDetails.Rows[e.RowIndex].Cells["TradeType"].Style.BackColor = Color.LightCoral;
-                    dgvTradeDetails.Rows[e.RowIndex].Cells["TradeType"].Style.SelectionBackColor = Color.OrangeRed;
-                    break;
-                case TradeType.CloseShort:
-                    dgvTradeDetails.Rows[e.RowIndex].Cells["TradeType"].Style.BackColor = Color.LightCoral;
-                    dgvTradeDetails.Rows[e.RowIndex].Cells["TradeType"].Style.SelectionBackColor = Color.OrangeRed;
-                    break;
+                var xmlFilePath = GeneralHelper.GetXmlFilePath(cbxListOfTradeXmls.Text);
+
+                var generalInformation = _tradeModelManager.GetGeneralInformation(xmlFilePath);
+
+                generalInformation.MakerCommission = Convert.ToDecimal(tbxMakerCommission.Text.Replace(".", ","));
+
+                _tradeModelManager.UpdateGeneralInformation(generalInformation, xmlFilePath);
+
+                MessageBox.Show("Maker komisyon oranı %" + tbxMakerCommission.Text + " olarak güncellendi.", "Bilgi",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                tbxMakerCommission.Enabled = false;
+                btnUpdateMakerCommission.Enabled = false;
+                chckMakerCommission.Checked = false;
+
+                LoadGeneralInformation();
             }
+            else
+            {
+                MessageBox.Show("Lütfen trade listesini seçiniz!", "Uyarı",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+
         }
 
- 
+        private void btnUpdateTakerCommission_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(cbxListOfTradeXmls.Text))
+            {
+                var xmlFilePath = GeneralHelper.GetXmlFilePath(cbxListOfTradeXmls.Text);
+
+                var generalInformation = _tradeModelManager.GetGeneralInformation(xmlFilePath);
+
+                generalInformation.TakerCommission = Convert.ToDecimal(tbxTakerCommission.Text.Replace(".", ","));
+
+                _tradeModelManager.UpdateGeneralInformation(generalInformation, xmlFilePath);
+
+                MessageBox.Show("Taker komisyon oranı %" + tbxTakerCommission.Text + " olarak güncellendi.", "Bilgi",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                tbxTakerCommission.Enabled = false;
+                btnUpdateTakerCommission.Enabled = false;
+                chckTakerCommission.Checked = false;
+
+                LoadGeneralInformation();
+            }
+            else
+            {
+                MessageBox.Show("Lütfen trade listesini seçiniz!", "Uyarı",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+        }
     }
 }
