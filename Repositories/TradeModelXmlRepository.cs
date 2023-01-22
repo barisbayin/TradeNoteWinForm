@@ -130,6 +130,8 @@ namespace TradeNote.Repositories
                 trade.PositionResult = updatedTrade.PositionResult;
                 trade.ProfitOrLoss = updatedTrade.ProfitOrLoss;
                 trade.ProfitOrLossPercent = updatedTrade.ProfitOrLossPercent;
+                trade.TotalCommission = updatedTrade.TotalCommission;
+                trade.TotalFundingFee = updatedTrade.TotalFundingFee;
                 trade.EndTrade=updatedTrade.EndTrade;
                 trade.Note = updatedTrade.Note;
             }
@@ -240,7 +242,7 @@ namespace TradeNote.Repositories
                     tradeDetail.EntryBalance = updatedTradeDetail.EntryBalance;
                     tradeDetail.EntryPrice = updatedTradeDetail.EntryPrice;
                     tradeDetail.EntryLotCount = updatedTradeDetail.EntryLotCount;
-                    tradeDetail.TradeType = updatedTradeDetail.TradeType;
+                    tradeDetail.OrderType = updatedTradeDetail.OrderType;
                     tradeDetail.TradeDate = updatedTradeDetail.TradeDate;
                 }
             }

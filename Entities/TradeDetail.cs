@@ -18,6 +18,9 @@ namespace TradeNote.Entities
         [DisplayName("İşlem Türü")]
         public TradeType TradeType { get; set; }
 
+        [DisplayName("Emir Tipi")]
+        public OrderType OrderType { get; set; }
+
         [DisplayName("Giriş Bakiyesi $")]
         public decimal EntryBalance { get; set; }
 

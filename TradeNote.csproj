@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Business\TradeModelManager.cs" />
     <Compile Include="Entities\TradeDetail.cs" />
+    <Compile Include="Enums\OrderType.cs" />
     <Compile Include="Enums\TradeType.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

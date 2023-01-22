@@ -94,7 +94,7 @@ namespace TradeNote
                     List<Trade> tradeList = new List<Trade>(dataList);
 
                     dgvTradeList.DataSource = tradeList;
-
+                    dgvTradeList.ReadOnly=true;
                     dgvTradeList.Columns["EndTrade"].Visible = false;
                     //dgvTradeList.Columns["AverageEntryBalance"].DefaultCellStyle.Format = "$#.##";
                     //dgvTradeList.Columns["TargetedEntryPrice"].DefaultCellStyle.Format = "$#.##";
@@ -132,6 +132,7 @@ namespace TradeNote
                 var dataList = _tradeModelManager.GetTradeDetailList(tradeId, xmlFilePath);
 
                 dgvTradeDetails.DataSource = dataList;
+                dgvTradeDetails.ReadOnly=true;
                 //dgvTradeList.Columns["AverageEntryBalance"].DefaultCellStyle.Format = "$#.##";
                 //dgvTradeList.Columns["TargetedEntryPrice"].DefaultCellStyle.Format = "$#.##";
                 //dgvTradeList.Columns[6].DefaultCellStyle.Format = "$#.##";
@@ -752,5 +753,7 @@ namespace TradeNote
                     break;
             }
         }
+
+ 
     }
 }

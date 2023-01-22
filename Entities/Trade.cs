@@ -76,6 +76,12 @@ namespace TradeNote
         [DisplayName("PnL %")]
         public decimal ProfitOrLossPercent { get; set; }
 
+        [DisplayName("Komisyon")]
+        public decimal TotalCommission { get; set; }
+
+        [DisplayName("Fonlama Maliyeti")]
+        public decimal TotalFundingFee { get; set; }
+
         [DisplayName("Not")]
         public string Note { get; set; }
 

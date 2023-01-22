@@ -44,6 +44,9 @@
             this.gbTradeDetails = new System.Windows.Forms.GroupBox();
             this.dgvTradeDetails = new System.Windows.Forms.DataGridView();
             this.pnlTradeEnrtyPanel = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.tbxTotalFundingFee = new System.Windows.Forms.TextBox();
+            this.lblTotalFundingFee = new System.Windows.Forms.Label();
             this.chckEntryLotCount = new System.Windows.Forms.CheckBox();
             this.tbxTargetedEntryPrice = new System.Windows.Forms.TextBox();
             this.lblTargetedEntryPrice = new System.Windows.Forms.Label();
@@ -104,6 +107,8 @@
             this.tbxPlusMinus = new System.Windows.Forms.TextBox();
             this.lblStartBalanceText = new System.Windows.Forms.Label();
             this.lblStartBalance = new System.Windows.Forms.Label();
+            this.lblOrderType = new System.Windows.Forms.Label();
+            this.cbxOrderType = new System.Windows.Forms.ComboBox();
             this.pnlNavBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.scMainMenu)).BeginInit();
             this.scMainMenu.Panel1.SuspendLayout();
@@ -243,7 +248,7 @@
             this.scMainMenu.Panel2.Controls.Add(this.gbStatistics);
             this.scMainMenu.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.scMainMenu.Panel2MinSize = 370;
-            this.scMainMenu.Size = new System.Drawing.Size(1179, 778);
+            this.scMainMenu.Size = new System.Drawing.Size(1179, 846);
             this.scMainMenu.SplitterDistance = 805;
             this.scMainMenu.TabIndex = 1;
             // 
@@ -258,7 +263,7 @@
             this.gbForList.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.gbForList.Location = new System.Drawing.Point(0, 0);
             this.gbForList.Name = "gbForList";
-            this.gbForList.Size = new System.Drawing.Size(805, 778);
+            this.gbForList.Size = new System.Drawing.Size(805, 846);
             this.gbForList.TabIndex = 0;
             this.gbForList.TabStop = false;
             this.gbForList.Text = "İşlem Listesi";
@@ -279,8 +284,8 @@
             // 
             this.scForTradeReport.Panel2.Controls.Add(this.gbTradeDetails);
             this.scForTradeReport.Panel2MinSize = 300;
-            this.scForTradeReport.Size = new System.Drawing.Size(799, 759);
-            this.scForTradeReport.SplitterDistance = 455;
+            this.scForTradeReport.Size = new System.Drawing.Size(799, 827);
+            this.scForTradeReport.SplitterDistance = 523;
             this.scForTradeReport.TabIndex = 0;
             // 
             // dgvTradeList
@@ -292,7 +297,7 @@
             this.dgvTradeList.Location = new System.Drawing.Point(0, 0);
             this.dgvTradeList.Name = "dgvTradeList";
             this.dgvTradeList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvTradeList.Size = new System.Drawing.Size(799, 455);
+            this.dgvTradeList.Size = new System.Drawing.Size(799, 523);
             this.dgvTradeList.TabIndex = 1;
             this.dgvTradeList.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTradeList_CellClick_1);
             this.dgvTradeList.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dgvTradeList_RowPrePaint_1);
@@ -325,6 +330,11 @@
             // pnlTradeEnrtyPanel
             // 
             this.pnlTradeEnrtyPanel.AutoScroll = true;
+            this.pnlTradeEnrtyPanel.Controls.Add(this.lblOrderType);
+            this.pnlTradeEnrtyPanel.Controls.Add(this.cbxOrderType);
+            this.pnlTradeEnrtyPanel.Controls.Add(this.label2);
+            this.pnlTradeEnrtyPanel.Controls.Add(this.tbxTotalFundingFee);
+            this.pnlTradeEnrtyPanel.Controls.Add(this.lblTotalFundingFee);
             this.pnlTradeEnrtyPanel.Controls.Add(this.chckEntryLotCount);
             this.pnlTradeEnrtyPanel.Controls.Add(this.tbxTargetedEntryPrice);
             this.pnlTradeEnrtyPanel.Controls.Add(this.lblTargetedEntryPrice);
@@ -364,16 +374,45 @@
             this.pnlTradeEnrtyPanel.Controls.Add(this.lblPositionSide);
             this.pnlTradeEnrtyPanel.Controls.Add(this.cbxPositionSide);
             this.pnlTradeEnrtyPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlTradeEnrtyPanel.Location = new System.Drawing.Point(0, 201);
+            this.pnlTradeEnrtyPanel.Location = new System.Drawing.Point(0, 227);
             this.pnlTradeEnrtyPanel.Name = "pnlTradeEnrtyPanel";
-            this.pnlTradeEnrtyPanel.Size = new System.Drawing.Size(370, 577);
+            this.pnlTradeEnrtyPanel.Size = new System.Drawing.Size(370, 619);
             this.pnlTradeEnrtyPanel.TabIndex = 1;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label2.Location = new System.Drawing.Point(7, 292);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(358, 13);
+            this.label2.TabIndex = 187;
+            this.label2.Text = "---------------------------------------------------------------------------------" +
+    "------------------------------------";
+            // 
+            // tbxTotalFundingFee
+            // 
+            this.tbxTotalFundingFee.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.tbxTotalFundingFee.Location = new System.Drawing.Point(138, 183);
+            this.tbxTotalFundingFee.Name = "tbxTotalFundingFee";
+            this.tbxTotalFundingFee.Size = new System.Drawing.Size(201, 20);
+            this.tbxTotalFundingFee.TabIndex = 186;
+            // 
+            // lblTotalFundingFee
+            // 
+            this.lblTotalFundingFee.AutoSize = true;
+            this.lblTotalFundingFee.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblTotalFundingFee.Location = new System.Drawing.Point(9, 186);
+            this.lblTotalFundingFee.Name = "lblTotalFundingFee";
+            this.lblTotalFundingFee.Size = new System.Drawing.Size(113, 13);
+            this.lblTotalFundingFee.TabIndex = 185;
+            this.lblTotalFundingFee.Text = "Top. Fonlama Maliyeti:";
             // 
             // chckEntryLotCount
             // 
             this.chckEntryLotCount.AutoSize = true;
             this.chckEntryLotCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.chckEntryLotCount.Location = new System.Drawing.Point(145, 451);
+            this.chckEntryLotCount.Location = new System.Drawing.Point(145, 496);
             this.chckEntryLotCount.Name = "chckEntryLotCount";
             this.chckEntryLotCount.Size = new System.Drawing.Size(15, 14);
             this.chckEntryLotCount.TabIndex = 184;
@@ -403,7 +442,7 @@
             this.btnDeleteTradeDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.btnDeleteTradeDetail.Image = ((System.Drawing.Image)(resources.GetObject("btnDeleteTradeDetail.Image")));
             this.btnDeleteTradeDetail.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnDeleteTradeDetail.Location = new System.Drawing.Point(207, 483);
+            this.btnDeleteTradeDetail.Location = new System.Drawing.Point(207, 546);
             this.btnDeleteTradeDetail.Name = "btnDeleteTradeDetail";
             this.btnDeleteTradeDetail.Size = new System.Drawing.Size(64, 28);
             this.btnDeleteTradeDetail.TabIndex = 181;
@@ -416,7 +455,7 @@
             this.btnSaveTradeDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.btnSaveTradeDetail.Image = ((System.Drawing.Image)(resources.GetObject("btnSaveTradeDetail.Image")));
             this.btnSaveTradeDetail.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSaveTradeDetail.Location = new System.Drawing.Point(275, 483);
+            this.btnSaveTradeDetail.Location = new System.Drawing.Point(275, 546);
             this.btnSaveTradeDetail.Name = "btnSaveTradeDetail";
             this.btnSaveTradeDetail.Size = new System.Drawing.Size(64, 28);
             this.btnSaveTradeDetail.TabIndex = 180;
@@ -430,7 +469,7 @@
             this.btnNewTradeDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.btnNewTradeDetail.Image = ((System.Drawing.Image)(resources.GetObject("btnNewTradeDetail.Image")));
             this.btnNewTradeDetail.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnNewTradeDetail.Location = new System.Drawing.Point(138, 483);
+            this.btnNewTradeDetail.Location = new System.Drawing.Point(138, 546);
             this.btnNewTradeDetail.Name = "btnNewTradeDetail";
             this.btnNewTradeDetail.Size = new System.Drawing.Size(64, 28);
             this.btnNewTradeDetail.TabIndex = 179;
@@ -443,7 +482,7 @@
             // 
             this.tbxTradeEntryLotCount.Enabled = false;
             this.tbxTradeEntryLotCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.tbxTradeEntryLotCount.Location = new System.Drawing.Point(169, 448);
+            this.tbxTradeEntryLotCount.Location = new System.Drawing.Point(169, 493);
             this.tbxTradeEntryLotCount.Name = "tbxTradeEntryLotCount";
             this.tbxTradeEntryLotCount.Size = new System.Drawing.Size(170, 20);
             this.tbxTradeEntryLotCount.TabIndex = 178;
@@ -452,7 +491,7 @@
             // 
             this.lblTradeEntryLotCount.AutoSize = true;
             this.lblTradeEntryLotCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblTradeEntryLotCount.Location = new System.Drawing.Point(86, 451);
+            this.lblTradeEntryLotCount.Location = new System.Drawing.Point(86, 496);
             this.lblTradeEntryLotCount.Name = "lblTradeEntryLotCount";
             this.lblTradeEntryLotCount.Size = new System.Drawing.Size(32, 13);
             this.lblTradeEntryLotCount.TabIndex = 177;
@@ -462,7 +501,7 @@
             // 
             this.lblTradeType.AutoSize = true;
             this.lblTradeType.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblTradeType.Location = new System.Drawing.Point(88, 372);
+            this.lblTradeType.Location = new System.Drawing.Point(88, 389);
             this.lblTradeType.Name = "lblTradeType";
             this.lblTradeType.Size = new System.Drawing.Size(34, 13);
             this.lblTradeType.TabIndex = 176;
@@ -472,7 +511,7 @@
             // 
             this.cbxTradeType.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.cbxTradeType.FormattingEnabled = true;
-            this.cbxTradeType.Location = new System.Drawing.Point(138, 370);
+            this.cbxTradeType.Location = new System.Drawing.Point(138, 387);
             this.cbxTradeType.Name = "cbxTradeType";
             this.cbxTradeType.Size = new System.Drawing.Size(201, 21);
             this.cbxTradeType.TabIndex = 175;
@@ -481,7 +520,7 @@
             // 
             this.lblTradeDetailTradeIdLabel.AutoSize = true;
             this.lblTradeDetailTradeIdLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblTradeDetailTradeIdLabel.Location = new System.Drawing.Point(277, 322);
+            this.lblTradeDetailTradeIdLabel.Location = new System.Drawing.Point(277, 339);
             this.lblTradeDetailTradeIdLabel.Name = "lblTradeDetailTradeIdLabel";
             this.lblTradeDetailTradeIdLabel.Size = new System.Drawing.Size(0, 13);
             this.lblTradeDetailTradeIdLabel.TabIndex = 174;
@@ -490,7 +529,7 @@
             // 
             this.lblTradeDetailTradeId.AutoSize = true;
             this.lblTradeDetailTradeId.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblTradeDetailTradeId.Location = new System.Drawing.Point(216, 322);
+            this.lblTradeDetailTradeId.Location = new System.Drawing.Point(216, 339);
             this.lblTradeDetailTradeId.Name = "lblTradeDetailTradeId";
             this.lblTradeDetailTradeId.Size = new System.Drawing.Size(50, 13);
             this.lblTradeDetailTradeId.TabIndex = 173;
@@ -500,7 +539,7 @@
             // 
             this.lblTradeDetailIdLabel.AutoSize = true;
             this.lblTradeDetailIdLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblTradeDetailIdLabel.Location = new System.Drawing.Point(135, 322);
+            this.lblTradeDetailIdLabel.Location = new System.Drawing.Point(135, 339);
             this.lblTradeDetailIdLabel.Name = "lblTradeDetailIdLabel";
             this.lblTradeDetailIdLabel.Size = new System.Drawing.Size(0, 13);
             this.lblTradeDetailIdLabel.TabIndex = 172;
@@ -509,7 +548,7 @@
             // 
             this.lblTradeDetailId.AutoSize = true;
             this.lblTradeDetailId.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblTradeDetailId.Location = new System.Drawing.Point(103, 322);
+            this.lblTradeDetailId.Location = new System.Drawing.Point(103, 339);
             this.lblTradeDetailId.Name = "lblTradeDetailId";
             this.lblTradeDetailId.Size = new System.Drawing.Size(19, 13);
             this.lblTradeDetailId.TabIndex = 171;
@@ -519,7 +558,7 @@
             // 
             this.lblTradeStarDate.AutoSize = true;
             this.lblTradeStarDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblTradeStarDate.Location = new System.Drawing.Point(59, 350);
+            this.lblTradeStarDate.Location = new System.Drawing.Point(59, 367);
             this.lblTradeStarDate.Name = "lblTradeStarDate";
             this.lblTradeStarDate.Size = new System.Drawing.Size(63, 13);
             this.lblTradeStarDate.TabIndex = 170;
@@ -528,7 +567,7 @@
             // dateTradeDetailDate
             // 
             this.dateTradeDetailDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.dateTradeDetailDate.Location = new System.Drawing.Point(138, 344);
+            this.dateTradeDetailDate.Location = new System.Drawing.Point(138, 361);
             this.dateTradeDetailDate.Name = "dateTradeDetailDate";
             this.dateTradeDetailDate.Size = new System.Drawing.Size(201, 20);
             this.dateTradeDetailDate.TabIndex = 169;
@@ -537,7 +576,7 @@
             // 
             this.lblTradeDetailsArea.AutoSize = true;
             this.lblTradeDetailsArea.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblTradeDetailsArea.Location = new System.Drawing.Point(119, 292);
+            this.lblTradeDetailsArea.Location = new System.Drawing.Point(119, 309);
             this.lblTradeDetailsArea.Name = "lblTradeDetailsArea";
             this.lblTradeDetailsArea.Size = new System.Drawing.Size(146, 16);
             this.lblTradeDetailsArea.TabIndex = 168;
@@ -576,7 +615,7 @@
             // 
             this.chckEndTrade.AutoSize = true;
             this.chckEndTrade.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.chckEndTrade.Location = new System.Drawing.Point(138, 229);
+            this.chckEndTrade.Location = new System.Drawing.Point(145, 523);
             this.chckEndTrade.Name = "chckEndTrade";
             this.chckEndTrade.Size = new System.Drawing.Size(105, 17);
             this.chckEndTrade.TabIndex = 164;
@@ -588,7 +627,7 @@
             this.btnTradeDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.btnTradeDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnTradeDelete.Image")));
             this.btnTradeDelete.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnTradeDelete.Location = new System.Drawing.Point(207, 247);
+            this.btnTradeDelete.Location = new System.Drawing.Point(207, 261);
             this.btnTradeDelete.Name = "btnTradeDelete";
             this.btnTradeDelete.Size = new System.Drawing.Size(64, 28);
             this.btnTradeDelete.TabIndex = 163;
@@ -601,7 +640,7 @@
             this.btnSaveTrade.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.btnSaveTrade.Image = ((System.Drawing.Image)(resources.GetObject("btnSaveTrade.Image")));
             this.btnSaveTrade.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSaveTrade.Location = new System.Drawing.Point(275, 247);
+            this.btnSaveTrade.Location = new System.Drawing.Point(275, 261);
             this.btnSaveTrade.Name = "btnSaveTrade";
             this.btnSaveTrade.Size = new System.Drawing.Size(64, 28);
             this.btnSaveTrade.TabIndex = 162;
@@ -615,7 +654,7 @@
             this.btnNewTrade.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.btnNewTrade.Image = ((System.Drawing.Image)(resources.GetObject("btnNewTrade.Image")));
             this.btnNewTrade.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnNewTrade.Location = new System.Drawing.Point(138, 247);
+            this.btnNewTrade.Location = new System.Drawing.Point(138, 261);
             this.btnNewTrade.Name = "btnNewTrade";
             this.btnNewTrade.Size = new System.Drawing.Size(64, 28);
             this.btnNewTrade.TabIndex = 161;
@@ -628,7 +667,7 @@
             // 
             this.lblTradeNote.AutoSize = true;
             this.lblTradeNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblTradeNote.Location = new System.Drawing.Point(84, 186);
+            this.lblTradeNote.Location = new System.Drawing.Point(84, 212);
             this.lblTradeNote.Name = "lblTradeNote";
             this.lblTradeNote.Size = new System.Drawing.Size(38, 13);
             this.lblTradeNote.TabIndex = 160;
@@ -637,7 +676,7 @@
             // rtbxTradeNote
             // 
             this.rtbxTradeNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.rtbxTradeNote.Location = new System.Drawing.Point(138, 183);
+            this.rtbxTradeNote.Location = new System.Drawing.Point(138, 209);
             this.rtbxTradeNote.Name = "rtbxTradeNote";
             this.rtbxTradeNote.Size = new System.Drawing.Size(201, 41);
             this.rtbxTradeNote.TabIndex = 159;
@@ -646,7 +685,7 @@
             // tbxTradeEntryPrice
             // 
             this.tbxTradeEntryPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.tbxTradeEntryPrice.Location = new System.Drawing.Point(138, 396);
+            this.tbxTradeEntryPrice.Location = new System.Drawing.Point(138, 441);
             this.tbxTradeEntryPrice.Name = "tbxTradeEntryPrice";
             this.tbxTradeEntryPrice.Size = new System.Drawing.Size(201, 20);
             this.tbxTradeEntryPrice.TabIndex = 158;
@@ -655,7 +694,7 @@
             // 
             this.lblTradeEntryPrice.AutoSize = true;
             this.lblTradeEntryPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblTradeEntryPrice.Location = new System.Drawing.Point(61, 399);
+            this.lblTradeEntryPrice.Location = new System.Drawing.Point(61, 444);
             this.lblTradeEntryPrice.Name = "lblTradeEntryPrice";
             this.lblTradeEntryPrice.Size = new System.Drawing.Size(61, 13);
             this.lblTradeEntryPrice.TabIndex = 157;
@@ -730,7 +769,7 @@
             // tbxTradeEntryBalance
             // 
             this.tbxTradeEntryBalance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.tbxTradeEntryBalance.Location = new System.Drawing.Point(138, 422);
+            this.tbxTradeEntryBalance.Location = new System.Drawing.Point(138, 467);
             this.tbxTradeEntryBalance.Name = "tbxTradeEntryBalance";
             this.tbxTradeEntryBalance.Size = new System.Drawing.Size(201, 20);
             this.tbxTradeEntryBalance.TabIndex = 148;
@@ -739,7 +778,7 @@
             // 
             this.lblTradeEntryBalance.AutoSize = true;
             this.lblTradeEntryBalance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblTradeEntryBalance.Location = new System.Drawing.Point(50, 425);
+            this.lblTradeEntryBalance.Location = new System.Drawing.Point(50, 470);
             this.lblTradeEntryBalance.Name = "lblTradeEntryBalance";
             this.lblTradeEntryBalance.Size = new System.Drawing.Size(72, 13);
             this.lblTradeEntryBalance.TabIndex = 147;
@@ -795,7 +834,7 @@
             this.gbStatistics.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.gbStatistics.Location = new System.Drawing.Point(0, 0);
             this.gbStatistics.Name = "gbStatistics";
-            this.gbStatistics.Size = new System.Drawing.Size(370, 201);
+            this.gbStatistics.Size = new System.Drawing.Size(370, 227);
             this.gbStatistics.TabIndex = 0;
             this.gbStatistics.TabStop = false;
             this.gbStatistics.Text = "Genel İstatistik";
@@ -1007,11 +1046,33 @@
             this.lblStartBalance.TabIndex = 25;
             this.lblStartBalance.Text = "Başlangıç Bakiyesi:";
             // 
+            // lblOrderType
+            // 
+            this.lblOrderType.AutoSize = true;
+            this.lblOrderType.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblOrderType.Location = new System.Drawing.Point(68, 417);
+            this.lblOrderType.Name = "lblOrderType";
+            this.lblOrderType.Size = new System.Drawing.Size(50, 13);
+            this.lblOrderType.TabIndex = 189;
+            this.lblOrderType.Text = "Emir Tipi:";
+            // 
+            // cbxOrderType
+            // 
+            this.cbxOrderType.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.cbxOrderType.FormattingEnabled = true;
+            this.cbxOrderType.Items.AddRange(new object[] {
+            "Maker",
+            "Taker"});
+            this.cbxOrderType.Location = new System.Drawing.Point(138, 414);
+            this.cbxOrderType.Name = "cbxOrderType";
+            this.cbxOrderType.Size = new System.Drawing.Size(201, 21);
+            this.cbxOrderType.TabIndex = 188;
+            // 
             // TradeList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1179, 824);
+            this.ClientSize = new System.Drawing.Size(1179, 892);
             this.Controls.Add(this.scMainMenu);
             this.Controls.Add(this.pnlNavBar);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -1117,6 +1178,11 @@
         private System.Windows.Forms.TextBox tbxTargetedEntryPrice;
         private System.Windows.Forms.Label lblTargetedEntryPrice;
         private System.Windows.Forms.CheckBox chckEntryLotCount;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox tbxTotalFundingFee;
+        private System.Windows.Forms.Label lblTotalFundingFee;
+        private System.Windows.Forms.Label lblOrderType;
+        private System.Windows.Forms.ComboBox cbxOrderType;
     }
 }
 

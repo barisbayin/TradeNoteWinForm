@@ -238,9 +238,20 @@ namespace TradeNote.Business
                 {
                     if (Math.Abs(entryTotalCount - closeTotalCount) < 0.0005M)
                     {
-                        var profit = (averageCloseBalance - averageEntryBalance) * willCalculatedTrade.Leverage;
-                        willCalculatedTrade.ProfitOrLoss = profit;
-                        willCalculatedTrade.ProfitOrLossPercent = Math.Round((averageCloseBalance / averageEntryBalance - 1) * 100 * willCalculatedTrade.Leverage, 2);
+                        decimal profit = 0;
+                        if (willCalculatedTrade.PositionSide == PositionSide.Long)
+                        {
+                            profit = (averageCloseBalance - averageEntryBalance) * willCalculatedTrade.Leverage;
+                            willCalculatedTrade.ProfitOrLoss = profit;
+                            willCalculatedTrade.ProfitOrLossPercent = Math.Round((averageCloseBalance / averageEntryBalance - 1) * 100 * willCalculatedTrade.Leverage, 2);
+                        }
+                        if (willCalculatedTrade.PositionSide == PositionSide.Short)
+                        {
+                            profit = (averageEntryBalance - averageCloseBalance) * willCalculatedTrade.Leverage;
+                            willCalculatedTrade.ProfitOrLoss = profit;
+                            willCalculatedTrade.ProfitOrLossPercent = Math.Round((1 - averageCloseBalance / averageEntryBalance) * 100 * willCalculatedTrade.Leverage, 2);
+                        }
+
                         willCalculatedTrade.TradeEndDate = DateTime.Now;
                         if (profit < 0)
                         {
