@@ -943,6 +943,7 @@
             this.cbxTradeType.Name = "cbxTradeType";
             this.cbxTradeType.Size = new System.Drawing.Size(201, 21);
             this.cbxTradeType.TabIndex = 270;
+            this.cbxTradeType.SelectedValueChanged += new System.EventHandler(this.cbxTradeType_SelectedValueChanged);
             // 
             // lblTradeDetailTradeIdLabel
             // 
@@ -1050,6 +1051,7 @@
             this.chckEndTrade.TabIndex = 259;
             this.chckEndTrade.Text = "Trade\'i Sonlandır";
             this.chckEndTrade.UseVisualStyleBackColor = true;
+            this.chckEndTrade.CheckedChanged += new System.EventHandler(this.chckEndTrade_CheckedChanged);
             // 
             // btnTradeDelete
             // 

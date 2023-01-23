@@ -22,6 +22,11 @@ namespace TradeNote.Business
         {
             _tradeModelXmlRepository.CreateEmptyXmlFile(xmlFilePath);
         }
+        public void DeleteXmlFileByPath(string xmlFilePath)
+        {
+            _tradeModelXmlRepository.DeleteXmlFileByPath(xmlFilePath);
+        }
+
 
         public void AddTrade(Trade trade, string xmlFilePath)
         {
@@ -96,6 +101,8 @@ namespace TradeNote.Business
             decimal winRate = 0;
             decimal lastBalance;
             decimal totalPnlPercent;
+            decimal totalCommission;
+            decimal totalFundingFee;
 
             var currentGeneralInformation = GetGeneralInformation(xmlFilePath);
 
@@ -115,7 +122,10 @@ namespace TradeNote.Business
                 profitSum = Math.Round(dataList.Where(x => x.PositionResult == PositionResult.TP).Sum(x => x.ProfitOrLoss), 2);
                 lossSum = Math.Round(dataList.Where(x => x.PositionResult == PositionResult.SL).Sum(x => x.ProfitOrLoss), 2);
                 totalProfitOrLoss = profitSum + lossSum;
-                lastBalance = Math.Round(Convert.ToDecimal(currentGeneralInformation.StartingBalance + totalProfitOrLoss), 2);
+                totalCommission = Math.Round(dataList.Where(x=>x.EndTrade).Sum(x => x.CommissionSum), 2);
+                totalFundingFee= Math.Round(dataList.Where(x => x.EndTrade).Sum(x => x.FundingFeeSum), 2);
+
+                lastBalance = Math.Round(Convert.ToDecimal(currentGeneralInformation.StartingBalance + totalProfitOrLoss-totalCommission-totalFundingFee), 2);
                 totalPnlPercent = Math.Round(Convert.ToDecimal((lastBalance / currentGeneralInformation.StartingBalance - 1) * 100), 2);
 
 
@@ -129,6 +139,8 @@ namespace TradeNote.Business
                 currentGeneralInformation.TotalPnL = totalProfitOrLoss;
                 currentGeneralInformation.TradeWinRate = winRate;
                 currentGeneralInformation.TotalPnLPercent = totalPnlPercent;
+                currentGeneralInformation.TotalCommission=totalCommission;
+                currentGeneralInformation.TotalFundingFee=totalFundingFee;
 
                 UpdateGeneralInformation(currentGeneralInformation, xmlFilePath);
             }
@@ -254,7 +266,7 @@ namespace TradeNote.Business
 
                 if (willCalculatedTrade.EndTrade)
                 {
-                    if (Math.Abs(entryTotalCount - closeTotalCount) < 0.0005M)
+                    if (Math.Abs(entryTotalCount - closeTotalCount) < 0.0001M)
                     {
                         decimal profit = 0;
                         if (willCalculatedTrade.PositionSide == PositionSide.Long)

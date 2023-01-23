@@ -44,6 +44,21 @@ namespace TradeNote.Repositories
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+        public void DeleteXmlFileByPath(string xmlFilePath)
+        {
+            if (File.Exists(xmlFilePath))
+            {
+                string deletedFolderPath = Path.Combine(Application.StartupPath, "DeletedFiles");
+
+                if (!Directory.Exists(deletedFolderPath))
+                {
+                    Directory.CreateDirectory(deletedFolderPath);
+                }
+                string deletedFileName = "Deleted_" + Path.GetFileNameWithoutExtension(xmlFilePath) + "_" + DateTime.Now.ToString("dd-MM-yyyy-HH-mm") + ".xml_XX";
+                string deletedFilePath = Path.Combine(deletedFolderPath, deletedFileName);
+                File.Move(xmlFilePath, deletedFilePath);
+            }
+        }
 
         public void UpdateGeneralInformation(GeneralInformation updatedGeneralInformation, string xmlFilePath)
         {
