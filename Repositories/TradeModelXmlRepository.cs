@@ -60,6 +60,18 @@ namespace TradeNote.Repositories
             }
         }
 
+        public TradeModel GetTradeModel(string xmlFilePath)
+        {
+            TradeModel tradeModel = DeserializeTradeModel(xmlFilePath);
+            return tradeModel;
+        }
+
+        public List<Trade> GetAllTrades(string xmlFilePath)
+        {
+            TradeModel tradeModel = DeserializeTradeModel(xmlFilePath);
+            return tradeModel.Trades;
+        }
+
         public void UpdateGeneralInformation(GeneralInformation updatedGeneralInformation, string xmlFilePath)
         {
             // Deserialize the XML file to a TradeModel object
@@ -68,6 +80,8 @@ namespace TradeNote.Repositories
             // Update the properties of the GeneralInformation object
             tradeModel.GeneralInformation.StartingBalance = updatedGeneralInformation.StartingBalance;
             tradeModel.GeneralInformation.LastBalance = updatedGeneralInformation.LastBalance;
+            tradeModel.GeneralInformation.InTradeBalance = updatedGeneralInformation.InTradeBalance;
+            tradeModel.GeneralInformation.AvailableBalance = updatedGeneralInformation.AvailableBalance;
             tradeModel.GeneralInformation.ProfitsSum = updatedGeneralInformation.ProfitsSum;
             tradeModel.GeneralInformation.LossesSum = updatedGeneralInformation.LossesSum;
             tradeModel.GeneralInformation.TotalPnL = updatedGeneralInformation.TotalPnL;
@@ -182,6 +196,40 @@ namespace TradeNote.Repositories
             Trade trade = tradeModel.Trades.FirstOrDefault(t => t.Id == id);
 
             return trade;
+        }
+
+        public void RemoveTradeById(int id, string xmlFilePath)
+        {
+            // Deserialize the XML file to a TradeModel object
+            TradeModel tradeModel = DeserializeTradeModel(xmlFilePath);
+
+            Trade trade = tradeModel.Trades.FirstOrDefault(t => t.Id == id);
+
+            tradeModel.Trades.Remove(trade);
+
+            XmlSerializer serializer = new XmlSerializer(typeof(TradeModel));
+
+            using (TextWriter writer = new StreamWriter(xmlFilePath))
+            {
+                serializer.Serialize(writer, tradeModel);
+            }
+        }
+
+        public void RemoveTradeDetailById(int tradeId, int tradeDetailId, string xmlFilePath)
+        {
+            // Deserialize the XML file to a TradeModel object
+            TradeModel tradeModel = DeserializeTradeModel(xmlFilePath);
+
+            var tradeDetail = tradeModel.Trades.FirstOrDefault(t => t.Id == tradeId)?.TradeDetails.FirstOrDefault(td => td.Id == tradeDetailId);
+
+            tradeModel.Trades.FirstOrDefault(t => t.Id == tradeId)?.TradeDetails.Remove(tradeDetail);
+
+            XmlSerializer serializer = new XmlSerializer(typeof(TradeModel));
+
+            using (TextWriter writer = new StreamWriter(xmlFilePath))
+            {
+                serializer.Serialize(writer, tradeModel);
+            }
         }
 
 

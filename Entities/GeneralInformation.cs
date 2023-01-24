@@ -10,6 +10,12 @@ namespace TradeNote
         [DisplayName("Güncel Bakiye")]
         public decimal LastBalance { get; set; }
 
+        [DisplayName("İşlemdeki Bakiye")]
+        public decimal InTradeBalance { get; set; }
+
+        [DisplayName("Boştaki Bakiye")]
+        public decimal AvailableBalance { get; set; }
+
         [DisplayName("Kar Toplamı")]
         public decimal ProfitsSum { get; set; }
 

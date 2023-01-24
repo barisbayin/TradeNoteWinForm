@@ -189,6 +189,7 @@ namespace TradeNote
                     ClearTradeDetails();
                     dgvTradeList.DataSource = null;
                     dgvTradeDetails.DataSource = null;
+                    cbxListOfTradeXmls.Text = "";
                 }
             }
             else
@@ -358,6 +359,8 @@ namespace TradeNote
 
             lblStartBalanceText.Text = "$" + generalInformation.StartingBalance.ToString(CultureInfo.InvariantCulture);
             lblLastBalanceLabel.Text = "$" + generalInformation.LastBalance.ToString(CultureInfo.InvariantCulture);
+            lblInTradeBalanceLabel.Text = "$" + generalInformation.InTradeBalance.ToString(CultureInfo.InvariantCulture);
+            lblAvailableBalanceLabel.Text = "$" + generalInformation.AvailableBalance.ToString(CultureInfo.InvariantCulture);
             lblProfitsSumLabel.Text = "$" + generalInformation.ProfitsSum.ToString(CultureInfo.InvariantCulture);
             lblLossesSumLabel.Text = "$" + generalInformation.LossesSum.ToString(CultureInfo.InvariantCulture);
             lblTotalPnLLabel.Text = "$" + generalInformation.TotalPnL.ToString(CultureInfo.InvariantCulture);
@@ -369,6 +372,28 @@ namespace TradeNote
             tbxTakerCommission.Text = generalInformation.TakerCommission.ToString(CultureInfo.InvariantCulture);
             lblTotalCommissionLabel.Text = "$" + generalInformation.TotalCommission.ToString(CultureInfo.InvariantCulture);
             lblTotalFundingFeeLabel.Text = "$" + generalInformation.TotalFundingFee.ToString(CultureInfo.InvariantCulture);
+
+            if (generalInformation.TotalPnL >= 0)
+            {
+                lblTotalPnLLabel.ForeColor = Color.SeaGreen;
+                lblTotalPnLPercentLabel.ForeColor = Color.SeaGreen;
+            }
+            else
+            {
+                lblTotalPnLLabel.ForeColor = Color.IndianRed;
+                lblTotalPnLPercentLabel.ForeColor = Color.IndianRed;
+            }
+
+            if (generalInformation.TradeWinRate >= 0)
+            {
+                lblWinrateLabel.ForeColor = Color.SeaGreen;
+            }
+            else
+            {
+                lblWinrateLabel.ForeColor = Color.IndianRed;
+            }
+
+
         }
 
         private void btnSaveTrade_Click(object sender, EventArgs e)
@@ -376,6 +401,15 @@ namespace TradeNote
             if (!string.IsNullOrEmpty(cbxListOfTradeXmls.Text))
             {
                 string xmlFilePath = GeneralHelper.GetXmlFilePath(cbxListOfTradeXmls.Text);
+
+                var generalInformation = GetGeneralInformation();
+
+                if (generalInformation.StartingBalance == 0)
+                {
+                    MessageBox.Show("Lütfen önce başlangıç bakiyenizi giriniz!", "Uyarı", MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                    return;
+                }
 
                 try
                 {
@@ -593,6 +627,29 @@ namespace TradeNote
                 tradeId = Convert.ToInt32(lblTradeDetailTradeIdLabel.Text);
 
                 var tradeData = _tradeModelManager.GetTradeById(tradeId, xmlFilePath);
+                var generalInformation = GetGeneralInformation();
+
+                if (cbxTradeType.Text == "OpenLong" || cbxTradeType.Text == "OpenShort")
+                {
+                    var entryBalance = Convert.ToDecimal(tbxTradeEntryBalance.Text);
+                    var availableBalance = generalInformation.AvailableBalance;
+                    if (availableBalance - entryBalance < 0)
+                    {
+                        MessageBox.Show("Mevcut işlem bakiyeniz: $" + tbxTradeEntryBalance.Text + "\n" + "Boştaki bakiyeniz: $" + availableBalance + "\n" + "İşlem bakiyeniz boştaki bakiyenizden büyük olamaz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                }
+
+                if (cbxTradeType.Text == "CloseLong" || cbxTradeType.Text == "CloseShort")
+                {
+                    if (tradeData.AverageEntryBalance == 0)
+                    {
+                        MessageBox.Show("İşlem açılmadan posizyon kapatma yapılamaz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                }
+
+
 
                 if (!string.IsNullOrEmpty(lblTradeDetailIdLabel.Text))
                 {
@@ -658,6 +715,8 @@ namespace TradeNote
                                     break;
                                 }
                         }
+
+
 
                         tradeData.EndTrade = true;
                         _tradeModelManager.UpdateTrade(tradeData, xmlFilePath);
@@ -813,12 +872,82 @@ namespace TradeNote
 
         private void btnTradeDelete_Click(object sender, EventArgs e)
         {
+            var tradeId = Convert.ToInt32(lblTradeIdLabel.Text);
+            var xmlFilePath = GeneralHelper.GetXmlFilePath(cbxListOfTradeXmls.Text);
 
+            if (!string.IsNullOrEmpty(cbxListOfTradeXmls.Text))
+            {
+                if (!string.IsNullOrEmpty(lblTradeIdLabel.Text))
+                {
+                    _tradeModelManager.RemoveTradeById(tradeId, xmlFilePath);
+                    MessageBox.Show(lblTradeIdLabel.Text + " id numaralı işlem silindi!", "Uyarı",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                    _tradeModelManager.CalculateGeneralInformation(xmlFilePath);
+
+                    LoadGeneralInformation();
+                    LoadTradeDataGridView();
+                    LoadTradeDetailDataGridView(tradeId);
+                }
+                else
+                {
+                    MessageBox.Show("Lütfen işlem yapmak istediğiniz trade satırına tıklayınız!", "Uyarı",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Lütfen trade listesini seçiniz!", "Uyarı",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private void btnDeleteTradeDetail_Click(object sender, EventArgs e)
         {
+            if (!string.IsNullOrEmpty(lblTradeDetailTradeIdLabel.Text) && !string.IsNullOrEmpty(lblTradeDetailIdLabel.Text))
+            {
+                var tradeId = Convert.ToInt32(lblTradeDetailTradeIdLabel.Text);
+                var tradeDetailId = Convert.ToInt32(lblTradeDetailIdLabel.Text);
+                var xmlFilePath = GeneralHelper.GetXmlFilePath(cbxListOfTradeXmls.Text);
 
+                var tradeData = _tradeModelManager.GetTradeById(tradeId, xmlFilePath);
+
+                if (tradeData.EndTrade)
+                {
+                    MessageBox.Show("Sonlandırılmış bir trade işleminden detay silinemez!", "Uyarı",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                if (!string.IsNullOrEmpty(cbxListOfTradeXmls.Text))
+                {
+
+                    _tradeModelManager.RemoveTradeDetailById(tradeId, tradeDetailId, xmlFilePath);
+                    MessageBox.Show(lblTradeDetailIdLabel.Text + " id numaralı işlem detayı silindi!", "Uyarı",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                    var updatedTrade = _tradeModelManager.CalculateTrade(tradeId, xmlFilePath);
+                    _tradeModelManager.UpdateTrade(updatedTrade,xmlFilePath);
+                    _tradeModelManager.CalculateGeneralInformation(xmlFilePath);
+
+                    LoadGeneralInformation();
+                    LoadTradeDataGridView();
+                    LoadTradeDetailDataGridView(tradeId);
+
+
+
+                }
+                else
+                {
+                    MessageBox.Show("Lütfen trade listesini seçiniz!", "Uyarı",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Lütfen işlem yapmak istediğiniz trade satırına tıklayınız!", "Uyarı",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private void chckMakerCommission_CheckedChanged(object sender, EventArgs e)
@@ -958,15 +1087,26 @@ namespace TradeNote
             if (cbxTradeType.Text == "CloseLong" || cbxTradeType.Text == "CloseShort")
             {
                 var xmlFilePath = GeneralHelper.GetXmlFilePath(cbxListOfTradeXmls.Text);
-                var tradeData = _tradeModelManager.GetTradeById(Convert.ToInt32(lblTradeDetailTradeIdLabel.Text), xmlFilePath);
 
-                if (tradeData.TradeDetails.Count == 0)
+                if (!string.IsNullOrEmpty(lblTradeDetailTradeIdLabel.Text))
                 {
-                    MessageBox.Show("Posizyon henüz açılmamış görünüyor. Lütfen önce posizyon açma parametrelerini kaydediniz!", "Uyarı",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    cbxTradeType.Text = "";
+                    var tradeData = _tradeModelManager.GetTradeById(Convert.ToInt32(lblTradeDetailTradeIdLabel.Text), xmlFilePath);
 
+                    if (tradeData.TradeDetails.Count == 0)
+                    {
+                        MessageBox.Show("Posizyon henüz açılmamış görünüyor. Lütfen önce posizyon açma parametrelerini kaydediniz!", "Uyarı",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        cbxTradeType.Text = "";
+                    }
                 }
+                else
+                {
+                    MessageBox.Show("Lütfen işlem yapmak istediğiniz trade satırına tıklayınız!", "Uyarı",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
+
+
             }
 
         }

@@ -278,7 +278,7 @@
         AFygb6lQSJ8uAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="btnUpdateMakerCommission.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="btnUpdateTakerCommission.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAACxIAAAsSAdLdfvwAAACaSURBVDhPYxg8YLb6hjlA/GeO+ob/+DBUzWyoNgQgRjMM
@@ -287,7 +287,7 @@
         AFygb6lQSJ8uAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="btnUpdateTakerCommission.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="btnUpdateMakerCommission.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAACxIAAAsSAdLdfvwAAACaSURBVDhPYxg8YLb6hjlA/GeO+ob/+DBUzWyoNgQgRjMM

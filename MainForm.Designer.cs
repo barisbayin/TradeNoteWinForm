@@ -123,6 +123,10 @@
             this.lblPositionSide = new System.Windows.Forms.Label();
             this.cbxPositionSide = new System.Windows.Forms.ComboBox();
             this.lblLine2 = new System.Windows.Forms.Label();
+            this.lblInTradeBalanceLabel = new System.Windows.Forms.Label();
+            this.lblInTradeBalance = new System.Windows.Forms.Label();
+            this.lblAvailableBalanceLabel = new System.Windows.Forms.Label();
+            this.lblAvailableBalance = new System.Windows.Forms.Label();
             this.pnlNavBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.scMainMenu)).BeginInit();
             this.scMainMenu.Panel1.SuspendLayout();
@@ -356,6 +360,10 @@
             // 
             this.tpgTrade.AutoScroll = true;
             this.tpgTrade.BackColor = System.Drawing.SystemColors.Control;
+            this.tpgTrade.Controls.Add(this.lblAvailableBalanceLabel);
+            this.tpgTrade.Controls.Add(this.lblAvailableBalance);
+            this.tpgTrade.Controls.Add(this.lblInTradeBalanceLabel);
+            this.tpgTrade.Controls.Add(this.lblInTradeBalance);
             this.tpgTrade.Controls.Add(this.lblLine2);
             this.tpgTrade.Controls.Add(this.lblOrderType);
             this.tpgTrade.Controls.Add(this.cbxOrderType);
@@ -454,7 +462,7 @@
             this.lblTotalFundingFeeLabel.AutoSize = true;
             this.lblTotalFundingFeeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.lblTotalFundingFeeLabel.ForeColor = System.Drawing.Color.DarkSalmon;
-            this.lblTotalFundingFeeLabel.Location = new System.Drawing.Point(127, 142);
+            this.lblTotalFundingFeeLabel.Location = new System.Drawing.Point(128, 195);
             this.lblTotalFundingFeeLabel.Name = "lblTotalFundingFeeLabel";
             this.lblTotalFundingFeeLabel.Size = new System.Drawing.Size(0, 13);
             this.lblTotalFundingFeeLabel.TabIndex = 241;
@@ -463,7 +471,7 @@
             // 
             this.lblTotalFundingFee.AutoSize = true;
             this.lblTotalFundingFee.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblTotalFundingFee.Location = new System.Drawing.Point(5, 142);
+            this.lblTotalFundingFee.Location = new System.Drawing.Point(6, 195);
             this.lblTotalFundingFee.Name = "lblTotalFundingFee";
             this.lblTotalFundingFee.Size = new System.Drawing.Size(113, 13);
             this.lblTotalFundingFee.TabIndex = 240;
@@ -474,7 +482,7 @@
             this.lblTotalCommissionLabel.AutoSize = true;
             this.lblTotalCommissionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.lblTotalCommissionLabel.ForeColor = System.Drawing.Color.DarkOrange;
-            this.lblTotalCommissionLabel.Location = new System.Drawing.Point(127, 119);
+            this.lblTotalCommissionLabel.Location = new System.Drawing.Point(128, 172);
             this.lblTotalCommissionLabel.Name = "lblTotalCommissionLabel";
             this.lblTotalCommissionLabel.Size = new System.Drawing.Size(0, 13);
             this.lblTotalCommissionLabel.TabIndex = 239;
@@ -483,7 +491,7 @@
             // 
             this.lblTotalCommission.AutoSize = true;
             this.lblTotalCommission.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblTotalCommission.Location = new System.Drawing.Point(25, 119);
+            this.lblTotalCommission.Location = new System.Drawing.Point(26, 172);
             this.lblTotalCommission.Name = "lblTotalCommission";
             this.lblTotalCommission.Size = new System.Drawing.Size(93, 13);
             this.lblTotalCommission.TabIndex = 238;
@@ -493,7 +501,7 @@
             // 
             this.lblTotalPnLPercentLabel.AutoSize = true;
             this.lblTotalPnLPercentLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblTotalPnLPercentLabel.Location = new System.Drawing.Point(290, 95);
+            this.lblTotalPnLPercentLabel.Location = new System.Drawing.Point(295, 95);
             this.lblTotalPnLPercentLabel.Name = "lblTotalPnLPercentLabel";
             this.lblTotalPnLPercentLabel.Size = new System.Drawing.Size(0, 13);
             this.lblTotalPnLPercentLabel.TabIndex = 237;
@@ -512,7 +520,7 @@
             // 
             this.lblWinrateLabel.AutoSize = true;
             this.lblWinrateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblWinrateLabel.Location = new System.Drawing.Point(290, 182);
+            this.lblWinrateLabel.Location = new System.Drawing.Point(295, 182);
             this.lblWinrateLabel.Name = "lblWinrateLabel";
             this.lblWinrateLabel.Size = new System.Drawing.Size(0, 13);
             this.lblWinrateLabel.TabIndex = 235;
@@ -531,7 +539,7 @@
             // 
             this.lblLossCountLabel.AutoSize = true;
             this.lblLossCountLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblLossCountLabel.Location = new System.Drawing.Point(127, 194);
+            this.lblLossCountLabel.Location = new System.Drawing.Point(295, 159);
             this.lblLossCountLabel.Name = "lblLossCountLabel";
             this.lblLossCountLabel.Size = new System.Drawing.Size(0, 13);
             this.lblLossCountLabel.TabIndex = 233;
@@ -540,7 +548,7 @@
             // 
             this.lblLossCount.AutoSize = true;
             this.lblLossCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblLossCount.Location = new System.Drawing.Point(25, 194);
+            this.lblLossCount.Location = new System.Drawing.Point(193, 159);
             this.lblLossCount.Name = "lblLossCount";
             this.lblLossCount.Size = new System.Drawing.Size(93, 13);
             this.lblLossCount.TabIndex = 232;
@@ -550,7 +558,7 @@
             // 
             this.lblWinCountLabel.AutoSize = true;
             this.lblWinCountLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblWinCountLabel.Location = new System.Drawing.Point(127, 168);
+            this.lblWinCountLabel.Location = new System.Drawing.Point(295, 133);
             this.lblWinCountLabel.Name = "lblWinCountLabel";
             this.lblWinCountLabel.Size = new System.Drawing.Size(0, 13);
             this.lblWinCountLabel.TabIndex = 231;
@@ -559,7 +567,7 @@
             // 
             this.lblWinCount.AutoSize = true;
             this.lblWinCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblWinCount.Location = new System.Drawing.Point(31, 168);
+            this.lblWinCount.Location = new System.Drawing.Point(199, 133);
             this.lblWinCount.Name = "lblWinCount";
             this.lblWinCount.Size = new System.Drawing.Size(87, 13);
             this.lblWinCount.TabIndex = 230;
@@ -569,7 +577,7 @@
             // 
             this.lblTotalPnLLabel.AutoSize = true;
             this.lblTotalPnLLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblTotalPnLLabel.Location = new System.Drawing.Point(290, 69);
+            this.lblTotalPnLLabel.Location = new System.Drawing.Point(295, 69);
             this.lblTotalPnLLabel.Name = "lblTotalPnLLabel";
             this.lblTotalPnLLabel.Size = new System.Drawing.Size(0, 13);
             this.lblTotalPnLLabel.TabIndex = 229;
@@ -589,7 +597,7 @@
             this.lblLossesSumLabel.AutoSize = true;
             this.lblLossesSumLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.lblLossesSumLabel.ForeColor = System.Drawing.Color.IndianRed;
-            this.lblLossesSumLabel.Location = new System.Drawing.Point(127, 95);
+            this.lblLossesSumLabel.Location = new System.Drawing.Point(128, 148);
             this.lblLossesSumLabel.Name = "lblLossesSumLabel";
             this.lblLossesSumLabel.Size = new System.Drawing.Size(0, 13);
             this.lblLossesSumLabel.TabIndex = 227;
@@ -598,7 +606,7 @@
             // 
             this.lblLossesSum.AutoSize = true;
             this.lblLossesSum.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblLossesSum.Location = new System.Drawing.Point(44, 95);
+            this.lblLossesSum.Location = new System.Drawing.Point(45, 148);
             this.lblLossesSum.Name = "lblLossesSum";
             this.lblLossesSum.Size = new System.Drawing.Size(75, 13);
             this.lblLossesSum.TabIndex = 226;
@@ -609,7 +617,7 @@
             this.lblProfitsSumLabel.AutoSize = true;
             this.lblProfitsSumLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.lblProfitsSumLabel.ForeColor = System.Drawing.Color.SeaGreen;
-            this.lblProfitsSumLabel.Location = new System.Drawing.Point(127, 69);
+            this.lblProfitsSumLabel.Location = new System.Drawing.Point(128, 122);
             this.lblProfitsSumLabel.Name = "lblProfitsSumLabel";
             this.lblProfitsSumLabel.Size = new System.Drawing.Size(0, 13);
             this.lblProfitsSumLabel.TabIndex = 225;
@@ -618,7 +626,7 @@
             // 
             this.lblProfitsSum.AutoSize = true;
             this.lblProfitsSum.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblProfitsSum.Location = new System.Drawing.Point(52, 69);
+            this.lblProfitsSum.Location = new System.Drawing.Point(53, 122);
             this.lblProfitsSum.Name = "lblProfitsSum";
             this.lblProfitsSum.Size = new System.Drawing.Size(66, 13);
             this.lblProfitsSum.TabIndex = 224;
@@ -1249,6 +1257,44 @@
             this.lblLine2.Text = "---------------------------------------------------------------------------------" +
     "------------------------------------";
             // 
+            // lblInTradeBalanceLabel
+            // 
+            this.lblInTradeBalanceLabel.AutoSize = true;
+            this.lblInTradeBalanceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblInTradeBalanceLabel.Location = new System.Drawing.Point(127, 69);
+            this.lblInTradeBalanceLabel.Name = "lblInTradeBalanceLabel";
+            this.lblInTradeBalanceLabel.Size = new System.Drawing.Size(0, 13);
+            this.lblInTradeBalanceLabel.TabIndex = 287;
+            // 
+            // lblInTradeBalance
+            // 
+            this.lblInTradeBalance.AutoSize = true;
+            this.lblInTradeBalance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblInTradeBalance.Location = new System.Drawing.Point(29, 69);
+            this.lblInTradeBalance.Name = "lblInTradeBalance";
+            this.lblInTradeBalance.Size = new System.Drawing.Size(89, 13);
+            this.lblInTradeBalance.TabIndex = 286;
+            this.lblInTradeBalance.Text = "İşlemdeki Bakiye:";
+            // 
+            // lblAvailableBalanceLabel
+            // 
+            this.lblAvailableBalanceLabel.AutoSize = true;
+            this.lblAvailableBalanceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblAvailableBalanceLabel.Location = new System.Drawing.Point(129, 95);
+            this.lblAvailableBalanceLabel.Name = "lblAvailableBalanceLabel";
+            this.lblAvailableBalanceLabel.Size = new System.Drawing.Size(0, 13);
+            this.lblAvailableBalanceLabel.TabIndex = 289;
+            // 
+            // lblAvailableBalance
+            // 
+            this.lblAvailableBalance.AutoSize = true;
+            this.lblAvailableBalance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblAvailableBalance.Location = new System.Drawing.Point(38, 95);
+            this.lblAvailableBalance.Name = "lblAvailableBalance";
+            this.lblAvailableBalance.Size = new System.Drawing.Size(80, 13);
+            this.lblAvailableBalance.TabIndex = 288;
+            this.lblAvailableBalance.Text = "Boştaki Bakiye:";
+            // 
             // TradeList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1381,6 +1427,10 @@
         private System.Windows.Forms.Label lblTradeEntryBalance;
         private System.Windows.Forms.Label lblPositionSide;
         private System.Windows.Forms.ComboBox cbxPositionSide;
+        private System.Windows.Forms.Label lblAvailableBalanceLabel;
+        private System.Windows.Forms.Label lblAvailableBalance;
+        private System.Windows.Forms.Label lblInTradeBalanceLabel;
+        private System.Windows.Forms.Label lblInTradeBalance;
     }
 }
 
