@@ -3,15 +3,20 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using System.Xml.Linq;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 using TradeNote.Business;
 using TradeNote.Entities;
 using TradeNote.Enums;
 using TradeNote.Helpers;
 using TradeNote.Repositories;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace TradeNote
 {
@@ -177,6 +182,7 @@ namespace TradeNote
             {
                 var result = MessageBox.Show(cbxListOfTradeXmls.Text + " listesini silmek istiyor musunuz?", "Uyarı",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
                 if (result == DialogResult.Yes)
                 {
                     _tradeModelManager.DeleteXmlFileByPath(xmlFilePath);
@@ -384,7 +390,7 @@ namespace TradeNote
                 lblTotalPnLPercentLabel.ForeColor = Color.IndianRed;
             }
 
-            if (generalInformation.TradeWinRate >= 0)
+            if (generalInformation.TradeWinRate >= 50)
             {
                 lblWinrateLabel.ForeColor = Color.SeaGreen;
             }
@@ -875,19 +881,27 @@ namespace TradeNote
             var tradeId = Convert.ToInt32(lblTradeIdLabel.Text);
             var xmlFilePath = GeneralHelper.GetXmlFilePath(cbxListOfTradeXmls.Text);
 
+
             if (!string.IsNullOrEmpty(cbxListOfTradeXmls.Text))
             {
                 if (!string.IsNullOrEmpty(lblTradeIdLabel.Text))
                 {
-                    _tradeModelManager.RemoveTradeById(tradeId, xmlFilePath);
-                    MessageBox.Show(lblTradeIdLabel.Text + " id numaralı işlem silindi!", "Uyarı",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    var result = MessageBox.Show(lblTradeIdLabel.Text + " numaralı trade'i silmek istiyor musunuz?", "Uyarı",
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
-                    _tradeModelManager.CalculateGeneralInformation(xmlFilePath);
+                    if (result == DialogResult.Yes)
+                    {
+                        _tradeModelManager.RemoveTradeById(tradeId, xmlFilePath);
+                        MessageBox.Show(lblTradeIdLabel.Text + " id numaralı işlem silindi!", "Uyarı",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-                    LoadGeneralInformation();
-                    LoadTradeDataGridView();
-                    LoadTradeDetailDataGridView(tradeId);
+                        _tradeModelManager.CalculateGeneralInformation(xmlFilePath);
+
+                        LoadGeneralInformation();
+                        LoadTradeDataGridView();
+                        LoadTradeDetailDataGridView(tradeId);
+                    }
+
                 }
                 else
                 {
@@ -906,42 +920,46 @@ namespace TradeNote
         {
             if (!string.IsNullOrEmpty(lblTradeDetailTradeIdLabel.Text) && !string.IsNullOrEmpty(lblTradeDetailIdLabel.Text))
             {
-                var tradeId = Convert.ToInt32(lblTradeDetailTradeIdLabel.Text);
-                var tradeDetailId = Convert.ToInt32(lblTradeDetailIdLabel.Text);
-                var xmlFilePath = GeneralHelper.GetXmlFilePath(cbxListOfTradeXmls.Text);
+                var result = MessageBox.Show(lblTradeIdLabel.Text + " numaralı işlemi silmek istiyor musunuz?", "Uyarı",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
-                var tradeData = _tradeModelManager.GetTradeById(tradeId, xmlFilePath);
-
-                if (tradeData.EndTrade)
+                if (result == DialogResult.Yes)
                 {
-                    MessageBox.Show("Sonlandırılmış bir trade işleminden detay silinemez!", "Uyarı",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
+                    var tradeId = Convert.ToInt32(lblTradeDetailTradeIdLabel.Text);
+                    var tradeDetailId = Convert.ToInt32(lblTradeDetailIdLabel.Text);
+                    var xmlFilePath = GeneralHelper.GetXmlFilePath(cbxListOfTradeXmls.Text);
+
+                    var tradeData = _tradeModelManager.GetTradeById(tradeId, xmlFilePath);
+
+                    if (tradeData.EndTrade)
+                    {
+                        MessageBox.Show("Sonlandırılmış bir trade işleminden detay silinemez!", "Uyarı",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    if (!string.IsNullOrEmpty(cbxListOfTradeXmls.Text))
+                    {
+
+                        _tradeModelManager.RemoveTradeDetailById(tradeId, tradeDetailId, xmlFilePath);
+                        MessageBox.Show(lblTradeDetailIdLabel.Text + " id numaralı işlem detayı silindi!", "Uyarı",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                        var updatedTrade = _tradeModelManager.CalculateTrade(tradeId, xmlFilePath);
+                        _tradeModelManager.UpdateTrade(updatedTrade, xmlFilePath);
+                        _tradeModelManager.CalculateGeneralInformation(xmlFilePath);
+
+                        LoadGeneralInformation();
+                        LoadTradeDataGridView();
+                        LoadTradeDetailDataGridView(tradeId);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Lütfen trade listesini seçiniz!", "Uyarı",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
                 }
 
-                if (!string.IsNullOrEmpty(cbxListOfTradeXmls.Text))
-                {
-
-                    _tradeModelManager.RemoveTradeDetailById(tradeId, tradeDetailId, xmlFilePath);
-                    MessageBox.Show(lblTradeDetailIdLabel.Text + " id numaralı işlem detayı silindi!", "Uyarı",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-                    var updatedTrade = _tradeModelManager.CalculateTrade(tradeId, xmlFilePath);
-                    _tradeModelManager.UpdateTrade(updatedTrade,xmlFilePath);
-                    _tradeModelManager.CalculateGeneralInformation(xmlFilePath);
-
-                    LoadGeneralInformation();
-                    LoadTradeDataGridView();
-                    LoadTradeDetailDataGridView(tradeId);
-
-
-
-                }
-                else
-                {
-                    MessageBox.Show("Lütfen trade listesini seçiniz!", "Uyarı",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
             }
             else
             {
@@ -1110,5 +1128,135 @@ namespace TradeNote
             }
 
         }
+
+        private void btnExportToExcel_Click(object sender, EventArgs e)
+        {
+
+            Point screenPoint = btnExport.PointToScreen(new Point(btnExport.Left, btnExport.Bottom));
+            if (screenPoint.Y + cmsExport.Size.Height > Screen.PrimaryScreen.WorkingArea.Height)
+            {
+                cmsExport.Show(btnExport, new Point(0, -cmsExport.Size.Height));
+            }
+            else
+            {
+                cmsExport.Show(btnExport, new Point(0, btnExport.Height));
+            }
+
+        }
+
+        private void ExportToExcel(DataGridView dataGridView)
+        {
+            Excel.Application excel = new Excel.Application();
+            excel.Visible = true;
+            Excel.Workbook workbook = excel.Workbooks.Add(System.Reflection.Missing.Value);
+            Excel.Worksheet worksheet = (Excel.Worksheet)workbook.Sheets[1];
+
+            for (int i = 0; i < dataGridView.Columns.Count; i++)
+            {
+                worksheet.Cells[1, i + 1] = dataGridView.Columns[i].HeaderText;
+            }
+            for (int i = 0; i < dataGridView.Rows.Count; i++)
+            {
+                for (int j = 0; j < dataGridView.Columns.Count; j++)
+                {
+                    worksheet.Cells[i + 2, j + 1] = dataGridView.Rows[i].Cells[j].Value.ToString();
+                }
+            }
+
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*";
+            saveFileDialog.FilterIndex = 1;
+            saveFileDialog.RestoreDirectory = true;
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                workbook.SaveAs(saveFileDialog.FileName, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlExclusive, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+            }
+            workbook.Close();
+            excel.Quit();
+        }
+
+        private void ExportToPdf(DataGridView dataGridView)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "PDF files (*.pdf)|*.pdf|All files (*.*)|*.*";
+            saveFileDialog.FilterIndex = 1;
+            saveFileDialog.RestoreDirectory = true;
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                using (FileStream stream = new FileStream(saveFileDialog.FileName, FileMode.Create))
+                {
+                    Document pdfDoc = new Document(PageSize.A3.Rotate(), 10f, 10f, 10f, 0f);
+                    PdfWriter.GetInstance(pdfDoc, stream);
+                    pdfDoc.Open();
+                    PdfPTable pdfTable = new PdfPTable(dataGridView.Columns.Count);
+                    pdfTable.DefaultCell.Padding = 3;
+                    pdfTable.WidthPercentage = 100;
+                    pdfTable.HorizontalAlignment = Element.ALIGN_LEFT;
+
+                    float[] widths = new float[dataGridView.Columns.Count];
+                    for (int i = 0; i < dataGridView.Columns.Count; i++)
+                    {
+                        widths[i] = dataGridView.Columns[i].Width;
+                    }
+                    pdfTable.SetWidths(widths);
+
+                    for (int i = 0; i < dataGridView.Columns.Count; i++)
+                    {
+                        PdfPCell cell = new PdfPCell(new Phrase(dataGridView.Columns[i].HeaderText));
+                        cell.BackgroundColor = new BaseColor(240, 240, 240);
+                        pdfTable.AddCell(cell);
+                    }
+
+                    for (int i = 0; i < dataGridView.Rows.Count; i++)
+                    {
+                        for (int j = 0; j < dataGridView.Columns.Count; j++)
+                        {
+                            pdfTable.AddCell(dataGridView.Rows[i].Cells[j].Value.ToString());
+                        }
+                    }
+                    pdfDoc.Add(pdfTable);
+                    pdfDoc.Close();
+                    stream.Close();
+                }
+            }
+        }
+
+        private void tsmiExportToExcel_Click(object sender, EventArgs e)
+        {
+            if (dgvTradeList.DataSource != null)
+            {
+                ExportToExcel(dgvTradeList);
+            }
+            else
+            {
+                MessageBox.Show("Trade listesi boş görünüyor. Lütfen trade listesini seçtikten sonra excele aktarmayı deneyin!", "Uyarı",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void tsmiExportToPdf_Click(object sender, EventArgs e)
+        {
+            if (dgvTradeList.DataSource != null)
+            {
+                ExportToPdf(dgvTradeList);
+            }
+            else
+            {
+                MessageBox.Show("Trade listesi boş görünüyor. Lütfen trade listesini seçtikten sonra excele aktarmayı deneyin!", "Uyarı",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void tsmiExportStatisticsImage_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tsmiExportTradeStatistics_Click(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }

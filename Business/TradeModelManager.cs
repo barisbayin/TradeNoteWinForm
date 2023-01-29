@@ -133,7 +133,7 @@ namespace TradeNote.Business
 
                 totalPnlPercent = Math.Round(Convert.ToDecimal((lastBalance / currentGeneralInformation.StartingBalance - 1) * 100), 2);
 
-                inTradeBalance = Math.Round(_tradeModelXmlRepository.GetAllTrades(xmlFilePath).Where(x => x.EndTrade == false).Sum(x => x.AverageEntryBalance), 2);
+                inTradeBalance = Math.Round(_tradeModelXmlRepository.GetAllTrades(xmlFilePath).Where(x => x.EndTrade == false).Sum(x => x.AverageEntryBalance) - _tradeModelXmlRepository.GetAllTrades(xmlFilePath).Where(x => x.EndTrade == false).Sum(x => x.AverageCloseBalance), 2);
 
                 availableBalance = lastBalance - inTradeBalance;
 
@@ -228,9 +228,9 @@ namespace TradeNote.Business
                         }
                         else
                         {
-                            willCalculatedTrade.RiskPercent = 0;
-                            willCalculatedTrade.RewardPercent = 0;
-                            willCalculatedTrade.RiskRewardRatio = 0;
+                            willCalculatedTrade.RiskPercent = Math.Round((willCalculatedTrade.StopLossPrice / willCalculatedTrade.TargetedEntryPrice - 1) * 100, 2);
+                            willCalculatedTrade.RewardPercent = Math.Round((willCalculatedTrade.TakeProfitPrice / willCalculatedTrade.TargetedEntryPrice - 1) * 100, 2);
+                            willCalculatedTrade.RiskRewardRatio = Math.Abs(Math.Round(willCalculatedTrade.RewardPercent / willCalculatedTrade.RiskPercent, 2));
                         }
 
                         break;
@@ -279,9 +279,9 @@ namespace TradeNote.Business
                         }
                         else
                         {
-                            willCalculatedTrade.RiskPercent = 0;
-                            willCalculatedTrade.RewardPercent = 0;
-                            willCalculatedTrade.RiskRewardRatio = 0;
+                            willCalculatedTrade.RiskPercent = Math.Round((1 - willCalculatedTrade.StopLossPrice / willCalculatedTrade.TargetedEntryPrice) * 100, 2);
+                            willCalculatedTrade.RewardPercent = Math.Round((1 - willCalculatedTrade.TakeProfitPrice / willCalculatedTrade.TargetedEntryPrice) * 100, 2);
+                            willCalculatedTrade.RiskRewardRatio = Math.Abs(Math.Round(willCalculatedTrade.RewardPercent / willCalculatedTrade.RiskPercent, 2));
                         }
 
                         break;

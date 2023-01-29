@@ -28,8 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TradeList));
             this.pnlNavBar = new System.Windows.Forms.Panel();
+            this.btnExport = new System.Windows.Forms.Button();
             this.btnDeleteXmlFile = new System.Windows.Forms.Button();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.btnSaveTradeXml = new System.Windows.Forms.Button();
@@ -45,40 +47,11 @@
             this.dgvTradeDetails = new System.Windows.Forms.DataGridView();
             this.tcMainMenu = new System.Windows.Forms.TabControl();
             this.tpgTrade = new System.Windows.Forms.TabPage();
-            this.tpgSettings = new System.Windows.Forms.TabPage();
-            this.lblTotalFundingFeeLabel = new System.Windows.Forms.Label();
-            this.lblTotalFundingFee = new System.Windows.Forms.Label();
-            this.lblTotalCommissionLabel = new System.Windows.Forms.Label();
-            this.lblTotalCommission = new System.Windows.Forms.Label();
-            this.lblTotalPnLPercentLabel = new System.Windows.Forms.Label();
-            this.lblTotalPnLPercent = new System.Windows.Forms.Label();
-            this.lblWinrateLabel = new System.Windows.Forms.Label();
-            this.lblWinRate = new System.Windows.Forms.Label();
-            this.lblLossCountLabel = new System.Windows.Forms.Label();
-            this.lblLossCount = new System.Windows.Forms.Label();
-            this.lblWinCountLabel = new System.Windows.Forms.Label();
-            this.lblWinCount = new System.Windows.Forms.Label();
-            this.lblTotalPnLLabel = new System.Windows.Forms.Label();
-            this.lblTotalPnL = new System.Windows.Forms.Label();
-            this.lblLossesSumLabel = new System.Windows.Forms.Label();
-            this.lblLossesSum = new System.Windows.Forms.Label();
-            this.lblProfitsSumLabel = new System.Windows.Forms.Label();
-            this.lblProfitsSum = new System.Windows.Forms.Label();
-            this.lblLastBalanceLabel = new System.Windows.Forms.Label();
-            this.lblLastBalance = new System.Windows.Forms.Label();
-            this.btnPlusMinus = new System.Windows.Forms.Button();
-            this.chckPlusMinus = new System.Windows.Forms.CheckBox();
-            this.tbxPlusMinus = new System.Windows.Forms.TextBox();
-            this.lblStartBalanceText = new System.Windows.Forms.Label();
-            this.lblStartBalance = new System.Windows.Forms.Label();
-            this.btnUpdateMakerCommission = new System.Windows.Forms.Button();
-            this.chckMakerCommission = new System.Windows.Forms.CheckBox();
-            this.tbxMakerCommission = new System.Windows.Forms.TextBox();
-            this.lblMakerCommission = new System.Windows.Forms.Label();
-            this.btnUpdateTakerCommission = new System.Windows.Forms.Button();
-            this.chckTakerCommission = new System.Windows.Forms.CheckBox();
-            this.tbxTakerCommission = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblAvailableBalanceLabel = new System.Windows.Forms.Label();
+            this.lblAvailableBalance = new System.Windows.Forms.Label();
+            this.lblInTradeBalanceLabel = new System.Windows.Forms.Label();
+            this.lblInTradeBalance = new System.Windows.Forms.Label();
+            this.lblLine2 = new System.Windows.Forms.Label();
             this.lblOrderType = new System.Windows.Forms.Label();
             this.cbxOrderType = new System.Windows.Forms.ComboBox();
             this.lblLine = new System.Windows.Forms.Label();
@@ -122,11 +95,46 @@
             this.lblTradeEntryBalance = new System.Windows.Forms.Label();
             this.lblPositionSide = new System.Windows.Forms.Label();
             this.cbxPositionSide = new System.Windows.Forms.ComboBox();
-            this.lblLine2 = new System.Windows.Forms.Label();
-            this.lblInTradeBalanceLabel = new System.Windows.Forms.Label();
-            this.lblInTradeBalance = new System.Windows.Forms.Label();
-            this.lblAvailableBalanceLabel = new System.Windows.Forms.Label();
-            this.lblAvailableBalance = new System.Windows.Forms.Label();
+            this.lblTotalFundingFeeLabel = new System.Windows.Forms.Label();
+            this.lblTotalFundingFee = new System.Windows.Forms.Label();
+            this.lblTotalCommissionLabel = new System.Windows.Forms.Label();
+            this.lblTotalCommission = new System.Windows.Forms.Label();
+            this.lblTotalPnLPercentLabel = new System.Windows.Forms.Label();
+            this.lblTotalPnLPercent = new System.Windows.Forms.Label();
+            this.lblWinrateLabel = new System.Windows.Forms.Label();
+            this.lblWinRate = new System.Windows.Forms.Label();
+            this.lblLossCountLabel = new System.Windows.Forms.Label();
+            this.lblLossCount = new System.Windows.Forms.Label();
+            this.lblWinCountLabel = new System.Windows.Forms.Label();
+            this.lblWinCount = new System.Windows.Forms.Label();
+            this.lblTotalPnLLabel = new System.Windows.Forms.Label();
+            this.lblTotalPnL = new System.Windows.Forms.Label();
+            this.lblLossesSumLabel = new System.Windows.Forms.Label();
+            this.lblLossesSum = new System.Windows.Forms.Label();
+            this.lblProfitsSumLabel = new System.Windows.Forms.Label();
+            this.lblProfitsSum = new System.Windows.Forms.Label();
+            this.lblLastBalanceLabel = new System.Windows.Forms.Label();
+            this.lblLastBalance = new System.Windows.Forms.Label();
+            this.btnPlusMinus = new System.Windows.Forms.Button();
+            this.chckPlusMinus = new System.Windows.Forms.CheckBox();
+            this.tbxPlusMinus = new System.Windows.Forms.TextBox();
+            this.lblStartBalanceText = new System.Windows.Forms.Label();
+            this.lblStartBalance = new System.Windows.Forms.Label();
+            this.tpgSettings = new System.Windows.Forms.TabPage();
+            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
+            this.btnUpdateTakerCommission = new System.Windows.Forms.Button();
+            this.chckTakerCommission = new System.Windows.Forms.CheckBox();
+            this.tbxTakerCommission = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btnUpdateMakerCommission = new System.Windows.Forms.Button();
+            this.chckMakerCommission = new System.Windows.Forms.CheckBox();
+            this.tbxMakerCommission = new System.Windows.Forms.TextBox();
+            this.lblMakerCommission = new System.Windows.Forms.Label();
+            this.cmsExport = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmiExportToExcel = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiExportToPdf = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiExportStatisticsImage = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiExportTradeStatistics = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlNavBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.scMainMenu)).BeginInit();
             this.scMainMenu.Panel1.SuspendLayout();
@@ -143,12 +151,14 @@
             this.tcMainMenu.SuspendLayout();
             this.tpgTrade.SuspendLayout();
             this.tpgSettings.SuspendLayout();
+            this.cmsExport.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlNavBar
             // 
             this.pnlNavBar.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.pnlNavBar.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pnlNavBar.Controls.Add(this.btnExport);
             this.pnlNavBar.Controls.Add(this.btnDeleteXmlFile);
             this.pnlNavBar.Controls.Add(this.btnRefresh);
             this.pnlNavBar.Controls.Add(this.btnSaveTradeXml);
@@ -161,6 +171,19 @@
             this.pnlNavBar.Name = "pnlNavBar";
             this.pnlNavBar.Size = new System.Drawing.Size(1179, 46);
             this.pnlNavBar.TabIndex = 0;
+            // 
+            // btnExport
+            // 
+            this.btnExport.Image = ((System.Drawing.Image)(resources.GetObject("btnExport.Image")));
+            this.btnExport.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnExport.Location = new System.Drawing.Point(755, 3);
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(53, 37);
+            this.btnExport.TabIndex = 7;
+            this.btnExport.Text = "Aktar";
+            this.btnExport.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnExport.UseVisualStyleBackColor = true;
+            this.btnExport.Click += new System.EventHandler(this.btnExportToExcel_Click);
             // 
             // btnDeleteXmlFile
             // 
@@ -440,357 +463,54 @@
             this.tpgTrade.TabIndex = 0;
             this.tpgTrade.Text = "Trade";
             // 
-            // tpgSettings
-            // 
-            this.tpgSettings.Controls.Add(this.btnUpdateTakerCommission);
-            this.tpgSettings.Controls.Add(this.chckTakerCommission);
-            this.tpgSettings.Controls.Add(this.tbxTakerCommission);
-            this.tpgSettings.Controls.Add(this.label1);
-            this.tpgSettings.Controls.Add(this.btnUpdateMakerCommission);
-            this.tpgSettings.Controls.Add(this.chckMakerCommission);
-            this.tpgSettings.Controls.Add(this.tbxMakerCommission);
-            this.tpgSettings.Controls.Add(this.lblMakerCommission);
-            this.tpgSettings.Location = new System.Drawing.Point(4, 22);
-            this.tpgSettings.Name = "tpgSettings";
-            this.tpgSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tpgSettings.Size = new System.Drawing.Size(372, 869);
-            this.tpgSettings.TabIndex = 1;
-            this.tpgSettings.Text = "Ayarlar";
-            // 
-            // lblTotalFundingFeeLabel
-            // 
-            this.lblTotalFundingFeeLabel.AutoSize = true;
-            this.lblTotalFundingFeeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblTotalFundingFeeLabel.ForeColor = System.Drawing.Color.DarkSalmon;
-            this.lblTotalFundingFeeLabel.Location = new System.Drawing.Point(128, 195);
-            this.lblTotalFundingFeeLabel.Name = "lblTotalFundingFeeLabel";
-            this.lblTotalFundingFeeLabel.Size = new System.Drawing.Size(0, 13);
-            this.lblTotalFundingFeeLabel.TabIndex = 241;
-            // 
-            // lblTotalFundingFee
-            // 
-            this.lblTotalFundingFee.AutoSize = true;
-            this.lblTotalFundingFee.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblTotalFundingFee.Location = new System.Drawing.Point(6, 195);
-            this.lblTotalFundingFee.Name = "lblTotalFundingFee";
-            this.lblTotalFundingFee.Size = new System.Drawing.Size(113, 13);
-            this.lblTotalFundingFee.TabIndex = 240;
-            this.lblTotalFundingFee.Text = "Top. Fonlama Maliyeti:";
-            // 
-            // lblTotalCommissionLabel
-            // 
-            this.lblTotalCommissionLabel.AutoSize = true;
-            this.lblTotalCommissionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblTotalCommissionLabel.ForeColor = System.Drawing.Color.DarkOrange;
-            this.lblTotalCommissionLabel.Location = new System.Drawing.Point(128, 172);
-            this.lblTotalCommissionLabel.Name = "lblTotalCommissionLabel";
-            this.lblTotalCommissionLabel.Size = new System.Drawing.Size(0, 13);
-            this.lblTotalCommissionLabel.TabIndex = 239;
-            // 
-            // lblTotalCommission
-            // 
-            this.lblTotalCommission.AutoSize = true;
-            this.lblTotalCommission.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblTotalCommission.Location = new System.Drawing.Point(26, 172);
-            this.lblTotalCommission.Name = "lblTotalCommission";
-            this.lblTotalCommission.Size = new System.Drawing.Size(93, 13);
-            this.lblTotalCommission.TabIndex = 238;
-            this.lblTotalCommission.Text = "Toplam Komisyon:";
-            // 
-            // lblTotalPnLPercentLabel
-            // 
-            this.lblTotalPnLPercentLabel.AutoSize = true;
-            this.lblTotalPnLPercentLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblTotalPnLPercentLabel.Location = new System.Drawing.Point(295, 95);
-            this.lblTotalPnLPercentLabel.Name = "lblTotalPnLPercentLabel";
-            this.lblTotalPnLPercentLabel.Size = new System.Drawing.Size(0, 13);
-            this.lblTotalPnLPercentLabel.TabIndex = 237;
-            // 
-            // lblTotalPnLPercent
-            // 
-            this.lblTotalPnLPercent.AutoSize = true;
-            this.lblTotalPnLPercent.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblTotalPnLPercent.Location = new System.Drawing.Point(208, 95);
-            this.lblTotalPnLPercent.Name = "lblTotalPnLPercent";
-            this.lblTotalPnLPercent.Size = new System.Drawing.Size(78, 13);
-            this.lblTotalPnLPercent.TabIndex = 236;
-            this.lblTotalPnLPercent.Text = "Toplam PnL %:";
-            // 
-            // lblWinrateLabel
-            // 
-            this.lblWinrateLabel.AutoSize = true;
-            this.lblWinrateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblWinrateLabel.Location = new System.Drawing.Point(295, 182);
-            this.lblWinrateLabel.Name = "lblWinrateLabel";
-            this.lblWinrateLabel.Size = new System.Drawing.Size(0, 13);
-            this.lblWinrateLabel.TabIndex = 235;
-            // 
-            // lblWinRate
-            // 
-            this.lblWinRate.AutoSize = true;
-            this.lblWinRate.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblWinRate.Location = new System.Drawing.Point(200, 182);
-            this.lblWinRate.Name = "lblWinRate";
-            this.lblWinRate.Size = new System.Drawing.Size(86, 13);
-            this.lblWinRate.TabIndex = 234;
-            this.lblWinRate.Text = "Kazanç Yüzdesi:";
-            // 
-            // lblLossCountLabel
-            // 
-            this.lblLossCountLabel.AutoSize = true;
-            this.lblLossCountLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblLossCountLabel.Location = new System.Drawing.Point(295, 159);
-            this.lblLossCountLabel.Name = "lblLossCountLabel";
-            this.lblLossCountLabel.Size = new System.Drawing.Size(0, 13);
-            this.lblLossCountLabel.TabIndex = 233;
-            // 
-            // lblLossCount
-            // 
-            this.lblLossCount.AutoSize = true;
-            this.lblLossCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblLossCount.Location = new System.Drawing.Point(193, 159);
-            this.lblLossCount.Name = "lblLossCount";
-            this.lblLossCount.Size = new System.Drawing.Size(93, 13);
-            this.lblLossCount.TabIndex = 232;
-            this.lblLossCount.Text = "Kaybedilen Trade:";
-            // 
-            // lblWinCountLabel
-            // 
-            this.lblWinCountLabel.AutoSize = true;
-            this.lblWinCountLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblWinCountLabel.Location = new System.Drawing.Point(295, 133);
-            this.lblWinCountLabel.Name = "lblWinCountLabel";
-            this.lblWinCountLabel.Size = new System.Drawing.Size(0, 13);
-            this.lblWinCountLabel.TabIndex = 231;
-            // 
-            // lblWinCount
-            // 
-            this.lblWinCount.AutoSize = true;
-            this.lblWinCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblWinCount.Location = new System.Drawing.Point(199, 133);
-            this.lblWinCount.Name = "lblWinCount";
-            this.lblWinCount.Size = new System.Drawing.Size(87, 13);
-            this.lblWinCount.TabIndex = 230;
-            this.lblWinCount.Text = "Kazanılan Trade:";
-            // 
-            // lblTotalPnLLabel
-            // 
-            this.lblTotalPnLLabel.AutoSize = true;
-            this.lblTotalPnLLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblTotalPnLLabel.Location = new System.Drawing.Point(295, 69);
-            this.lblTotalPnLLabel.Name = "lblTotalPnLLabel";
-            this.lblTotalPnLLabel.Size = new System.Drawing.Size(0, 13);
-            this.lblTotalPnLLabel.TabIndex = 229;
-            // 
-            // lblTotalPnL
-            // 
-            this.lblTotalPnL.AutoSize = true;
-            this.lblTotalPnL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblTotalPnL.Location = new System.Drawing.Point(210, 69);
-            this.lblTotalPnL.Name = "lblTotalPnL";
-            this.lblTotalPnL.Size = new System.Drawing.Size(76, 13);
-            this.lblTotalPnL.TabIndex = 228;
-            this.lblTotalPnL.Text = "Toplam PnL $:";
-            // 
-            // lblLossesSumLabel
-            // 
-            this.lblLossesSumLabel.AutoSize = true;
-            this.lblLossesSumLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblLossesSumLabel.ForeColor = System.Drawing.Color.IndianRed;
-            this.lblLossesSumLabel.Location = new System.Drawing.Point(128, 148);
-            this.lblLossesSumLabel.Name = "lblLossesSumLabel";
-            this.lblLossesSumLabel.Size = new System.Drawing.Size(0, 13);
-            this.lblLossesSumLabel.TabIndex = 227;
-            // 
-            // lblLossesSum
-            // 
-            this.lblLossesSum.AutoSize = true;
-            this.lblLossesSum.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblLossesSum.Location = new System.Drawing.Point(45, 148);
-            this.lblLossesSum.Name = "lblLossesSum";
-            this.lblLossesSum.Size = new System.Drawing.Size(75, 13);
-            this.lblLossesSum.TabIndex = 226;
-            this.lblLossesSum.Text = "Zarar Toplamı:";
-            // 
-            // lblProfitsSumLabel
-            // 
-            this.lblProfitsSumLabel.AutoSize = true;
-            this.lblProfitsSumLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblProfitsSumLabel.ForeColor = System.Drawing.Color.SeaGreen;
-            this.lblProfitsSumLabel.Location = new System.Drawing.Point(128, 122);
-            this.lblProfitsSumLabel.Name = "lblProfitsSumLabel";
-            this.lblProfitsSumLabel.Size = new System.Drawing.Size(0, 13);
-            this.lblProfitsSumLabel.TabIndex = 225;
-            // 
-            // lblProfitsSum
-            // 
-            this.lblProfitsSum.AutoSize = true;
-            this.lblProfitsSum.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblProfitsSum.Location = new System.Drawing.Point(53, 122);
-            this.lblProfitsSum.Name = "lblProfitsSum";
-            this.lblProfitsSum.Size = new System.Drawing.Size(66, 13);
-            this.lblProfitsSum.TabIndex = 224;
-            this.lblProfitsSum.Text = "Kar Toplamı:";
-            // 
-            // lblLastBalanceLabel
-            // 
-            this.lblLastBalanceLabel.AutoSize = true;
-            this.lblLastBalanceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblLastBalanceLabel.Location = new System.Drawing.Point(128, 45);
-            this.lblLastBalanceLabel.Name = "lblLastBalanceLabel";
-            this.lblLastBalanceLabel.Size = new System.Drawing.Size(0, 13);
-            this.lblLastBalanceLabel.TabIndex = 223;
-            // 
-            // lblLastBalance
-            // 
-            this.lblLastBalance.AutoSize = true;
-            this.lblLastBalance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblLastBalance.Location = new System.Drawing.Point(39, 45);
-            this.lblLastBalance.Name = "lblLastBalance";
-            this.lblLastBalance.Size = new System.Drawing.Size(79, 13);
-            this.lblLastBalance.TabIndex = 222;
-            this.lblLastBalance.Text = "Güncel Bakiye:";
-            // 
-            // btnPlusMinus
-            // 
-            this.btnPlusMinus.Enabled = false;
-            this.btnPlusMinus.Image = ((System.Drawing.Image)(resources.GetObject("btnPlusMinus.Image")));
-            this.btnPlusMinus.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnPlusMinus.Location = new System.Drawing.Point(293, 12);
-            this.btnPlusMinus.Name = "btnPlusMinus";
-            this.btnPlusMinus.Size = new System.Drawing.Size(66, 24);
-            this.btnPlusMinus.TabIndex = 221;
-            this.btnPlusMinus.Text = "Ek/Az";
-            this.btnPlusMinus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnPlusMinus.UseVisualStyleBackColor = true;
-            this.btnPlusMinus.Click += new System.EventHandler(this.btnPlusMinus_Click_1);
-            // 
-            // chckPlusMinus
-            // 
-            this.chckPlusMinus.AutoSize = true;
-            this.chckPlusMinus.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.chckPlusMinus.Location = new System.Drawing.Point(206, 20);
-            this.chckPlusMinus.Name = "chckPlusMinus";
-            this.chckPlusMinus.Size = new System.Drawing.Size(15, 14);
-            this.chckPlusMinus.TabIndex = 220;
-            this.chckPlusMinus.UseVisualStyleBackColor = true;
-            this.chckPlusMinus.CheckedChanged += new System.EventHandler(this.chckPlusMinus_CheckedChanged_1);
-            // 
-            // tbxPlusMinus
-            // 
-            this.tbxPlusMinus.Enabled = false;
-            this.tbxPlusMinus.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.tbxPlusMinus.Location = new System.Drawing.Point(227, 15);
-            this.tbxPlusMinus.Name = "tbxPlusMinus";
-            this.tbxPlusMinus.Size = new System.Drawing.Size(60, 20);
-            this.tbxPlusMinus.TabIndex = 219;
-            // 
-            // lblStartBalanceText
-            // 
-            this.lblStartBalanceText.AutoSize = true;
-            this.lblStartBalanceText.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblStartBalanceText.Location = new System.Drawing.Point(127, 18);
-            this.lblStartBalanceText.Name = "lblStartBalanceText";
-            this.lblStartBalanceText.Size = new System.Drawing.Size(0, 13);
-            this.lblStartBalanceText.TabIndex = 218;
-            // 
-            // lblStartBalance
-            // 
-            this.lblStartBalance.AutoSize = true;
-            this.lblStartBalance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblStartBalance.Location = new System.Drawing.Point(21, 18);
-            this.lblStartBalance.Name = "lblStartBalance";
-            this.lblStartBalance.Size = new System.Drawing.Size(98, 13);
-            this.lblStartBalance.TabIndex = 217;
-            this.lblStartBalance.Text = "Başlangıç Bakiyesi:";
-            // 
-            // btnUpdateMakerCommission
-            // 
-            this.btnUpdateMakerCommission.Enabled = false;
-            this.btnUpdateMakerCommission.Image = ((System.Drawing.Image)(resources.GetObject("btnUpdateMakerCommission.Image")));
-            this.btnUpdateMakerCommission.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnUpdateMakerCommission.Location = new System.Drawing.Point(215, 8);
-            this.btnUpdateMakerCommission.Name = "btnUpdateMakerCommission";
-            this.btnUpdateMakerCommission.Size = new System.Drawing.Size(76, 24);
-            this.btnUpdateMakerCommission.TabIndex = 226;
-            this.btnUpdateMakerCommission.Text = "Güncelle";
-            this.btnUpdateMakerCommission.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnUpdateMakerCommission.UseVisualStyleBackColor = true;
-            this.btnUpdateMakerCommission.Click += new System.EventHandler(this.btnUpdateMakerCommission_Click);
-            // 
-            // chckMakerCommission
-            // 
-            this.chckMakerCommission.AutoSize = true;
-            this.chckMakerCommission.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.chckMakerCommission.Location = new System.Drawing.Point(194, 15);
-            this.chckMakerCommission.Name = "chckMakerCommission";
-            this.chckMakerCommission.Size = new System.Drawing.Size(15, 14);
-            this.chckMakerCommission.TabIndex = 225;
-            this.chckMakerCommission.UseVisualStyleBackColor = true;
-            this.chckMakerCommission.CheckedChanged += new System.EventHandler(this.chckMakerCommission_CheckedChanged);
-            // 
-            // tbxMakerCommission
-            // 
-            this.tbxMakerCommission.Enabled = false;
-            this.tbxMakerCommission.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.tbxMakerCommission.Location = new System.Drawing.Point(118, 10);
-            this.tbxMakerCommission.Name = "tbxMakerCommission";
-            this.tbxMakerCommission.Size = new System.Drawing.Size(60, 20);
-            this.tbxMakerCommission.TabIndex = 224;
-            // 
-            // lblMakerCommission
-            // 
-            this.lblMakerCommission.AutoSize = true;
-            this.lblMakerCommission.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblMakerCommission.Location = new System.Drawing.Point(10, 15);
-            this.lblMakerCommission.Name = "lblMakerCommission";
-            this.lblMakerCommission.Size = new System.Drawing.Size(102, 13);
-            this.lblMakerCommission.TabIndex = 222;
-            this.lblMakerCommission.Text = "Maker Komisyon % :";
-            // 
-            // btnUpdateTakerCommission
-            // 
-            this.btnUpdateTakerCommission.Enabled = false;
-            this.btnUpdateTakerCommission.Image = ((System.Drawing.Image)(resources.GetObject("btnUpdateTakerCommission.Image")));
-            this.btnUpdateTakerCommission.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnUpdateTakerCommission.Location = new System.Drawing.Point(215, 38);
-            this.btnUpdateTakerCommission.Name = "btnUpdateTakerCommission";
-            this.btnUpdateTakerCommission.Size = new System.Drawing.Size(76, 24);
-            this.btnUpdateTakerCommission.TabIndex = 230;
-            this.btnUpdateTakerCommission.Text = "Güncelle";
-            this.btnUpdateTakerCommission.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnUpdateTakerCommission.UseVisualStyleBackColor = true;
-            this.btnUpdateTakerCommission.Click += new System.EventHandler(this.btnUpdateTakerCommission_Click);
-            // 
-            // chckTakerCommission
-            // 
-            this.chckTakerCommission.AutoSize = true;
-            this.chckTakerCommission.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.chckTakerCommission.Location = new System.Drawing.Point(194, 45);
-            this.chckTakerCommission.Name = "chckTakerCommission";
-            this.chckTakerCommission.Size = new System.Drawing.Size(15, 14);
-            this.chckTakerCommission.TabIndex = 229;
-            this.chckTakerCommission.UseVisualStyleBackColor = true;
-            this.chckTakerCommission.CheckedChanged += new System.EventHandler(this.chckTakerCommission_CheckedChanged);
-            // 
-            // tbxTakerCommission
-            // 
-            this.tbxTakerCommission.Enabled = false;
-            this.tbxTakerCommission.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.tbxTakerCommission.Location = new System.Drawing.Point(118, 40);
-            this.tbxTakerCommission.Name = "tbxTakerCommission";
-            this.tbxTakerCommission.Size = new System.Drawing.Size(60, 20);
-            this.tbxTakerCommission.TabIndex = 228;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label1.Location = new System.Drawing.Point(12, 45);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(100, 13);
-            this.label1.TabIndex = 227;
-            this.label1.Text = "Taker Komisyon % :";
+            // lblAvailableBalanceLabel
+            // 
+            this.lblAvailableBalanceLabel.AutoSize = true;
+            this.lblAvailableBalanceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblAvailableBalanceLabel.Location = new System.Drawing.Point(129, 95);
+            this.lblAvailableBalanceLabel.Name = "lblAvailableBalanceLabel";
+            this.lblAvailableBalanceLabel.Size = new System.Drawing.Size(0, 13);
+            this.lblAvailableBalanceLabel.TabIndex = 289;
+            // 
+            // lblAvailableBalance
+            // 
+            this.lblAvailableBalance.AutoSize = true;
+            this.lblAvailableBalance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblAvailableBalance.Location = new System.Drawing.Point(38, 95);
+            this.lblAvailableBalance.Name = "lblAvailableBalance";
+            this.lblAvailableBalance.Size = new System.Drawing.Size(80, 13);
+            this.lblAvailableBalance.TabIndex = 288;
+            this.lblAvailableBalance.Text = "Boştaki Bakiye:";
+            // 
+            // lblInTradeBalanceLabel
+            // 
+            this.lblInTradeBalanceLabel.AutoSize = true;
+            this.lblInTradeBalanceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblInTradeBalanceLabel.Location = new System.Drawing.Point(127, 69);
+            this.lblInTradeBalanceLabel.Name = "lblInTradeBalanceLabel";
+            this.lblInTradeBalanceLabel.Size = new System.Drawing.Size(0, 13);
+            this.lblInTradeBalanceLabel.TabIndex = 287;
+            // 
+            // lblInTradeBalance
+            // 
+            this.lblInTradeBalance.AutoSize = true;
+            this.lblInTradeBalance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblInTradeBalance.Location = new System.Drawing.Point(29, 69);
+            this.lblInTradeBalance.Name = "lblInTradeBalance";
+            this.lblInTradeBalance.Size = new System.Drawing.Size(89, 13);
+            this.lblInTradeBalance.TabIndex = 286;
+            this.lblInTradeBalance.Text = "İşlemdeki Bakiye:";
+            // 
+            // lblLine2
+            // 
+            this.lblLine2.AutoSize = true;
+            this.lblLine2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblLine2.Location = new System.Drawing.Point(7, 240);
+            this.lblLine2.Name = "lblLine2";
+            this.lblLine2.Size = new System.Drawing.Size(358, 13);
+            this.lblLine2.TabIndex = 285;
+            this.lblLine2.Text = "---------------------------------------------------------------------------------" +
+    "------------------------------------";
             // 
             // lblOrderType
             // 
@@ -1246,54 +966,410 @@
             this.cbxPositionSide.Size = new System.Drawing.Size(201, 21);
             this.cbxPositionSide.TabIndex = 242;
             // 
-            // lblLine2
+            // lblTotalFundingFeeLabel
             // 
-            this.lblLine2.AutoSize = true;
-            this.lblLine2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblLine2.Location = new System.Drawing.Point(7, 240);
-            this.lblLine2.Name = "lblLine2";
-            this.lblLine2.Size = new System.Drawing.Size(358, 13);
-            this.lblLine2.TabIndex = 285;
-            this.lblLine2.Text = "---------------------------------------------------------------------------------" +
-    "------------------------------------";
+            this.lblTotalFundingFeeLabel.AutoSize = true;
+            this.lblTotalFundingFeeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblTotalFundingFeeLabel.ForeColor = System.Drawing.Color.DarkSalmon;
+            this.lblTotalFundingFeeLabel.Location = new System.Drawing.Point(128, 195);
+            this.lblTotalFundingFeeLabel.Name = "lblTotalFundingFeeLabel";
+            this.lblTotalFundingFeeLabel.Size = new System.Drawing.Size(0, 13);
+            this.lblTotalFundingFeeLabel.TabIndex = 241;
             // 
-            // lblInTradeBalanceLabel
+            // lblTotalFundingFee
             // 
-            this.lblInTradeBalanceLabel.AutoSize = true;
-            this.lblInTradeBalanceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblInTradeBalanceLabel.Location = new System.Drawing.Point(127, 69);
-            this.lblInTradeBalanceLabel.Name = "lblInTradeBalanceLabel";
-            this.lblInTradeBalanceLabel.Size = new System.Drawing.Size(0, 13);
-            this.lblInTradeBalanceLabel.TabIndex = 287;
+            this.lblTotalFundingFee.AutoSize = true;
+            this.lblTotalFundingFee.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblTotalFundingFee.Location = new System.Drawing.Point(6, 195);
+            this.lblTotalFundingFee.Name = "lblTotalFundingFee";
+            this.lblTotalFundingFee.Size = new System.Drawing.Size(113, 13);
+            this.lblTotalFundingFee.TabIndex = 240;
+            this.lblTotalFundingFee.Text = "Top. Fonlama Maliyeti:";
             // 
-            // lblInTradeBalance
+            // lblTotalCommissionLabel
             // 
-            this.lblInTradeBalance.AutoSize = true;
-            this.lblInTradeBalance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblInTradeBalance.Location = new System.Drawing.Point(29, 69);
-            this.lblInTradeBalance.Name = "lblInTradeBalance";
-            this.lblInTradeBalance.Size = new System.Drawing.Size(89, 13);
-            this.lblInTradeBalance.TabIndex = 286;
-            this.lblInTradeBalance.Text = "İşlemdeki Bakiye:";
+            this.lblTotalCommissionLabel.AutoSize = true;
+            this.lblTotalCommissionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblTotalCommissionLabel.ForeColor = System.Drawing.Color.DarkOrange;
+            this.lblTotalCommissionLabel.Location = new System.Drawing.Point(128, 172);
+            this.lblTotalCommissionLabel.Name = "lblTotalCommissionLabel";
+            this.lblTotalCommissionLabel.Size = new System.Drawing.Size(0, 13);
+            this.lblTotalCommissionLabel.TabIndex = 239;
             // 
-            // lblAvailableBalanceLabel
+            // lblTotalCommission
             // 
-            this.lblAvailableBalanceLabel.AutoSize = true;
-            this.lblAvailableBalanceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblAvailableBalanceLabel.Location = new System.Drawing.Point(129, 95);
-            this.lblAvailableBalanceLabel.Name = "lblAvailableBalanceLabel";
-            this.lblAvailableBalanceLabel.Size = new System.Drawing.Size(0, 13);
-            this.lblAvailableBalanceLabel.TabIndex = 289;
+            this.lblTotalCommission.AutoSize = true;
+            this.lblTotalCommission.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblTotalCommission.Location = new System.Drawing.Point(26, 172);
+            this.lblTotalCommission.Name = "lblTotalCommission";
+            this.lblTotalCommission.Size = new System.Drawing.Size(93, 13);
+            this.lblTotalCommission.TabIndex = 238;
+            this.lblTotalCommission.Text = "Toplam Komisyon:";
             // 
-            // lblAvailableBalance
+            // lblTotalPnLPercentLabel
             // 
-            this.lblAvailableBalance.AutoSize = true;
-            this.lblAvailableBalance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblAvailableBalance.Location = new System.Drawing.Point(38, 95);
-            this.lblAvailableBalance.Name = "lblAvailableBalance";
-            this.lblAvailableBalance.Size = new System.Drawing.Size(80, 13);
-            this.lblAvailableBalance.TabIndex = 288;
-            this.lblAvailableBalance.Text = "Boştaki Bakiye:";
+            this.lblTotalPnLPercentLabel.AutoSize = true;
+            this.lblTotalPnLPercentLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblTotalPnLPercentLabel.Location = new System.Drawing.Point(295, 95);
+            this.lblTotalPnLPercentLabel.Name = "lblTotalPnLPercentLabel";
+            this.lblTotalPnLPercentLabel.Size = new System.Drawing.Size(0, 13);
+            this.lblTotalPnLPercentLabel.TabIndex = 237;
+            // 
+            // lblTotalPnLPercent
+            // 
+            this.lblTotalPnLPercent.AutoSize = true;
+            this.lblTotalPnLPercent.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblTotalPnLPercent.Location = new System.Drawing.Point(208, 95);
+            this.lblTotalPnLPercent.Name = "lblTotalPnLPercent";
+            this.lblTotalPnLPercent.Size = new System.Drawing.Size(78, 13);
+            this.lblTotalPnLPercent.TabIndex = 236;
+            this.lblTotalPnLPercent.Text = "Toplam PnL %:";
+            // 
+            // lblWinrateLabel
+            // 
+            this.lblWinrateLabel.AutoSize = true;
+            this.lblWinrateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblWinrateLabel.Location = new System.Drawing.Point(295, 182);
+            this.lblWinrateLabel.Name = "lblWinrateLabel";
+            this.lblWinrateLabel.Size = new System.Drawing.Size(0, 13);
+            this.lblWinrateLabel.TabIndex = 235;
+            // 
+            // lblWinRate
+            // 
+            this.lblWinRate.AutoSize = true;
+            this.lblWinRate.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblWinRate.Location = new System.Drawing.Point(200, 182);
+            this.lblWinRate.Name = "lblWinRate";
+            this.lblWinRate.Size = new System.Drawing.Size(86, 13);
+            this.lblWinRate.TabIndex = 234;
+            this.lblWinRate.Text = "Kazanç Yüzdesi:";
+            // 
+            // lblLossCountLabel
+            // 
+            this.lblLossCountLabel.AutoSize = true;
+            this.lblLossCountLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblLossCountLabel.ForeColor = System.Drawing.Color.IndianRed;
+            this.lblLossCountLabel.Location = new System.Drawing.Point(295, 159);
+            this.lblLossCountLabel.Name = "lblLossCountLabel";
+            this.lblLossCountLabel.Size = new System.Drawing.Size(0, 13);
+            this.lblLossCountLabel.TabIndex = 233;
+            // 
+            // lblLossCount
+            // 
+            this.lblLossCount.AutoSize = true;
+            this.lblLossCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblLossCount.Location = new System.Drawing.Point(193, 159);
+            this.lblLossCount.Name = "lblLossCount";
+            this.lblLossCount.Size = new System.Drawing.Size(93, 13);
+            this.lblLossCount.TabIndex = 232;
+            this.lblLossCount.Text = "Kaybedilen Trade:";
+            // 
+            // lblWinCountLabel
+            // 
+            this.lblWinCountLabel.AutoSize = true;
+            this.lblWinCountLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblWinCountLabel.ForeColor = System.Drawing.Color.SeaGreen;
+            this.lblWinCountLabel.Location = new System.Drawing.Point(295, 133);
+            this.lblWinCountLabel.Name = "lblWinCountLabel";
+            this.lblWinCountLabel.Size = new System.Drawing.Size(0, 13);
+            this.lblWinCountLabel.TabIndex = 231;
+            // 
+            // lblWinCount
+            // 
+            this.lblWinCount.AutoSize = true;
+            this.lblWinCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblWinCount.Location = new System.Drawing.Point(199, 133);
+            this.lblWinCount.Name = "lblWinCount";
+            this.lblWinCount.Size = new System.Drawing.Size(87, 13);
+            this.lblWinCount.TabIndex = 230;
+            this.lblWinCount.Text = "Kazanılan Trade:";
+            // 
+            // lblTotalPnLLabel
+            // 
+            this.lblTotalPnLLabel.AutoSize = true;
+            this.lblTotalPnLLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblTotalPnLLabel.Location = new System.Drawing.Point(295, 69);
+            this.lblTotalPnLLabel.Name = "lblTotalPnLLabel";
+            this.lblTotalPnLLabel.Size = new System.Drawing.Size(0, 13);
+            this.lblTotalPnLLabel.TabIndex = 229;
+            // 
+            // lblTotalPnL
+            // 
+            this.lblTotalPnL.AutoSize = true;
+            this.lblTotalPnL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblTotalPnL.Location = new System.Drawing.Point(210, 69);
+            this.lblTotalPnL.Name = "lblTotalPnL";
+            this.lblTotalPnL.Size = new System.Drawing.Size(76, 13);
+            this.lblTotalPnL.TabIndex = 228;
+            this.lblTotalPnL.Text = "Toplam PnL $:";
+            // 
+            // lblLossesSumLabel
+            // 
+            this.lblLossesSumLabel.AutoSize = true;
+            this.lblLossesSumLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblLossesSumLabel.ForeColor = System.Drawing.Color.IndianRed;
+            this.lblLossesSumLabel.Location = new System.Drawing.Point(128, 148);
+            this.lblLossesSumLabel.Name = "lblLossesSumLabel";
+            this.lblLossesSumLabel.Size = new System.Drawing.Size(0, 13);
+            this.lblLossesSumLabel.TabIndex = 227;
+            // 
+            // lblLossesSum
+            // 
+            this.lblLossesSum.AutoSize = true;
+            this.lblLossesSum.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblLossesSum.Location = new System.Drawing.Point(45, 148);
+            this.lblLossesSum.Name = "lblLossesSum";
+            this.lblLossesSum.Size = new System.Drawing.Size(75, 13);
+            this.lblLossesSum.TabIndex = 226;
+            this.lblLossesSum.Text = "Zarar Toplamı:";
+            // 
+            // lblProfitsSumLabel
+            // 
+            this.lblProfitsSumLabel.AutoSize = true;
+            this.lblProfitsSumLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblProfitsSumLabel.ForeColor = System.Drawing.Color.SeaGreen;
+            this.lblProfitsSumLabel.Location = new System.Drawing.Point(128, 122);
+            this.lblProfitsSumLabel.Name = "lblProfitsSumLabel";
+            this.lblProfitsSumLabel.Size = new System.Drawing.Size(0, 13);
+            this.lblProfitsSumLabel.TabIndex = 225;
+            // 
+            // lblProfitsSum
+            // 
+            this.lblProfitsSum.AutoSize = true;
+            this.lblProfitsSum.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblProfitsSum.Location = new System.Drawing.Point(53, 122);
+            this.lblProfitsSum.Name = "lblProfitsSum";
+            this.lblProfitsSum.Size = new System.Drawing.Size(66, 13);
+            this.lblProfitsSum.TabIndex = 224;
+            this.lblProfitsSum.Text = "Kar Toplamı:";
+            // 
+            // lblLastBalanceLabel
+            // 
+            this.lblLastBalanceLabel.AutoSize = true;
+            this.lblLastBalanceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblLastBalanceLabel.Location = new System.Drawing.Point(128, 45);
+            this.lblLastBalanceLabel.Name = "lblLastBalanceLabel";
+            this.lblLastBalanceLabel.Size = new System.Drawing.Size(0, 13);
+            this.lblLastBalanceLabel.TabIndex = 223;
+            // 
+            // lblLastBalance
+            // 
+            this.lblLastBalance.AutoSize = true;
+            this.lblLastBalance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblLastBalance.Location = new System.Drawing.Point(39, 45);
+            this.lblLastBalance.Name = "lblLastBalance";
+            this.lblLastBalance.Size = new System.Drawing.Size(79, 13);
+            this.lblLastBalance.TabIndex = 222;
+            this.lblLastBalance.Text = "Güncel Bakiye:";
+            // 
+            // btnPlusMinus
+            // 
+            this.btnPlusMinus.Enabled = false;
+            this.btnPlusMinus.Image = ((System.Drawing.Image)(resources.GetObject("btnPlusMinus.Image")));
+            this.btnPlusMinus.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnPlusMinus.Location = new System.Drawing.Point(293, 12);
+            this.btnPlusMinus.Name = "btnPlusMinus";
+            this.btnPlusMinus.Size = new System.Drawing.Size(66, 24);
+            this.btnPlusMinus.TabIndex = 221;
+            this.btnPlusMinus.Text = "Ek/Az";
+            this.btnPlusMinus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnPlusMinus.UseVisualStyleBackColor = true;
+            this.btnPlusMinus.Click += new System.EventHandler(this.btnPlusMinus_Click_1);
+            // 
+            // chckPlusMinus
+            // 
+            this.chckPlusMinus.AutoSize = true;
+            this.chckPlusMinus.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.chckPlusMinus.Location = new System.Drawing.Point(206, 20);
+            this.chckPlusMinus.Name = "chckPlusMinus";
+            this.chckPlusMinus.Size = new System.Drawing.Size(15, 14);
+            this.chckPlusMinus.TabIndex = 220;
+            this.chckPlusMinus.UseVisualStyleBackColor = true;
+            this.chckPlusMinus.CheckedChanged += new System.EventHandler(this.chckPlusMinus_CheckedChanged_1);
+            // 
+            // tbxPlusMinus
+            // 
+            this.tbxPlusMinus.Enabled = false;
+            this.tbxPlusMinus.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.tbxPlusMinus.Location = new System.Drawing.Point(227, 15);
+            this.tbxPlusMinus.Name = "tbxPlusMinus";
+            this.tbxPlusMinus.Size = new System.Drawing.Size(60, 20);
+            this.tbxPlusMinus.TabIndex = 219;
+            // 
+            // lblStartBalanceText
+            // 
+            this.lblStartBalanceText.AutoSize = true;
+            this.lblStartBalanceText.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblStartBalanceText.Location = new System.Drawing.Point(127, 18);
+            this.lblStartBalanceText.Name = "lblStartBalanceText";
+            this.lblStartBalanceText.Size = new System.Drawing.Size(0, 13);
+            this.lblStartBalanceText.TabIndex = 218;
+            // 
+            // lblStartBalance
+            // 
+            this.lblStartBalance.AutoSize = true;
+            this.lblStartBalance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblStartBalance.Location = new System.Drawing.Point(21, 18);
+            this.lblStartBalance.Name = "lblStartBalance";
+            this.lblStartBalance.Size = new System.Drawing.Size(98, 13);
+            this.lblStartBalance.TabIndex = 217;
+            this.lblStartBalance.Text = "Başlangıç Bakiyesi:";
+            // 
+            // tpgSettings
+            // 
+            this.tpgSettings.Controls.Add(this.checkedListBox1);
+            this.tpgSettings.Controls.Add(this.btnUpdateTakerCommission);
+            this.tpgSettings.Controls.Add(this.chckTakerCommission);
+            this.tpgSettings.Controls.Add(this.tbxTakerCommission);
+            this.tpgSettings.Controls.Add(this.label1);
+            this.tpgSettings.Controls.Add(this.btnUpdateMakerCommission);
+            this.tpgSettings.Controls.Add(this.chckMakerCommission);
+            this.tpgSettings.Controls.Add(this.tbxMakerCommission);
+            this.tpgSettings.Controls.Add(this.lblMakerCommission);
+            this.tpgSettings.Location = new System.Drawing.Point(4, 22);
+            this.tpgSettings.Name = "tpgSettings";
+            this.tpgSettings.Padding = new System.Windows.Forms.Padding(3);
+            this.tpgSettings.Size = new System.Drawing.Size(372, 869);
+            this.tpgSettings.TabIndex = 1;
+            this.tpgSettings.Text = "Ayarlar";
+            // 
+            // checkedListBox1
+            // 
+            this.checkedListBox1.FormattingEnabled = true;
+            this.checkedListBox1.Location = new System.Drawing.Point(15, 77);
+            this.checkedListBox1.Name = "checkedListBox1";
+            this.checkedListBox1.Size = new System.Drawing.Size(173, 364);
+            this.checkedListBox1.TabIndex = 231;
+            // 
+            // btnUpdateTakerCommission
+            // 
+            this.btnUpdateTakerCommission.Enabled = false;
+            this.btnUpdateTakerCommission.Image = ((System.Drawing.Image)(resources.GetObject("btnUpdateTakerCommission.Image")));
+            this.btnUpdateTakerCommission.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnUpdateTakerCommission.Location = new System.Drawing.Point(215, 38);
+            this.btnUpdateTakerCommission.Name = "btnUpdateTakerCommission";
+            this.btnUpdateTakerCommission.Size = new System.Drawing.Size(76, 24);
+            this.btnUpdateTakerCommission.TabIndex = 230;
+            this.btnUpdateTakerCommission.Text = "Güncelle";
+            this.btnUpdateTakerCommission.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnUpdateTakerCommission.UseVisualStyleBackColor = true;
+            this.btnUpdateTakerCommission.Click += new System.EventHandler(this.btnUpdateTakerCommission_Click);
+            // 
+            // chckTakerCommission
+            // 
+            this.chckTakerCommission.AutoSize = true;
+            this.chckTakerCommission.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.chckTakerCommission.Location = new System.Drawing.Point(194, 45);
+            this.chckTakerCommission.Name = "chckTakerCommission";
+            this.chckTakerCommission.Size = new System.Drawing.Size(15, 14);
+            this.chckTakerCommission.TabIndex = 229;
+            this.chckTakerCommission.UseVisualStyleBackColor = true;
+            this.chckTakerCommission.CheckedChanged += new System.EventHandler(this.chckTakerCommission_CheckedChanged);
+            // 
+            // tbxTakerCommission
+            // 
+            this.tbxTakerCommission.Enabled = false;
+            this.tbxTakerCommission.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.tbxTakerCommission.Location = new System.Drawing.Point(118, 40);
+            this.tbxTakerCommission.Name = "tbxTakerCommission";
+            this.tbxTakerCommission.Size = new System.Drawing.Size(60, 20);
+            this.tbxTakerCommission.TabIndex = 228;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label1.Location = new System.Drawing.Point(12, 45);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(100, 13);
+            this.label1.TabIndex = 227;
+            this.label1.Text = "Taker Komisyon % :";
+            // 
+            // btnUpdateMakerCommission
+            // 
+            this.btnUpdateMakerCommission.Enabled = false;
+            this.btnUpdateMakerCommission.Image = ((System.Drawing.Image)(resources.GetObject("btnUpdateMakerCommission.Image")));
+            this.btnUpdateMakerCommission.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnUpdateMakerCommission.Location = new System.Drawing.Point(215, 8);
+            this.btnUpdateMakerCommission.Name = "btnUpdateMakerCommission";
+            this.btnUpdateMakerCommission.Size = new System.Drawing.Size(76, 24);
+            this.btnUpdateMakerCommission.TabIndex = 226;
+            this.btnUpdateMakerCommission.Text = "Güncelle";
+            this.btnUpdateMakerCommission.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnUpdateMakerCommission.UseVisualStyleBackColor = true;
+            this.btnUpdateMakerCommission.Click += new System.EventHandler(this.btnUpdateMakerCommission_Click);
+            // 
+            // chckMakerCommission
+            // 
+            this.chckMakerCommission.AutoSize = true;
+            this.chckMakerCommission.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.chckMakerCommission.Location = new System.Drawing.Point(194, 15);
+            this.chckMakerCommission.Name = "chckMakerCommission";
+            this.chckMakerCommission.Size = new System.Drawing.Size(15, 14);
+            this.chckMakerCommission.TabIndex = 225;
+            this.chckMakerCommission.UseVisualStyleBackColor = true;
+            this.chckMakerCommission.CheckedChanged += new System.EventHandler(this.chckMakerCommission_CheckedChanged);
+            // 
+            // tbxMakerCommission
+            // 
+            this.tbxMakerCommission.Enabled = false;
+            this.tbxMakerCommission.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.tbxMakerCommission.Location = new System.Drawing.Point(118, 10);
+            this.tbxMakerCommission.Name = "tbxMakerCommission";
+            this.tbxMakerCommission.Size = new System.Drawing.Size(60, 20);
+            this.tbxMakerCommission.TabIndex = 224;
+            // 
+            // lblMakerCommission
+            // 
+            this.lblMakerCommission.AutoSize = true;
+            this.lblMakerCommission.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblMakerCommission.Location = new System.Drawing.Point(10, 15);
+            this.lblMakerCommission.Name = "lblMakerCommission";
+            this.lblMakerCommission.Size = new System.Drawing.Size(102, 13);
+            this.lblMakerCommission.TabIndex = 222;
+            this.lblMakerCommission.Text = "Maker Komisyon % :";
+            // 
+            // cmsExport
+            // 
+            this.cmsExport.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiExportToExcel,
+            this.tsmiExportToPdf,
+            this.tsmiExportStatisticsImage,
+            this.tsmiExportTradeStatistics});
+            this.cmsExport.Name = "cmsExport";
+            this.cmsExport.Size = new System.Drawing.Size(195, 92);
+            // 
+            // tsmiExportToExcel
+            // 
+            this.tsmiExportToExcel.Image = ((System.Drawing.Image)(resources.GetObject("tsmiExportToExcel.Image")));
+            this.tsmiExportToExcel.Name = "tsmiExportToExcel";
+            this.tsmiExportToExcel.Size = new System.Drawing.Size(194, 22);
+            this.tsmiExportToExcel.Text = "Excele Aktar";
+            this.tsmiExportToExcel.Click += new System.EventHandler(this.tsmiExportToExcel_Click);
+            // 
+            // tsmiExportToPdf
+            // 
+            this.tsmiExportToPdf.Image = ((System.Drawing.Image)(resources.GetObject("tsmiExportToPdf.Image")));
+            this.tsmiExportToPdf.Name = "tsmiExportToPdf";
+            this.tsmiExportToPdf.Size = new System.Drawing.Size(194, 22);
+            this.tsmiExportToPdf.Text = "Pdf\'e Aktar";
+            this.tsmiExportToPdf.Click += new System.EventHandler(this.tsmiExportToPdf_Click);
+            // 
+            // tsmiExportStatisticsImage
+            // 
+            this.tsmiExportStatisticsImage.Image = ((System.Drawing.Image)(resources.GetObject("tsmiExportStatisticsImage.Image")));
+            this.tsmiExportStatisticsImage.Name = "tsmiExportStatisticsImage";
+            this.tsmiExportStatisticsImage.Size = new System.Drawing.Size(194, 22);
+            this.tsmiExportStatisticsImage.Text = "İstatistik Resmi Oluştur";
+            this.tsmiExportStatisticsImage.Click += new System.EventHandler(this.tsmiExportStatisticsImage_Click);
+            // 
+            // tsmiExportTradeStatistics
+            // 
+            this.tsmiExportTradeStatistics.Image = ((System.Drawing.Image)(resources.GetObject("tsmiExportTradeStatistics.Image")));
+            this.tsmiExportTradeStatistics.Name = "tsmiExportTradeStatistics";
+            this.tsmiExportTradeStatistics.Size = new System.Drawing.Size(194, 22);
+            this.tsmiExportTradeStatistics.Text = "Trade İstatistik Resmi";
+            this.tsmiExportTradeStatistics.Click += new System.EventHandler(this.tsmiExportTradeStatistics_Click);
             // 
             // TradeList
             // 
@@ -1327,6 +1403,7 @@
             this.tpgTrade.PerformLayout();
             this.tpgSettings.ResumeLayout(false);
             this.tpgSettings.PerformLayout();
+            this.cmsExport.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1431,6 +1508,13 @@
         private System.Windows.Forms.Label lblAvailableBalance;
         private System.Windows.Forms.Label lblInTradeBalanceLabel;
         private System.Windows.Forms.Label lblInTradeBalance;
+        private System.Windows.Forms.Button btnExport;
+        private System.Windows.Forms.CheckedListBox checkedListBox1;
+        private System.Windows.Forms.ContextMenuStrip cmsExport;
+        private System.Windows.Forms.ToolStripMenuItem tsmiExportToExcel;
+        private System.Windows.Forms.ToolStripMenuItem tsmiExportToPdf;
+        private System.Windows.Forms.ToolStripMenuItem tsmiExportStatisticsImage;
+        private System.Windows.Forms.ToolStripMenuItem tsmiExportTradeStatistics;
     }
 }
 
