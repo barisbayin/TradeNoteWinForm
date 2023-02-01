@@ -121,6 +121,7 @@
             this.lblStartBalanceText = new System.Windows.Forms.Label();
             this.lblStartBalance = new System.Windows.Forms.Label();
             this.tpgSettings = new System.Windows.Forms.TabPage();
+            this.btnSaveTradeCheckedListBox = new System.Windows.Forms.Button();
             this.chcklbTradeColumns = new System.Windows.Forms.CheckedListBox();
             this.btnUpdateTakerCommission = new System.Windows.Forms.Button();
             this.chckTakerCommission = new System.Windows.Forms.CheckBox();
@@ -135,7 +136,6 @@
             this.tsmiExportToPdf = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiExportStatisticsImage = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiExportTradeStatistics = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnSaveTradeCheckedListBox = new System.Windows.Forms.Button();
             this.pnlNavBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.scMainMenu)).BeginInit();
             this.scMainMenu.Panel1.SuspendLayout();
@@ -1235,6 +1235,20 @@
             this.tpgSettings.TabIndex = 1;
             this.tpgSettings.Text = "Ayarlar";
             // 
+            // btnSaveTradeCheckedListBox
+            // 
+            this.btnSaveTradeCheckedListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnSaveTradeCheckedListBox.Image = ((System.Drawing.Image)(resources.GetObject("btnSaveTradeCheckedListBox.Image")));
+            this.btnSaveTradeCheckedListBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSaveTradeCheckedListBox.Location = new System.Drawing.Point(264, 466);
+            this.btnSaveTradeCheckedListBox.Name = "btnSaveTradeCheckedListBox";
+            this.btnSaveTradeCheckedListBox.Size = new System.Drawing.Size(64, 28);
+            this.btnSaveTradeCheckedListBox.TabIndex = 258;
+            this.btnSaveTradeCheckedListBox.Text = "Kaydet";
+            this.btnSaveTradeCheckedListBox.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnSaveTradeCheckedListBox.UseVisualStyleBackColor = true;
+            this.btnSaveTradeCheckedListBox.Click += new System.EventHandler(this.btnsaveTradeCheckedListBox_Click);
+            // 
             // chcklbTradeColumns
             // 
             this.chcklbTradeColumns.FormattingEnabled = true;
@@ -1251,7 +1265,7 @@
             "Take Profit Fiyatı",
             "Ortalama Giriş Fiyatı",
             "Ortalama Pozisyon Kapama Fiyatı",
-            "Risk Yizdesi",
+            "Risk Yüzdesi",
             "Kazanç Yüzdesi",
             "Risk/Kazanç Yüzdesi",
             "Tahmini Risk Miktarı",
@@ -1260,12 +1274,12 @@
             "Ortalama Pozisyon Kapama Adedi",
             "Posizyon Sonucu",
             "PnL",
-            "PnL Yizdesi",
+            "PnL Yüzdesi",
             "Toplam Komisyon",
             "Toplam Fonlama Maliyeti",
             "Notlar",
             "Trade Sonlandı Mı?"});
-            this.chcklbTradeColumns.Location = new System.Drawing.Point(13, 66);
+            this.chcklbTradeColumns.Location = new System.Drawing.Point(50, 66);
             this.chcklbTradeColumns.Name = "chcklbTradeColumns";
             this.chcklbTradeColumns.Size = new System.Drawing.Size(278, 394);
             this.chcklbTradeColumns.TabIndex = 231;
@@ -1275,7 +1289,7 @@
             this.btnUpdateTakerCommission.Enabled = false;
             this.btnUpdateTakerCommission.Image = ((System.Drawing.Image)(resources.GetObject("btnUpdateTakerCommission.Image")));
             this.btnUpdateTakerCommission.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnUpdateTakerCommission.Location = new System.Drawing.Point(215, 38);
+            this.btnUpdateTakerCommission.Location = new System.Drawing.Point(252, 38);
             this.btnUpdateTakerCommission.Name = "btnUpdateTakerCommission";
             this.btnUpdateTakerCommission.Size = new System.Drawing.Size(76, 24);
             this.btnUpdateTakerCommission.TabIndex = 230;
@@ -1288,7 +1302,7 @@
             // 
             this.chckTakerCommission.AutoSize = true;
             this.chckTakerCommission.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.chckTakerCommission.Location = new System.Drawing.Point(194, 45);
+            this.chckTakerCommission.Location = new System.Drawing.Point(231, 45);
             this.chckTakerCommission.Name = "chckTakerCommission";
             this.chckTakerCommission.Size = new System.Drawing.Size(15, 14);
             this.chckTakerCommission.TabIndex = 229;
@@ -1299,7 +1313,7 @@
             // 
             this.tbxTakerCommission.Enabled = false;
             this.tbxTakerCommission.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.tbxTakerCommission.Location = new System.Drawing.Point(118, 40);
+            this.tbxTakerCommission.Location = new System.Drawing.Point(155, 40);
             this.tbxTakerCommission.Name = "tbxTakerCommission";
             this.tbxTakerCommission.Size = new System.Drawing.Size(60, 20);
             this.tbxTakerCommission.TabIndex = 228;
@@ -1308,7 +1322,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label1.Location = new System.Drawing.Point(12, 45);
+            this.label1.Location = new System.Drawing.Point(49, 45);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(100, 13);
             this.label1.TabIndex = 227;
@@ -1319,7 +1333,7 @@
             this.btnUpdateMakerCommission.Enabled = false;
             this.btnUpdateMakerCommission.Image = ((System.Drawing.Image)(resources.GetObject("btnUpdateMakerCommission.Image")));
             this.btnUpdateMakerCommission.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnUpdateMakerCommission.Location = new System.Drawing.Point(215, 8);
+            this.btnUpdateMakerCommission.Location = new System.Drawing.Point(252, 8);
             this.btnUpdateMakerCommission.Name = "btnUpdateMakerCommission";
             this.btnUpdateMakerCommission.Size = new System.Drawing.Size(76, 24);
             this.btnUpdateMakerCommission.TabIndex = 226;
@@ -1332,7 +1346,7 @@
             // 
             this.chckMakerCommission.AutoSize = true;
             this.chckMakerCommission.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.chckMakerCommission.Location = new System.Drawing.Point(194, 15);
+            this.chckMakerCommission.Location = new System.Drawing.Point(231, 15);
             this.chckMakerCommission.Name = "chckMakerCommission";
             this.chckMakerCommission.Size = new System.Drawing.Size(15, 14);
             this.chckMakerCommission.TabIndex = 225;
@@ -1343,7 +1357,7 @@
             // 
             this.tbxMakerCommission.Enabled = false;
             this.tbxMakerCommission.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.tbxMakerCommission.Location = new System.Drawing.Point(118, 10);
+            this.tbxMakerCommission.Location = new System.Drawing.Point(155, 10);
             this.tbxMakerCommission.Name = "tbxMakerCommission";
             this.tbxMakerCommission.Size = new System.Drawing.Size(60, 20);
             this.tbxMakerCommission.TabIndex = 224;
@@ -1352,7 +1366,7 @@
             // 
             this.lblMakerCommission.AutoSize = true;
             this.lblMakerCommission.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblMakerCommission.Location = new System.Drawing.Point(10, 15);
+            this.lblMakerCommission.Location = new System.Drawing.Point(47, 15);
             this.lblMakerCommission.Name = "lblMakerCommission";
             this.lblMakerCommission.Size = new System.Drawing.Size(102, 13);
             this.lblMakerCommission.TabIndex = 222;
@@ -1399,20 +1413,6 @@
             this.tsmiExportTradeStatistics.Size = new System.Drawing.Size(194, 22);
             this.tsmiExportTradeStatistics.Text = "Trade İstatistik Resmi";
             this.tsmiExportTradeStatistics.Click += new System.EventHandler(this.tsmiExportTradeStatistics_Click);
-            // 
-            // btnSaveTradeCheckedListBox
-            // 
-            this.btnSaveTradeCheckedListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnSaveTradeCheckedListBox.Image = ((System.Drawing.Image)(resources.GetObject("btnSaveTradeCheckedListBox.Image")));
-            this.btnSaveTradeCheckedListBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSaveTradeCheckedListBox.Location = new System.Drawing.Point(227, 466);
-            this.btnSaveTradeCheckedListBox.Name = "btnSaveTradeCheckedListBox";
-            this.btnSaveTradeCheckedListBox.Size = new System.Drawing.Size(64, 28);
-            this.btnSaveTradeCheckedListBox.TabIndex = 258;
-            this.btnSaveTradeCheckedListBox.Text = "Kaydet";
-            this.btnSaveTradeCheckedListBox.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnSaveTradeCheckedListBox.UseVisualStyleBackColor = true;
-            this.btnSaveTradeCheckedListBox.Click += new System.EventHandler(this.btnsaveTradeCheckedListBox_Click);
             // 
             // TradeList
             // 

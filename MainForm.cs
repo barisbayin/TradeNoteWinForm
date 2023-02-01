@@ -110,7 +110,116 @@ namespace TradeNote
 
                     dgvTradeList.DataSource = tradeList;
                     dgvTradeList.ReadOnly = true;
-                    dgvTradeList.Columns["EndTrade"].Visible = false;
+
+                    var columnSettings = GetColumnSettings();
+
+                    foreach (var columnSetting in columnSettings)
+                    {
+                        if (columnSetting.Key == "Id")
+                        {
+                            dgvTradeList.Columns["Id"].Visible = columnSetting.Value;
+                        }
+                        if (columnSetting.Key == "Trade Başlangıç Tarihi")
+                        {
+                            dgvTradeList.Columns["TradeStartDate"].Visible = columnSetting.Value;
+                        }
+                        if (columnSetting.Key == "Trade Bitiş Tarihi")
+                        {
+                            dgvTradeList.Columns["TradeEndDate"].Visible = columnSetting.Value;
+                        }
+                        if (columnSetting.Key == "Posizyon Yönü")
+                        {
+                            dgvTradeList.Columns["PositionSide"].Visible = columnSetting.Value;
+                        }
+                        if (columnSetting.Key == "Ortalama Giriş Miktarı")
+                        {
+                            dgvTradeList.Columns["AverageEntryBalance"].Visible = columnSetting.Value;
+                        }
+                        if (columnSetting.Key == "Ortalama Giriş Adedi")
+                        {
+                            dgvTradeList.Columns["AverageEntryLotCount"].Visible = columnSetting.Value;
+                        }
+                        if (columnSetting.Key == "Kaldıraç")
+                        {
+                            dgvTradeList.Columns["Leverage"].Visible = columnSetting.Value;
+                        }
+                        if (columnSetting.Key == "Hedeflenen Giriş Fiyatı")
+                        {
+                            dgvTradeList.Columns["TargetedEntryPrice"].Visible = columnSetting.Value;
+                        }
+                        if (columnSetting.Key == "StopLoss Fiyatı")
+                        {
+                            dgvTradeList.Columns["StopLossPrice"].Visible = columnSetting.Value;
+                        }
+                        if (columnSetting.Key == "Take Profit Fiyatı")
+                        {
+                            dgvTradeList.Columns["TakeProfitPrice"].Visible = columnSetting.Value;
+                        }
+                        if (columnSetting.Key == "Ortalama Giriş Fiyatı")
+                        {
+                            dgvTradeList.Columns["AverageEntryPrice"].Visible = columnSetting.Value;
+                        }
+                        if (columnSetting.Key == "Ortalama Pozisyon Kapama Fiyatı")
+                        {
+                            dgvTradeList.Columns["AveragePositionClosePrice"].Visible = columnSetting.Value;
+                        }
+                        if (columnSetting.Key == "Risk Yüzdesi")
+                        {
+                            dgvTradeList.Columns["RiskPercent"].Visible = columnSetting.Value;
+                        }
+                        if (columnSetting.Key == "Kazanç Yüzdesi")
+                        {
+                            dgvTradeList.Columns["RewardPercent"].Visible = columnSetting.Value;
+                        }
+                        if (columnSetting.Key == "Risk/Kazanç Yüzdesi")
+                        {
+                            dgvTradeList.Columns["RiskRewardRatio"].Visible = columnSetting.Value;
+                        }
+                        if (columnSetting.Key == "Tahmini Risk Miktarı")
+                        {
+                            dgvTradeList.Columns["ExpectedRiskValue"].Visible = columnSetting.Value;
+                        }
+                        if (columnSetting.Key == "Tahmini Kazanç Miktarı")
+                        {
+                            dgvTradeList.Columns["ExpectedRewardValue"].Visible = columnSetting.Value;
+                        }
+                        if (columnSetting.Key == "Ortalama Posizyon Kapama Miktarı")
+                        {
+                            dgvTradeList.Columns["AverageCloseBalance"].Visible = columnSetting.Value;
+                        }
+                        if (columnSetting.Key == "Ortalama Pozisyon Kapama Adedi")
+                        {
+                            dgvTradeList.Columns["AverageCloseLotCount"].Visible = columnSetting.Value;
+                        }
+                        if (columnSetting.Key == "Posizyon Sonucu")
+                        {
+                            dgvTradeList.Columns["PositionResult"].Visible = columnSetting.Value;
+                        }
+                        if (columnSetting.Key == "PnL")
+                        {
+                            dgvTradeList.Columns["ProfitOrLoss"].Visible = columnSetting.Value;
+                        }
+                        if (columnSetting.Key == "PnL Yüzdesi")
+                        {
+                            dgvTradeList.Columns["ProfitOrLossPercent"].Visible = columnSetting.Value;
+                        }
+                        if (columnSetting.Key == "Toplam Komisyon")
+                        {
+                            dgvTradeList.Columns["CommissionSum"].Visible = columnSetting.Value;
+                        }
+                        if (columnSetting.Key == "Toplam Fonlama Maliyeti")
+                        {
+                            dgvTradeList.Columns["FundingFeeSum"].Visible = columnSetting.Value;
+                        }
+                        if (columnSetting.Key == "Notlar")
+                        {
+                            dgvTradeList.Columns["Note"].Visible = columnSetting.Value;
+                        }
+                        if (columnSetting.Key == "Trade Sonlandı Mı?")
+                        {
+                            dgvTradeList.Columns["EndTrade"].Visible = columnSetting.Value;
+                        }
+                    }
 
                     //dgvTradeList.Columns["AverageEntryBalance"].DefaultCellStyle.Format = "$#.##";
                     //dgvTradeList.Columns["TargetedEntryPrice"].DefaultCellStyle.Format = "$#.##";
@@ -209,13 +318,16 @@ namespace TradeNote
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
+            if (!string.IsNullOrEmpty(cbxListOfTradeXmls.Text))
+            {
+                var xmlFilePath = GeneralHelper.GetXmlFilePath(cbxListOfTradeXmls.Text);
 
-            var xmlFilePath = GeneralHelper.GetXmlFilePath(cbxListOfTradeXmls.Text);
+                LoadTradeDataGridView();
+                _tradeModelManager.CalculateGeneralInformation(xmlFilePath);
+                LoadGeneralInformation();
+                PopulateComboBoxWithXmlFiles();
+            }
 
-            LoadTradeDataGridView();
-            _tradeModelManager.CalculateGeneralInformation(xmlFilePath);
-            LoadGeneralInformation();
-            PopulateComboBoxWithXmlFiles();
 
         }
 
@@ -834,7 +946,6 @@ namespace TradeNote
                 tbxTradeEntryPrice.Text = tradeDetailData.EntryPrice.ToString(CultureInfo.InvariantCulture);
                 lblTradeDetailTradeIdLabel.Text = tradeDetailData.TradeId.ToString();
 
-
             }
             catch
             {
@@ -1276,16 +1387,17 @@ namespace TradeNote
 
         private void LoadTradeCheckedListBoxCheckStates()
         {
-            //if (File.Exists(Properties.Settings.Default.CheckedListBoxFile))
-            //{
-            //    using (StreamReader sr = new StreamReader(Properties.Settings.Default.CheckedListBoxFile))
-            //    {
-            //        for (int i = 0; i < chcklbTradeColumns.Items.Count; i++)
-            //        {
-            //            chcklbTradeColumns.SetItemChecked(i, Convert.ToBoolean(sr.ReadLine()));
-            //        }
-            //    }
-            //}
+            if (File.Exists(Properties.Settings.Default.CheckedListBoxFile))
+            {
+                var columnSettings = GetColumnSettings();
+
+                for (int i = 0; i < chcklbTradeColumns.Items.Count; i++)
+                {
+                    var item = chcklbTradeColumns.Items[i].ToString();
+                    var checkState = columnSettings.TryGetValue(item, out bool value);
+                    chcklbTradeColumns.SetItemChecked(i, value);
+                }
+            }
         }
 
         bool[] checkedState;
@@ -1294,18 +1406,40 @@ namespace TradeNote
         {
             using (StreamWriter sw = new StreamWriter(path: Properties.Settings.Default.CheckedListBoxFile))
             {
-
                 foreach (var item in chcklbTradeColumns.Items)
                 {
                     sw.WriteLine(item + ":" + chcklbTradeColumns.GetItemChecked(chcklbTradeColumns.Items.IndexOf(item)));
                 }
-                //for (int i = 0; i < chcklbTradeColumns.Items.Count; i++)
-                //{
-                //    sw.WriteLine(chcklbTradeColumns.GetItemText + ":" + chcklbTradeColumns.GetItemChecked(i));
-                //}
             }
             MessageBox.Show("Gösterilecek sütunlar kaydedildi!", "Bilgi",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            LoadTradeCheckedListBoxCheckStates();
+            if (!string.IsNullOrEmpty(cbxListOfTradeXmls.Text))
+            {
+                LoadTradeDataGridView();
+            }
         }
+
+        private Dictionary<string, bool> GetColumnSettings()
+        {
+            Dictionary<string, bool> columnSettings = new Dictionary<string, bool>();
+
+            using (var reader = new StreamReader(Properties.Settings.Default.CheckedListBoxFile))
+            {
+                while (!reader.EndOfStream)
+                {
+                    string line = reader.ReadLine();
+                    string[] lineData = line.Split(':');
+                    string key = lineData[0];
+                    bool value = Convert.ToBoolean(lineData[1]);
+
+                    columnSettings.Add(key, value);
+
+                }
+                return columnSettings;
+            }
+        }
+
     }
 }
