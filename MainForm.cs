@@ -38,6 +38,7 @@ namespace TradeNote
         public void TradeList_Load(object sender, EventArgs e)
         {
             PopulateComboBoxWithXmlFiles();
+            LoadTradeCheckedListBoxCheckStates();
         }
 
 
@@ -95,6 +96,7 @@ namespace TradeNote
 
         private void LoadTradeDataGridView()
         {
+            var tradeColumnsShowArray = chcklbTradeColumns.Items;
 
             var xmlFilePath = GeneralHelper.GetXmlFilePath(cbxListOfTradeXmls.Text);
             try
@@ -1258,5 +1260,52 @@ namespace TradeNote
 
         }
 
+
+
+        private void TradeList_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            /*
+            checkedState = new bool[checkedListBox1.Items.Count];
+            for (int i = 0; i < checkedListBox1.Items.Count; i++)
+            {
+                checkedState[i] = checkedListBox1.GetItemChecked(i);
+            }
+            */
+        }
+
+
+        private void LoadTradeCheckedListBoxCheckStates()
+        {
+            //if (File.Exists(Properties.Settings.Default.CheckedListBoxFile))
+            //{
+            //    using (StreamReader sr = new StreamReader(Properties.Settings.Default.CheckedListBoxFile))
+            //    {
+            //        for (int i = 0; i < chcklbTradeColumns.Items.Count; i++)
+            //        {
+            //            chcklbTradeColumns.SetItemChecked(i, Convert.ToBoolean(sr.ReadLine()));
+            //        }
+            //    }
+            //}
+        }
+
+        bool[] checkedState;
+
+        private void btnsaveTradeCheckedListBox_Click(object sender, EventArgs e)
+        {
+            using (StreamWriter sw = new StreamWriter(path: Properties.Settings.Default.CheckedListBoxFile))
+            {
+
+                foreach (var item in chcklbTradeColumns.Items)
+                {
+                    sw.WriteLine(item + ":" + chcklbTradeColumns.GetItemChecked(chcklbTradeColumns.Items.IndexOf(item)));
+                }
+                //for (int i = 0; i < chcklbTradeColumns.Items.Count; i++)
+                //{
+                //    sw.WriteLine(chcklbTradeColumns.GetItemText + ":" + chcklbTradeColumns.GetItemChecked(i));
+                //}
+            }
+            MessageBox.Show("Gösterilecek sütunlar kaydedildi!", "Bilgi",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
 }

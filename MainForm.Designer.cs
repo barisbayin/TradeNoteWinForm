@@ -121,7 +121,7 @@
             this.lblStartBalanceText = new System.Windows.Forms.Label();
             this.lblStartBalance = new System.Windows.Forms.Label();
             this.tpgSettings = new System.Windows.Forms.TabPage();
-            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
+            this.chcklbTradeColumns = new System.Windows.Forms.CheckedListBox();
             this.btnUpdateTakerCommission = new System.Windows.Forms.Button();
             this.chckTakerCommission = new System.Windows.Forms.CheckBox();
             this.tbxTakerCommission = new System.Windows.Forms.TextBox();
@@ -135,6 +135,7 @@
             this.tsmiExportToPdf = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiExportStatisticsImage = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiExportTradeStatistics = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnSaveTradeCheckedListBox = new System.Windows.Forms.Button();
             this.pnlNavBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.scMainMenu)).BeginInit();
             this.scMainMenu.Panel1.SuspendLayout();
@@ -1010,7 +1011,7 @@
             // 
             this.lblTotalPnLPercentLabel.AutoSize = true;
             this.lblTotalPnLPercentLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblTotalPnLPercentLabel.Location = new System.Drawing.Point(295, 95);
+            this.lblTotalPnLPercentLabel.Location = new System.Drawing.Point(288, 95);
             this.lblTotalPnLPercentLabel.Name = "lblTotalPnLPercentLabel";
             this.lblTotalPnLPercentLabel.Size = new System.Drawing.Size(0, 13);
             this.lblTotalPnLPercentLabel.TabIndex = 237;
@@ -1019,7 +1020,7 @@
             // 
             this.lblTotalPnLPercent.AutoSize = true;
             this.lblTotalPnLPercent.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblTotalPnLPercent.Location = new System.Drawing.Point(208, 95);
+            this.lblTotalPnLPercent.Location = new System.Drawing.Point(201, 95);
             this.lblTotalPnLPercent.Name = "lblTotalPnLPercent";
             this.lblTotalPnLPercent.Size = new System.Drawing.Size(78, 13);
             this.lblTotalPnLPercent.TabIndex = 236;
@@ -1029,7 +1030,7 @@
             // 
             this.lblWinrateLabel.AutoSize = true;
             this.lblWinrateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblWinrateLabel.Location = new System.Drawing.Point(295, 182);
+            this.lblWinrateLabel.Location = new System.Drawing.Point(288, 182);
             this.lblWinrateLabel.Name = "lblWinrateLabel";
             this.lblWinrateLabel.Size = new System.Drawing.Size(0, 13);
             this.lblWinrateLabel.TabIndex = 235;
@@ -1038,7 +1039,7 @@
             // 
             this.lblWinRate.AutoSize = true;
             this.lblWinRate.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblWinRate.Location = new System.Drawing.Point(200, 182);
+            this.lblWinRate.Location = new System.Drawing.Point(193, 182);
             this.lblWinRate.Name = "lblWinRate";
             this.lblWinRate.Size = new System.Drawing.Size(86, 13);
             this.lblWinRate.TabIndex = 234;
@@ -1049,7 +1050,7 @@
             this.lblLossCountLabel.AutoSize = true;
             this.lblLossCountLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.lblLossCountLabel.ForeColor = System.Drawing.Color.IndianRed;
-            this.lblLossCountLabel.Location = new System.Drawing.Point(295, 159);
+            this.lblLossCountLabel.Location = new System.Drawing.Point(288, 159);
             this.lblLossCountLabel.Name = "lblLossCountLabel";
             this.lblLossCountLabel.Size = new System.Drawing.Size(0, 13);
             this.lblLossCountLabel.TabIndex = 233;
@@ -1058,7 +1059,7 @@
             // 
             this.lblLossCount.AutoSize = true;
             this.lblLossCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblLossCount.Location = new System.Drawing.Point(193, 159);
+            this.lblLossCount.Location = new System.Drawing.Point(186, 159);
             this.lblLossCount.Name = "lblLossCount";
             this.lblLossCount.Size = new System.Drawing.Size(93, 13);
             this.lblLossCount.TabIndex = 232;
@@ -1069,7 +1070,7 @@
             this.lblWinCountLabel.AutoSize = true;
             this.lblWinCountLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.lblWinCountLabel.ForeColor = System.Drawing.Color.SeaGreen;
-            this.lblWinCountLabel.Location = new System.Drawing.Point(295, 133);
+            this.lblWinCountLabel.Location = new System.Drawing.Point(288, 133);
             this.lblWinCountLabel.Name = "lblWinCountLabel";
             this.lblWinCountLabel.Size = new System.Drawing.Size(0, 13);
             this.lblWinCountLabel.TabIndex = 231;
@@ -1078,7 +1079,7 @@
             // 
             this.lblWinCount.AutoSize = true;
             this.lblWinCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblWinCount.Location = new System.Drawing.Point(199, 133);
+            this.lblWinCount.Location = new System.Drawing.Point(192, 133);
             this.lblWinCount.Name = "lblWinCount";
             this.lblWinCount.Size = new System.Drawing.Size(87, 13);
             this.lblWinCount.TabIndex = 230;
@@ -1088,7 +1089,7 @@
             // 
             this.lblTotalPnLLabel.AutoSize = true;
             this.lblTotalPnLLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblTotalPnLLabel.Location = new System.Drawing.Point(295, 69);
+            this.lblTotalPnLLabel.Location = new System.Drawing.Point(288, 69);
             this.lblTotalPnLLabel.Name = "lblTotalPnLLabel";
             this.lblTotalPnLLabel.Size = new System.Drawing.Size(0, 13);
             this.lblTotalPnLLabel.TabIndex = 229;
@@ -1097,7 +1098,7 @@
             // 
             this.lblTotalPnL.AutoSize = true;
             this.lblTotalPnL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblTotalPnL.Location = new System.Drawing.Point(210, 69);
+            this.lblTotalPnL.Location = new System.Drawing.Point(203, 69);
             this.lblTotalPnL.Name = "lblTotalPnL";
             this.lblTotalPnL.Size = new System.Drawing.Size(76, 13);
             this.lblTotalPnL.TabIndex = 228;
@@ -1167,7 +1168,7 @@
             this.btnPlusMinus.Enabled = false;
             this.btnPlusMinus.Image = ((System.Drawing.Image)(resources.GetObject("btnPlusMinus.Image")));
             this.btnPlusMinus.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnPlusMinus.Location = new System.Drawing.Point(293, 12);
+            this.btnPlusMinus.Location = new System.Drawing.Point(286, 12);
             this.btnPlusMinus.Name = "btnPlusMinus";
             this.btnPlusMinus.Size = new System.Drawing.Size(66, 24);
             this.btnPlusMinus.TabIndex = 221;
@@ -1180,7 +1181,7 @@
             // 
             this.chckPlusMinus.AutoSize = true;
             this.chckPlusMinus.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.chckPlusMinus.Location = new System.Drawing.Point(206, 20);
+            this.chckPlusMinus.Location = new System.Drawing.Point(199, 20);
             this.chckPlusMinus.Name = "chckPlusMinus";
             this.chckPlusMinus.Size = new System.Drawing.Size(15, 14);
             this.chckPlusMinus.TabIndex = 220;
@@ -1191,7 +1192,7 @@
             // 
             this.tbxPlusMinus.Enabled = false;
             this.tbxPlusMinus.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.tbxPlusMinus.Location = new System.Drawing.Point(227, 15);
+            this.tbxPlusMinus.Location = new System.Drawing.Point(220, 15);
             this.tbxPlusMinus.Name = "tbxPlusMinus";
             this.tbxPlusMinus.Size = new System.Drawing.Size(60, 20);
             this.tbxPlusMinus.TabIndex = 219;
@@ -1217,7 +1218,8 @@
             // 
             // tpgSettings
             // 
-            this.tpgSettings.Controls.Add(this.checkedListBox1);
+            this.tpgSettings.Controls.Add(this.btnSaveTradeCheckedListBox);
+            this.tpgSettings.Controls.Add(this.chcklbTradeColumns);
             this.tpgSettings.Controls.Add(this.btnUpdateTakerCommission);
             this.tpgSettings.Controls.Add(this.chckTakerCommission);
             this.tpgSettings.Controls.Add(this.tbxTakerCommission);
@@ -1233,13 +1235,40 @@
             this.tpgSettings.TabIndex = 1;
             this.tpgSettings.Text = "Ayarlar";
             // 
-            // checkedListBox1
+            // chcklbTradeColumns
             // 
-            this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Location = new System.Drawing.Point(15, 77);
-            this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(173, 364);
-            this.checkedListBox1.TabIndex = 231;
+            this.chcklbTradeColumns.FormattingEnabled = true;
+            this.chcklbTradeColumns.Items.AddRange(new object[] {
+            "Id",
+            "Trade Başlangıç Tarihi",
+            "Trade Bitiş Tarihi",
+            "Posizyon Yönü",
+            "Ortalama Giriş Miktarı",
+            "Ortalama Giriş Adedi",
+            "Kaldıraç",
+            "Hedeflenen Giriş Fiyatı",
+            "StopLoss Fiyatı",
+            "Take Profit Fiyatı",
+            "Ortalama Giriş Fiyatı",
+            "Ortalama Pozisyon Kapama Fiyatı",
+            "Risk Yizdesi",
+            "Kazanç Yüzdesi",
+            "Risk/Kazanç Yüzdesi",
+            "Tahmini Risk Miktarı",
+            "Tahmini Kazanç Miktarı",
+            "Ortalama Posizyon Kapama Miktarı",
+            "Ortalama Pozisyon Kapama Adedi",
+            "Posizyon Sonucu",
+            "PnL",
+            "PnL Yizdesi",
+            "Toplam Komisyon",
+            "Toplam Fonlama Maliyeti",
+            "Notlar",
+            "Trade Sonlandı Mı?"});
+            this.chcklbTradeColumns.Location = new System.Drawing.Point(13, 66);
+            this.chcklbTradeColumns.Name = "chcklbTradeColumns";
+            this.chcklbTradeColumns.Size = new System.Drawing.Size(278, 394);
+            this.chcklbTradeColumns.TabIndex = 231;
             // 
             // btnUpdateTakerCommission
             // 
@@ -1371,6 +1400,20 @@
             this.tsmiExportTradeStatistics.Text = "Trade İstatistik Resmi";
             this.tsmiExportTradeStatistics.Click += new System.EventHandler(this.tsmiExportTradeStatistics_Click);
             // 
+            // btnSaveTradeCheckedListBox
+            // 
+            this.btnSaveTradeCheckedListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnSaveTradeCheckedListBox.Image = ((System.Drawing.Image)(resources.GetObject("btnSaveTradeCheckedListBox.Image")));
+            this.btnSaveTradeCheckedListBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSaveTradeCheckedListBox.Location = new System.Drawing.Point(227, 466);
+            this.btnSaveTradeCheckedListBox.Name = "btnSaveTradeCheckedListBox";
+            this.btnSaveTradeCheckedListBox.Size = new System.Drawing.Size(64, 28);
+            this.btnSaveTradeCheckedListBox.TabIndex = 258;
+            this.btnSaveTradeCheckedListBox.Text = "Kaydet";
+            this.btnSaveTradeCheckedListBox.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnSaveTradeCheckedListBox.UseVisualStyleBackColor = true;
+            this.btnSaveTradeCheckedListBox.Click += new System.EventHandler(this.btnsaveTradeCheckedListBox_Click);
+            // 
             // TradeList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1382,6 +1425,7 @@
             this.KeyPreview = true;
             this.Name = "TradeList";
             this.Text = "Trade Not";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TradeList_FormClosing);
             this.Load += new System.EventHandler(this.TradeList_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TradeList_KeyDown);
             this.pnlNavBar.ResumeLayout(false);
@@ -1509,12 +1553,13 @@
         private System.Windows.Forms.Label lblInTradeBalanceLabel;
         private System.Windows.Forms.Label lblInTradeBalance;
         private System.Windows.Forms.Button btnExport;
-        private System.Windows.Forms.CheckedListBox checkedListBox1;
+        private System.Windows.Forms.CheckedListBox chcklbTradeColumns;
         private System.Windows.Forms.ContextMenuStrip cmsExport;
         private System.Windows.Forms.ToolStripMenuItem tsmiExportToExcel;
         private System.Windows.Forms.ToolStripMenuItem tsmiExportToPdf;
         private System.Windows.Forms.ToolStripMenuItem tsmiExportStatisticsImage;
         private System.Windows.Forms.ToolStripMenuItem tsmiExportTradeStatistics;
+        private System.Windows.Forms.Button btnSaveTradeCheckedListBox;
     }
 }
 
