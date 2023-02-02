@@ -1403,6 +1403,7 @@ namespace TradeNote
         bool[] checkedState;
 
         private void btnsaveTradeCheckedListBox_Click(object sender, EventArgs e)
+
         {
             using (StreamWriter sw = new StreamWriter(path: Properties.Settings.Default.CheckedListBoxFile))
             {
