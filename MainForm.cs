@@ -985,6 +985,7 @@ namespace TradeNote
             {
                 var settingsForm = new SettingsForm();
                 settingsForm.Show();
+                
             }
         }
 
