@@ -1364,7 +1364,9 @@ namespace TradeNote
 
         private void tsmiExportStatisticsImage_Click(object sender, EventArgs e)
         {
-
+            var settingsForm = new SettingsForm();
+            SettingsForm.ListOfTradeXmls = cbxListOfTradeXmls.Text;
+            settingsForm.Show();
         }
 
         private void tsmiExportTradeStatistics_Click(object sender, EventArgs e)

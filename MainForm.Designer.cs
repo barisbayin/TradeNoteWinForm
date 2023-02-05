@@ -1380,7 +1380,7 @@
             this.tsmiExportStatisticsImage,
             this.tsmiExportTradeStatistics});
             this.cmsExport.Name = "cmsExport";
-            this.cmsExport.Size = new System.Drawing.Size(195, 92);
+            this.cmsExport.Size = new System.Drawing.Size(195, 114);
             // 
             // tsmiExportToExcel
             // 
