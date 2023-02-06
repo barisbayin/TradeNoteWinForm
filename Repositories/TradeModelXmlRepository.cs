@@ -34,9 +34,6 @@ namespace TradeNote.Repositories
                 {
                     serializer.Serialize(writer, tradeModel);
                 }
-
-                MessageBox.Show(xmlFileName + " listesi oluşturuldu!", "Bilgi",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
@@ -78,6 +75,10 @@ namespace TradeNote.Repositories
             TradeModel tradeModel = DeserializeTradeModel(xmlFilePath);
 
             // Update the properties of the GeneralInformation object
+            tradeModel.GeneralInformation.Exchange = updatedGeneralInformation.Exchange;
+            tradeModel.GeneralInformation.CurrencyPair= updatedGeneralInformation.CurrencyPair;
+            tradeModel.GeneralInformation.ReferralLink= updatedGeneralInformation.ReferralLink;
+            tradeModel.GeneralInformation.ReferralId=   updatedGeneralInformation.ReferralId;
             tradeModel.GeneralInformation.StartingBalance = updatedGeneralInformation.StartingBalance;
             tradeModel.GeneralInformation.LastBalance = updatedGeneralInformation.LastBalance;
             tradeModel.GeneralInformation.InTradeBalance = updatedGeneralInformation.InTradeBalance;

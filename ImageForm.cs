@@ -13,9 +13,9 @@ using TradeNote.Repositories;
 
 namespace TradeNote
 {
-    public partial class SettingsForm : Form
+    public partial class ImageForm : Form
     {
-        public SettingsForm()
+        public ImageForm()
         {
             InitializeComponent();
 
@@ -23,10 +23,16 @@ namespace TradeNote
 
         public static string ListOfTradeXmls { get; set; }
         public static int SelectedTrade { get; set; }
+
+        public static string Exchange { get; set; }
+        public static string CurrencyPair { get; set; }
         public static string ReferralLink { get; set; }
         public static string ReferralId { get; set; }
 
+
         public static Image BaseImage { get; set; }
+
+        
 
         private readonly TradeModelManager _tradeModelManager = new TradeModelManager(new TradeModelXmlRepository());
 
@@ -64,6 +70,7 @@ namespace TradeNote
             pBoxCummulativeStatistics.Image = image;
         }
 
+
         private void GenerateTradeStatisticImage()
         {
             decimal averageEntryPrice = 0;
@@ -94,11 +101,12 @@ namespace TradeNote
 
             Bitmap image = new Bitmap(pBoxCummulativeStatistics.Image);
 
-            var referralLinkQrCode = GeneralHelper.GenerateQrCodeImageByGivenString(
-                "https://www.binance.com/en/activity/referral-entry/CPA?fromActivityPage=true&ref=CPA_008RRX90DX");
+            var referralLinkQrCode = GeneralHelper.GenerateQrCodeImageByGivenString(ReferralLink);
 
             using (Graphics g = Graphics.FromImage(image))
             {
+                g.DrawString(CurrencyPair, font: new Font("Hell Finland", 24), Brushes.Black,
+                    new PointF(200, 100));
 
                 switch (selectedTrade.PositionSide)
                 {
@@ -137,12 +145,12 @@ namespace TradeNote
                 g.DrawImage(referralLinkQrCode, new PointF(60, 330));
 
 
-                g.DrawString(cbxExchanges.Text, font: new Font("Hell Finland", 18), Brushes.Black, new PointF(190, 330));
+                g.DrawString(Exchange, font: new Font("Hell Finland", 18), Brushes.Black, new PointF(190, 330));
              
 
                 g.DrawString(ReferralId, font: new Font("Hell Finland", 18), Brushes.Black, new PointF(190, 370));
-                
-                
+
+
             }
 
             pBoxCummulativeStatistics.Image = image;
@@ -165,32 +173,5 @@ namespace TradeNote
             //}
         }
 
-        private void cbxPairList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Bitmap image = new Bitmap(pBoxCummulativeStatistics.Image);
-
-            using (Graphics g = Graphics.FromImage(image))
-            {
-               
-                g.DrawString(cbxPairList.Text, font: new Font("Hell Finland", 24), Brushes.Black, new PointF(200, 100));
-            }
-
-
-            pBoxCummulativeStatistics.Image = image;
-        }
-
-        private void cbxExchanges_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Bitmap image = new Bitmap(pBoxCummulativeStatistics.Image);
-
-            using (Graphics g = Graphics.FromImage(image))
-            {
-                pBoxCummulativeStatistics.Image = BaseImage;
-                g.DrawString(cbxExchanges.Text, font: new Font("Hell Finland", 18), Brushes.Black, new PointF(190, 330));
-            }
-
-
-            pBoxCummulativeStatistics.Image = image;
-        }
     }
 }

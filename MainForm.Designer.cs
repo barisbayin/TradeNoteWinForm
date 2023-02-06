@@ -121,22 +121,20 @@
             this.lblStartBalanceText = new System.Windows.Forms.Label();
             this.lblStartBalance = new System.Windows.Forms.Label();
             this.tpgSettings = new System.Windows.Forms.TabPage();
+            this.cbxExchanges = new System.Windows.Forms.ComboBox();
+            this.cbxCurrencyPairList = new System.Windows.Forms.ComboBox();
+            this.lblCurrencyPair = new System.Windows.Forms.Label();
+            this.lblExchange = new System.Windows.Forms.Label();
             this.lblReferralId = new System.Windows.Forms.Label();
             this.lblReferralLink = new System.Windows.Forms.Label();
-            this.btnUpdateReferralId = new System.Windows.Forms.Button();
-            this.chckReferralId = new System.Windows.Forms.CheckBox();
             this.tbxReferralId = new System.Windows.Forms.TextBox();
-            this.btnUpdateReferralLink = new System.Windows.Forms.Button();
-            this.chckReferralLink = new System.Windows.Forms.CheckBox();
             this.tbxReferralLink = new System.Windows.Forms.TextBox();
             this.btnSaveTradeCheckedListBox = new System.Windows.Forms.Button();
             this.chcklbTradeColumns = new System.Windows.Forms.CheckedListBox();
-            this.btnUpdateTakerCommission = new System.Windows.Forms.Button();
-            this.chckTakerCommission = new System.Windows.Forms.CheckBox();
+            this.btnSaveGeneralInformationEntries = new System.Windows.Forms.Button();
+            this.chckGeneralInformationEntries = new System.Windows.Forms.CheckBox();
             this.tbxTakerCommission = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.btnUpdateMakerCommission = new System.Windows.Forms.Button();
-            this.chckMakerCommission = new System.Windows.Forms.CheckBox();
             this.tbxMakerCommission = new System.Windows.Forms.TextBox();
             this.lblMakerCommission = new System.Windows.Forms.Label();
             this.cmsExport = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -350,6 +348,7 @@
             this.dgvTradeList.Size = new System.Drawing.Size(789, 572);
             this.dgvTradeList.TabIndex = 1;
             this.dgvTradeList.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTradeList_CellClick_1);
+            this.dgvTradeList.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvTradeList_CellPainting);
             this.dgvTradeList.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dgvTradeList_RowPrePaint_1);
             // 
             // gbTradeDetails
@@ -1226,22 +1225,20 @@
             // 
             // tpgSettings
             // 
+            this.tpgSettings.Controls.Add(this.cbxExchanges);
+            this.tpgSettings.Controls.Add(this.cbxCurrencyPairList);
+            this.tpgSettings.Controls.Add(this.lblCurrencyPair);
+            this.tpgSettings.Controls.Add(this.lblExchange);
             this.tpgSettings.Controls.Add(this.lblReferralId);
             this.tpgSettings.Controls.Add(this.lblReferralLink);
-            this.tpgSettings.Controls.Add(this.btnUpdateReferralId);
-            this.tpgSettings.Controls.Add(this.chckReferralId);
             this.tpgSettings.Controls.Add(this.tbxReferralId);
-            this.tpgSettings.Controls.Add(this.btnUpdateReferralLink);
-            this.tpgSettings.Controls.Add(this.chckReferralLink);
             this.tpgSettings.Controls.Add(this.tbxReferralLink);
             this.tpgSettings.Controls.Add(this.btnSaveTradeCheckedListBox);
             this.tpgSettings.Controls.Add(this.chcklbTradeColumns);
-            this.tpgSettings.Controls.Add(this.btnUpdateTakerCommission);
-            this.tpgSettings.Controls.Add(this.chckTakerCommission);
+            this.tpgSettings.Controls.Add(this.btnSaveGeneralInformationEntries);
+            this.tpgSettings.Controls.Add(this.chckGeneralInformationEntries);
             this.tpgSettings.Controls.Add(this.tbxTakerCommission);
             this.tpgSettings.Controls.Add(this.label1);
-            this.tpgSettings.Controls.Add(this.btnUpdateMakerCommission);
-            this.tpgSettings.Controls.Add(this.chckMakerCommission);
             this.tpgSettings.Controls.Add(this.tbxMakerCommission);
             this.tpgSettings.Controls.Add(this.lblMakerCommission);
             this.tpgSettings.Location = new System.Drawing.Point(4, 22);
@@ -1251,11 +1248,258 @@
             this.tpgSettings.TabIndex = 1;
             this.tpgSettings.Text = "Ayarlar";
             // 
+            // cbxExchanges
+            // 
+            this.cbxExchanges.Enabled = false;
+            this.cbxExchanges.FormattingEnabled = true;
+            this.cbxExchanges.Items.AddRange(new object[] {
+            "BINANCE",
+            "OKEX",
+            "BITHUMB",
+            "COINBASE",
+            "BITFINEX"});
+            this.cbxExchanges.Location = new System.Drawing.Point(125, 9);
+            this.cbxExchanges.Name = "cbxExchanges";
+            this.cbxExchanges.Size = new System.Drawing.Size(215, 21);
+            this.cbxExchanges.TabIndex = 276;
+            this.cbxExchanges.Text = "BINANCE";
+            // 
+            // cbxCurrencyPairList
+            // 
+            this.cbxCurrencyPairList.Enabled = false;
+            this.cbxCurrencyPairList.FormattingEnabled = true;
+            this.cbxCurrencyPairList.Items.AddRange(new object[] {
+            "1000LUNCBUSDPERP",
+            "1000LUNCUSDTPERP",
+            "1000SHIBBUSDPERP",
+            "1000SHIBUSDTPERP",
+            "1000XECUSDTPERP",
+            "1INCHUSDTPERP",
+            "AAVEUSDTPERP",
+            "ADABUSDPERP",
+            "ADAUSDTPERP",
+            "AGIXBUSDPERP",
+            "ALGOUSDTPERP",
+            "ALICEUSDTPERP",
+            "ALPHAUSDTPERP",
+            "AMBBUSDPERP",
+            "ANCBUSDPERP",
+            "ANKRUSDTPERP",
+            "ANTUSDTPERP",
+            "APEBUSDPERP",
+            "APEUSDTPERP",
+            "API3USDTPERP",
+            "APTBUSDPERP",
+            "APTUSDTPERP",
+            "ARPAUSDTPERP",
+            "ARUSDTPERP",
+            "ATAUSDTPERP",
+            "ATOMUSDTPERP",
+            "AUCTIONBUSDPERP",
+            "AUDIOUSDTPERP",
+            "AVAXBUSDPERP",
+            "AVAXUSDTPERP",
+            "AXSUSDTPERP",
+            "BAKEUSDTPERP",
+            "BALUSDTPERP",
+            "BANDUSDTPERP",
+            "BATUSDTPERP",
+            "BCHUSDTPERP",
+            "BELUSDTPERP",
+            "BLUEBIRDUSDTPERP",
+            "BLZUSDTPERP",
+            "BNBBUSDPERP",
+            "BNBUSDTPERP",
+            "BNXUSDTPERP",
+            "BTCBUSDPERP",
+            "BTCDOMUSDTPERP",
+            "BTCSTUSDTPERP",
+            "BTCUSDTPERP",
+            "BTSUSDTPERP",
+            "C98USDTPERP",
+            "CELOUSDTPERP",
+            "CELRUSDTPERP",
+            "CHRUSDTPERP",
+            "CHZUSDTPERP",
+            "COMPUSDTPERP",
+            "COTIUSDTPERP",
+            "CRVUSDTPERP",
+            "CTKUSDTPERP",
+            "CTSIUSDTPERP",
+            "CVCUSDTPERP",
+            "CVXBUSDPERP",
+            "CVXUSDTPERP",
+            "DARUSDTPERP",
+            "DASHUSDTPERP",
+            "DEFIUSDTPERP",
+            "DENTUSDTPERP",
+            "DGBUSDTPERP",
+            "DODOBUSDPERP",
+            "DOGEBUSDPERP",
+            "DOGEUSDTPERP",
+            "DOTBUSDPERP",
+            "DOTUSDTPERP",
+            "DUSKUSDTPERP",
+            "DYDXUSDTPERP",
+            "EGLDUSDTPERP",
+            "ENJUSDTPERP",
+            "ENSUSDTPERP",
+            "EOSUSDTPERP",
+            "ETCBUSDPERP",
+            "ETCUSDTPERP",
+            "ETHBUSDPERP",
+            "ETHUSDTPERP",
+            "FETUSDTPERP",
+            "FILBUSDPERP",
+            "FILUSDTPERP",
+            "FLMUSDTPERP",
+            "FLOWUSDTPERP",
+            "FOOTBALLUSDTPERP",
+            "FTMBUSDPERP",
+            "FTMUSDTPERP",
+            "FTTBUSDPERP",
+            "FTTUSDTPERP",
+            "FXSUSDTPERP",
+            "GALABUSDPERP",
+            "GALAUSDTPERP",
+            "GALBUSDPERP",
+            "GALUSDTPERP",
+            "GMTBUSDPERP",
+            "GMTUSDTPERP",
+            "GRTUSDTPERP",
+            "GTCUSDTPERP",
+            "HBARUSDTPERP",
+            "HNTUSDTPERP",
+            "HOOKUSDTPERP",
+            "HOTUSDTPERP",
+            "ICPBUSDPERP",
+            "ICPUSDTPERP",
+            "ICXUSDTPERP",
+            "IMXUSDTPERP",
+            "INJUSDTPERP",
+            "IOSTUSDTPERP",
+            "IOTAUSDTPERP",
+            "IOTXUSDTPERP",
+            "JASMYUSDTPERP",
+            "KAVAUSDTPERP",
+            "KLAYUSDTPERP",
+            "KNCUSDTPERP",
+            "KSMUSDTPERP",
+            "LDOBUSDPERP",
+            "LDOUSDTPERP",
+            "LEVERBUSDPERP",
+            "LINAUSDTPERP",
+            "LINKBUSDPERP",
+            "LINKUSDTPERP",
+            "LITUSDTPERP",
+            "LPTUSDTPERP",
+            "LRCUSDTPERP",
+            "LTCBUSDPERP",
+            "LTCUSDTPERP",
+            "LUNA2BUSDPERP",
+            "LUNA2USDTPERP",
+            "MAGICUSDTPERP",
+            "MANAUSDTPERP",
+            "MASKUSDTPERP",
+            "MATICBUSDPERP",
+            "MATICUSDTPERP",
+            "MINAUSDTPERP",
+            "MKRUSDTPERP",
+            "MTLUSDTPERP",
+            "NEARBUSDPERP",
+            "NEARUSDTPERP",
+            "NEOUSDTPERP",
+            "NKNUSDTPERP",
+            "OCEANUSDTPERP",
+            "OGNUSDTPERP",
+            "OMGUSDTPERP",
+            "ONEUSDTPERP",
+            "ONTUSDTPERP",
+            "OPUSDTPERP",
+            "PEOPLEUSDTPERP",
+            "PHBBUSDPERP",
+            "QNTUSDTPERP",
+            "QTUMUSDTPERP",
+            "RAYUSDTPERP",
+            "REEFUSDTPERP",
+            "RENUSDTPERP",
+            "RLCUSDTPERP",
+            "RNDRUSDTPERP",
+            "ROSEUSDTPERP",
+            "RSRUSDTPERP",
+            "RUNEUSDTPERP",
+            "RVNUSDTPERP",
+            "SANDBUSDPERP",
+            "SANDUSDTPERP",
+            "SCUSDTPERP",
+            "SFPUSDTPERP",
+            "SKLUSDTPERP",
+            "SNXUSDTPERP",
+            "SOLBUSDPERP",
+            "SOLUSDTPERP",
+            "SPELLUSDTPERP",
+            "SRMUSDTPERP",
+            "STGUSDTPERP",
+            "STMXUSDTPERP",
+            "STORJUSDTPERP",
+            "SUSHIUSDTPERP",
+            "SXPUSDTPERP",
+            "THETAUSDTPERP",
+            "TLMBUSDPERP",
+            "TLMUSDTPERP",
+            "TOMOUSDTPERP",
+            "TRBUSDTPERP",
+            "TRXBUSDPERP",
+            "TRXUSDTPERP",
+            "TUSDTPERP",
+            "UNFIUSDTPERP",
+            "UNIBUSDPERP",
+            "UNIUSDTPERP",
+            "VETUSDTPERP",
+            "WAVESBUSDPERP",
+            "WAVESUSDTPERP",
+            "WOOUSDTPERP",
+            "XEMUSDTPERP",
+            "XLMUSDTPERP",
+            "XMRUSDTPERP",
+            "XRPBUSDPERP",
+            "XRPUSDTPERP",
+            "XTZUSDTPERP",
+            "YFIUSDTPERP",
+            "ZECUSDTPERP",
+            "ZENUSDTPERP",
+            "ZILUSDTPERP",
+            "ZRXUSDTPERP"});
+            this.cbxCurrencyPairList.Location = new System.Drawing.Point(125, 39);
+            this.cbxCurrencyPairList.Name = "cbxCurrencyPairList";
+            this.cbxCurrencyPairList.Size = new System.Drawing.Size(215, 21);
+            this.cbxCurrencyPairList.TabIndex = 275;
+            // 
+            // lblCurrencyPair
+            // 
+            this.lblCurrencyPair.AutoSize = true;
+            this.lblCurrencyPair.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblCurrencyPair.Location = new System.Drawing.Point(53, 42);
+            this.lblCurrencyPair.Name = "lblCurrencyPair";
+            this.lblCurrencyPair.Size = new System.Drawing.Size(61, 13);
+            this.lblCurrencyPair.TabIndex = 274;
+            this.lblCurrencyPair.Text = "Kriptopara :";
+            // 
+            // lblExchange
+            // 
+            this.lblExchange.AutoSize = true;
+            this.lblExchange.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblExchange.Location = new System.Drawing.Point(74, 12);
+            this.lblExchange.Name = "lblExchange";
+            this.lblExchange.Size = new System.Drawing.Size(40, 13);
+            this.lblExchange.TabIndex = 273;
+            this.lblExchange.Text = "Borsa :";
+            // 
             // lblReferralId
             // 
             this.lblReferralId.AutoSize = true;
             this.lblReferralId.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblReferralId.Location = new System.Drawing.Point(58, 104);
+            this.lblReferralId.Location = new System.Drawing.Point(70, 102);
             this.lblReferralId.Name = "lblReferralId";
             this.lblReferralId.Size = new System.Drawing.Size(44, 13);
             this.lblReferralId.TabIndex = 266;
@@ -1265,78 +1509,28 @@
             // 
             this.lblReferralLink.AutoSize = true;
             this.lblReferralLink.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblReferralLink.Location = new System.Drawing.Point(49, 74);
+            this.lblReferralLink.Location = new System.Drawing.Point(61, 72);
             this.lblReferralLink.Name = "lblReferralLink";
             this.lblReferralLink.Size = new System.Drawing.Size(53, 13);
             this.lblReferralLink.TabIndex = 265;
             this.lblReferralLink.Text = "Ref Link :";
             // 
-            // btnUpdateReferralId
-            // 
-            this.btnUpdateReferralId.Enabled = false;
-            this.btnUpdateReferralId.Image = ((System.Drawing.Image)(resources.GetObject("btnUpdateReferralId.Image")));
-            this.btnUpdateReferralId.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnUpdateReferralId.Location = new System.Drawing.Point(252, 98);
-            this.btnUpdateReferralId.Name = "btnUpdateReferralId";
-            this.btnUpdateReferralId.Size = new System.Drawing.Size(76, 24);
-            this.btnUpdateReferralId.TabIndex = 264;
-            this.btnUpdateReferralId.Text = "Güncelle";
-            this.btnUpdateReferralId.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnUpdateReferralId.UseVisualStyleBackColor = true;
-            this.btnUpdateReferralId.Click += new System.EventHandler(this.btnUpdateReferralId_Click);
-            // 
-            // chckReferralId
-            // 
-            this.chckReferralId.AutoSize = true;
-            this.chckReferralId.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.chckReferralId.Location = new System.Drawing.Point(231, 105);
-            this.chckReferralId.Name = "chckReferralId";
-            this.chckReferralId.Size = new System.Drawing.Size(15, 14);
-            this.chckReferralId.TabIndex = 263;
-            this.chckReferralId.UseVisualStyleBackColor = true;
-            this.chckReferralId.CheckedChanged += new System.EventHandler(this.chckReferralId_CheckedChanged);
-            // 
             // tbxReferralId
             // 
             this.tbxReferralId.Enabled = false;
             this.tbxReferralId.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.tbxReferralId.Location = new System.Drawing.Point(108, 100);
+            this.tbxReferralId.Location = new System.Drawing.Point(125, 98);
             this.tbxReferralId.Name = "tbxReferralId";
-            this.tbxReferralId.Size = new System.Drawing.Size(107, 20);
+            this.tbxReferralId.Size = new System.Drawing.Size(215, 20);
             this.tbxReferralId.TabIndex = 262;
-            // 
-            // btnUpdateReferralLink
-            // 
-            this.btnUpdateReferralLink.Enabled = false;
-            this.btnUpdateReferralLink.Image = ((System.Drawing.Image)(resources.GetObject("btnUpdateReferralLink.Image")));
-            this.btnUpdateReferralLink.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnUpdateReferralLink.Location = new System.Drawing.Point(252, 68);
-            this.btnUpdateReferralLink.Name = "btnUpdateReferralLink";
-            this.btnUpdateReferralLink.Size = new System.Drawing.Size(76, 24);
-            this.btnUpdateReferralLink.TabIndex = 261;
-            this.btnUpdateReferralLink.Text = "Güncelle";
-            this.btnUpdateReferralLink.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnUpdateReferralLink.UseVisualStyleBackColor = true;
-            this.btnUpdateReferralLink.Click += new System.EventHandler(this.btnUpdateReferralLink_Click);
-            // 
-            // chckReferralLink
-            // 
-            this.chckReferralLink.AutoSize = true;
-            this.chckReferralLink.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.chckReferralLink.Location = new System.Drawing.Point(231, 75);
-            this.chckReferralLink.Name = "chckReferralLink";
-            this.chckReferralLink.Size = new System.Drawing.Size(15, 14);
-            this.chckReferralLink.TabIndex = 260;
-            this.chckReferralLink.UseVisualStyleBackColor = true;
-            this.chckReferralLink.CheckedChanged += new System.EventHandler(this.chckReferralLink_CheckedChanged);
             // 
             // tbxReferralLink
             // 
             this.tbxReferralLink.Enabled = false;
             this.tbxReferralLink.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.tbxReferralLink.Location = new System.Drawing.Point(108, 70);
+            this.tbxReferralLink.Location = new System.Drawing.Point(125, 68);
             this.tbxReferralLink.Name = "tbxReferralLink";
-            this.tbxReferralLink.Size = new System.Drawing.Size(107, 20);
+            this.tbxReferralLink.Size = new System.Drawing.Size(215, 20);
             this.tbxReferralLink.TabIndex = 259;
             // 
             // btnSaveTradeCheckedListBox
@@ -1344,7 +1538,7 @@
             this.btnSaveTradeCheckedListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.btnSaveTradeCheckedListBox.Image = ((System.Drawing.Image)(resources.GetObject("btnSaveTradeCheckedListBox.Image")));
             this.btnSaveTradeCheckedListBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSaveTradeCheckedListBox.Location = new System.Drawing.Point(264, 535);
+            this.btnSaveTradeCheckedListBox.Location = new System.Drawing.Point(276, 630);
             this.btnSaveTradeCheckedListBox.Name = "btnSaveTradeCheckedListBox";
             this.btnSaveTradeCheckedListBox.Size = new System.Drawing.Size(64, 28);
             this.btnSaveTradeCheckedListBox.TabIndex = 258;
@@ -1383,94 +1577,69 @@
             "Toplam Fonlama Maliyeti",
             "Notlar",
             "Trade Sonlandı Mı?"});
-            this.chcklbTradeColumns.Location = new System.Drawing.Point(50, 135);
+            this.chcklbTradeColumns.Location = new System.Drawing.Point(62, 230);
             this.chcklbTradeColumns.Name = "chcklbTradeColumns";
             this.chcklbTradeColumns.Size = new System.Drawing.Size(278, 394);
             this.chcklbTradeColumns.TabIndex = 231;
             // 
-            // btnUpdateTakerCommission
+            // btnSaveGeneralInformationEntries
             // 
-            this.btnUpdateTakerCommission.Enabled = false;
-            this.btnUpdateTakerCommission.Image = ((System.Drawing.Image)(resources.GetObject("btnUpdateTakerCommission.Image")));
-            this.btnUpdateTakerCommission.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnUpdateTakerCommission.Location = new System.Drawing.Point(252, 38);
-            this.btnUpdateTakerCommission.Name = "btnUpdateTakerCommission";
-            this.btnUpdateTakerCommission.Size = new System.Drawing.Size(76, 24);
-            this.btnUpdateTakerCommission.TabIndex = 230;
-            this.btnUpdateTakerCommission.Text = "Güncelle";
-            this.btnUpdateTakerCommission.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnUpdateTakerCommission.UseVisualStyleBackColor = true;
-            this.btnUpdateTakerCommission.Click += new System.EventHandler(this.btnUpdateTakerCommission_Click);
+            this.btnSaveGeneralInformationEntries.Enabled = false;
+            this.btnSaveGeneralInformationEntries.Image = ((System.Drawing.Image)(resources.GetObject("btnSaveGeneralInformationEntries.Image")));
+            this.btnSaveGeneralInformationEntries.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSaveGeneralInformationEntries.Location = new System.Drawing.Point(264, 191);
+            this.btnSaveGeneralInformationEntries.Name = "btnSaveGeneralInformationEntries";
+            this.btnSaveGeneralInformationEntries.Size = new System.Drawing.Size(76, 24);
+            this.btnSaveGeneralInformationEntries.TabIndex = 230;
+            this.btnSaveGeneralInformationEntries.Text = "Güncelle";
+            this.btnSaveGeneralInformationEntries.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnSaveGeneralInformationEntries.UseVisualStyleBackColor = true;
+            this.btnSaveGeneralInformationEntries.Click += new System.EventHandler(this.btnSaveGeneralInformationEntries_Click);
             // 
-            // chckTakerCommission
+            // chckGeneralInformationEntries
             // 
-            this.chckTakerCommission.AutoSize = true;
-            this.chckTakerCommission.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.chckTakerCommission.Location = new System.Drawing.Point(231, 45);
-            this.chckTakerCommission.Name = "chckTakerCommission";
-            this.chckTakerCommission.Size = new System.Drawing.Size(15, 14);
-            this.chckTakerCommission.TabIndex = 229;
-            this.chckTakerCommission.UseVisualStyleBackColor = true;
-            this.chckTakerCommission.CheckedChanged += new System.EventHandler(this.chckTakerCommission_CheckedChanged);
+            this.chckGeneralInformationEntries.AutoSize = true;
+            this.chckGeneralInformationEntries.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.chckGeneralInformationEntries.Location = new System.Drawing.Point(243, 197);
+            this.chckGeneralInformationEntries.Name = "chckGeneralInformationEntries";
+            this.chckGeneralInformationEntries.Size = new System.Drawing.Size(15, 14);
+            this.chckGeneralInformationEntries.TabIndex = 229;
+            this.chckGeneralInformationEntries.UseVisualStyleBackColor = true;
+            this.chckGeneralInformationEntries.CheckedChanged += new System.EventHandler(this.chckGeneralInformationEntries_CheckedChanged);
             // 
             // tbxTakerCommission
             // 
             this.tbxTakerCommission.Enabled = false;
             this.tbxTakerCommission.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.tbxTakerCommission.Location = new System.Drawing.Point(155, 40);
+            this.tbxTakerCommission.Location = new System.Drawing.Point(167, 158);
             this.tbxTakerCommission.Name = "tbxTakerCommission";
-            this.tbxTakerCommission.Size = new System.Drawing.Size(60, 20);
+            this.tbxTakerCommission.Size = new System.Drawing.Size(173, 20);
             this.tbxTakerCommission.TabIndex = 228;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label1.Location = new System.Drawing.Point(49, 45);
+            this.label1.Location = new System.Drawing.Point(61, 163);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(100, 13);
             this.label1.TabIndex = 227;
             this.label1.Text = "Taker Komisyon % :";
             // 
-            // btnUpdateMakerCommission
-            // 
-            this.btnUpdateMakerCommission.Enabled = false;
-            this.btnUpdateMakerCommission.Image = ((System.Drawing.Image)(resources.GetObject("btnUpdateMakerCommission.Image")));
-            this.btnUpdateMakerCommission.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnUpdateMakerCommission.Location = new System.Drawing.Point(252, 8);
-            this.btnUpdateMakerCommission.Name = "btnUpdateMakerCommission";
-            this.btnUpdateMakerCommission.Size = new System.Drawing.Size(76, 24);
-            this.btnUpdateMakerCommission.TabIndex = 226;
-            this.btnUpdateMakerCommission.Text = "Güncelle";
-            this.btnUpdateMakerCommission.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnUpdateMakerCommission.UseVisualStyleBackColor = true;
-            this.btnUpdateMakerCommission.Click += new System.EventHandler(this.btnUpdateMakerCommission_Click);
-            // 
-            // chckMakerCommission
-            // 
-            this.chckMakerCommission.AutoSize = true;
-            this.chckMakerCommission.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.chckMakerCommission.Location = new System.Drawing.Point(231, 15);
-            this.chckMakerCommission.Name = "chckMakerCommission";
-            this.chckMakerCommission.Size = new System.Drawing.Size(15, 14);
-            this.chckMakerCommission.TabIndex = 225;
-            this.chckMakerCommission.UseVisualStyleBackColor = true;
-            this.chckMakerCommission.CheckedChanged += new System.EventHandler(this.chckMakerCommission_CheckedChanged);
-            // 
             // tbxMakerCommission
             // 
             this.tbxMakerCommission.Enabled = false;
             this.tbxMakerCommission.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.tbxMakerCommission.Location = new System.Drawing.Point(155, 10);
+            this.tbxMakerCommission.Location = new System.Drawing.Point(167, 128);
             this.tbxMakerCommission.Name = "tbxMakerCommission";
-            this.tbxMakerCommission.Size = new System.Drawing.Size(60, 20);
+            this.tbxMakerCommission.Size = new System.Drawing.Size(173, 20);
             this.tbxMakerCommission.TabIndex = 224;
             // 
             // lblMakerCommission
             // 
             this.lblMakerCommission.AutoSize = true;
             this.lblMakerCommission.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblMakerCommission.Location = new System.Drawing.Point(47, 15);
+            this.lblMakerCommission.Location = new System.Drawing.Point(59, 133);
             this.lblMakerCommission.Name = "lblMakerCommission";
             this.lblMakerCommission.Size = new System.Drawing.Size(102, 13);
             this.lblMakerCommission.TabIndex = 222;
@@ -1600,12 +1769,10 @@
         private System.Windows.Forms.TextBox tbxPlusMinus;
         private System.Windows.Forms.Label lblStartBalanceText;
         private System.Windows.Forms.Label lblStartBalance;
-        private System.Windows.Forms.Button btnUpdateTakerCommission;
-        private System.Windows.Forms.CheckBox chckTakerCommission;
+        private System.Windows.Forms.Button btnSaveGeneralInformationEntries;
+        private System.Windows.Forms.CheckBox chckGeneralInformationEntries;
         private System.Windows.Forms.TextBox tbxTakerCommission;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button btnUpdateMakerCommission;
-        private System.Windows.Forms.CheckBox chckMakerCommission;
         private System.Windows.Forms.TextBox tbxMakerCommission;
         private System.Windows.Forms.Label lblMakerCommission;
         private System.Windows.Forms.Label lblLine2;
@@ -1666,12 +1833,12 @@
         private System.Windows.Forms.Button btnSaveTradeCheckedListBox;
         private System.Windows.Forms.Label lblReferralId;
         private System.Windows.Forms.Label lblReferralLink;
-        private System.Windows.Forms.Button btnUpdateReferralId;
-        private System.Windows.Forms.CheckBox chckReferralId;
         private System.Windows.Forms.TextBox tbxReferralId;
-        private System.Windows.Forms.Button btnUpdateReferralLink;
-        private System.Windows.Forms.CheckBox chckReferralLink;
         private System.Windows.Forms.TextBox tbxReferralLink;
+        private System.Windows.Forms.Label lblCurrencyPair;
+        private System.Windows.Forms.Label lblExchange;
+        private System.Windows.Forms.ComboBox cbxExchanges;
+        private System.Windows.Forms.ComboBox cbxCurrencyPairList;
     }
 }
 

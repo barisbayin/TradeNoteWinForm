@@ -19,6 +19,8 @@ using TradeNote.Properties;
 using TradeNote.Repositories;
 using ZXing;
 using Excel = Microsoft.Office.Interop.Excel;
+using Image = System.Drawing.Image;
+using Rectangle = System.Drawing.Rectangle;
 
 namespace TradeNote
 {
@@ -41,7 +43,6 @@ namespace TradeNote
         {
             PopulateComboBoxWithXmlFiles();
             LoadTradeCheckedListBoxCheckStates();
-            LoadGeneralSettings();
         }
 
 
@@ -88,6 +89,8 @@ namespace TradeNote
         {
             _tradeModelManager.CreateEmptyXmlFile(tbxNewTradeXmlName.Text);
 
+            MessageBox.Show(tbxNewTradeXmlName.Text + " listesi oluşturuldu. Trade işlemlerine başlamadan önce lütfen genel ayarlarınız yapınız!", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
             tbxNewTradeXmlName.Text = "";
             tbxNewTradeXmlName.Enabled = false;
             btnNewTradeXml.Enabled = true;
@@ -99,7 +102,6 @@ namespace TradeNote
 
         private void LoadTradeDataGridView()
         {
-            var tradeColumnsShowArray = chcklbTradeColumns.Items;
 
             var xmlFilePath = GeneralHelper.GetXmlFilePath(cbxListOfTradeXmls.Text);
             try
@@ -224,6 +226,15 @@ namespace TradeNote
                         }
                     }
 
+                    DataGridViewButtonColumn shareButtonColumn = new DataGridViewButtonColumn();
+
+                    shareButtonColumn.HeaderText = "Paylaş";
+                    shareButtonColumn.Name = "shareImageButton";
+                    shareButtonColumn.Text = "Paylaş";
+                    shareButtonColumn.DefaultCellStyle.SelectionBackColor = Color.Transparent;
+                    shareButtonColumn.UseColumnTextForButtonValue = true;
+                    dgvTradeList.Columns.Add(shareButtonColumn);
+
                     //dgvTradeList.Columns["AverageEntryBalance"].DefaultCellStyle.Format = "$#.##";
                     //dgvTradeList.Columns["TargetedEntryPrice"].DefaultCellStyle.Format = "$#.##";
                     //dgvTradeList.Columns[6].DefaultCellStyle.Format = "$#.##";
@@ -337,6 +348,38 @@ namespace TradeNote
         private void dgvTradeList_CellClick_1(object sender, DataGridViewCellEventArgs e)
         {
             var xmlFilePath = GeneralHelper.GetXmlFilePath(cbxListOfTradeXmls.Text);
+
+            if (dgvTradeList.Columns[e.ColumnIndex].Name == "shareImageButton")
+            {
+                var settingsForm = new ImageForm();
+                ImageForm.ListOfTradeXmls = cbxListOfTradeXmls.Text;
+
+                if (!string.IsNullOrEmpty(lblTradeIdLabel.Text))
+                {
+                    ImageForm.SelectedTrade = Convert.ToInt32(lblTradeIdLabel.Text);
+                }
+                else
+                {
+                    MessageBox.Show("Lütfen çıktı almak istediğiniz trade'i satırına tıklayarak seçiniz!", "Uyarı",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
+                var generalInformation = _tradeModelManager.GetGeneralInformation(xmlFilePath);
+
+
+                ImageForm.ReferralLink = generalInformation.ReferralLink;
+
+
+                ImageForm.ReferralId = generalInformation.ReferralId;
+
+                ImageForm.Exchange = generalInformation.Exchange;
+
+                ImageForm.CurrencyPair = generalInformation.CurrencyPair;
+
+
+                settingsForm.Show();
+            }
+
             try
             {
                 tradeClickedColumnIndex = e.ColumnIndex;
@@ -480,6 +523,10 @@ namespace TradeNote
         {
             var generalInformation = GetGeneralInformation();
 
+            cbxExchanges.Text = generalInformation.Exchange;
+            cbxCurrencyPairList.Text = generalInformation.CurrencyPair;
+            tbxReferralLink.Text = generalInformation.ReferralLink;
+            tbxReferralId.Text = generalInformation.ReferralId;
             lblStartBalanceText.Text = "$" + generalInformation.StartingBalance.ToString(CultureInfo.InvariantCulture);
             lblLastBalanceLabel.Text = "$" + generalInformation.LastBalance.ToString(CultureInfo.InvariantCulture);
             lblInTradeBalanceLabel.Text = "$" + generalInformation.InTradeBalance.ToString(CultureInfo.InvariantCulture);
@@ -1080,92 +1127,15 @@ namespace TradeNote
             }
         }
 
-        private void chckMakerCommission_CheckedChanged(object sender, EventArgs e)
-        {
-            if (chckMakerCommission.CheckState == CheckState.Checked)
-            {
-                tbxMakerCommission.Enabled = true;
-                btnUpdateMakerCommission.Enabled = true;
-            }
-            else
-            {
-                tbxMakerCommission.Enabled = false;
-                btnUpdateMakerCommission.Enabled = false;
-            }
-        }
-
-        private void chckTakerCommission_CheckedChanged(object sender, EventArgs e)
-        {
-            if (chckTakerCommission.CheckState == CheckState.Checked)
-            {
-                tbxTakerCommission.Enabled = true;
-                btnUpdateTakerCommission.Enabled = true;
-            }
-            else
-            {
-                tbxTakerCommission.Enabled = false;
-                btnUpdateTakerCommission.Enabled = false;
-            }
-        }
 
         private void btnUpdateMakerCommission_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(cbxListOfTradeXmls.Text))
-            {
-                var xmlFilePath = GeneralHelper.GetXmlFilePath(cbxListOfTradeXmls.Text);
 
-                var generalInformation = _tradeModelManager.GetGeneralInformation(xmlFilePath);
-
-                generalInformation.MakerCommission = Convert.ToDecimal(tbxMakerCommission.Text.Replace(".", ","));
-
-                _tradeModelManager.UpdateGeneralInformation(generalInformation, xmlFilePath);
-
-                MessageBox.Show("Maker komisyon oranı %" + tbxMakerCommission.Text + " olarak güncellendi.", "Bilgi",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                tbxMakerCommission.Enabled = false;
-                btnUpdateMakerCommission.Enabled = false;
-                chckMakerCommission.Checked = false;
-
-                LoadGeneralInformation();
-            }
-            else
-            {
-                MessageBox.Show("Lütfen trade listesini seçiniz!", "Uyarı",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
 
 
         }
 
-        private void btnUpdateTakerCommission_Click(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrEmpty(cbxListOfTradeXmls.Text))
-            {
-                var xmlFilePath = GeneralHelper.GetXmlFilePath(cbxListOfTradeXmls.Text);
 
-                var generalInformation = _tradeModelManager.GetGeneralInformation(xmlFilePath);
-
-                generalInformation.TakerCommission = Convert.ToDecimal(tbxTakerCommission.Text.Replace(".", ","));
-
-                _tradeModelManager.UpdateGeneralInformation(generalInformation, xmlFilePath);
-
-                MessageBox.Show("Taker komisyon oranı %" + tbxTakerCommission.Text + " olarak güncellendi.", "Bilgi",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                tbxTakerCommission.Enabled = false;
-                btnUpdateTakerCommission.Enabled = false;
-                chckTakerCommission.Checked = false;
-
-                LoadGeneralInformation();
-            }
-            else
-            {
-                MessageBox.Show("Lütfen trade listesini seçiniz!", "Uyarı",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-
-        }
 
         private void chckEndTrade_CheckedChanged(object sender, EventArgs e)
         {
@@ -1362,19 +1332,19 @@ namespace TradeNote
 
         private void tsmiExportStatisticsImage_Click(object sender, EventArgs e)
         {
-            var settingsForm = new SettingsForm();
-            SettingsForm.ListOfTradeXmls = cbxListOfTradeXmls.Text;
+            var settingsForm = new ImageForm();
+            ImageForm.ListOfTradeXmls = cbxListOfTradeXmls.Text;
             settingsForm.Show();
         }
 
         private void tsmiExportTradeStatistics_Click(object sender, EventArgs e)
         {
-            var settingsForm = new SettingsForm();
-            SettingsForm.ListOfTradeXmls = cbxListOfTradeXmls.Text;
+            var settingsForm = new ImageForm();
+            ImageForm.ListOfTradeXmls = cbxListOfTradeXmls.Text;
 
             if (!string.IsNullOrEmpty(lblTradeIdLabel.Text))
             {
-                SettingsForm.SelectedTrade = Convert.ToInt32(lblTradeIdLabel.Text);
+                ImageForm.SelectedTrade = Convert.ToInt32(lblTradeIdLabel.Text);
             }
             else
             {
@@ -1386,11 +1356,11 @@ namespace TradeNote
 
             if (generalSettings.ContainsKey("ReferralLink"))
             {
-                SettingsForm.ReferralLink = generalSettings["ReferralLink"];
+                ImageForm.ReferralLink = generalSettings["ReferralLink"];
             }
             if (generalSettings.ContainsKey("ReferralId"))
             {
-                SettingsForm.ReferralId = generalSettings["ReferralId"];
+                ImageForm.ReferralId = generalSettings["ReferralId"];
             }
 
 
@@ -1489,119 +1459,99 @@ namespace TradeNote
             }
         }
 
-        private void btnUpdateReferralLink_Click(object sender, EventArgs e)
+
+        private void chckGeneralInformationEntries_CheckedChanged(object sender, EventArgs e)
         {
-            var generalSettings = GetGeneralSettings();
-
-            if (generalSettings.ContainsKey("ReferralLink"))
+            if (chckGeneralInformationEntries.CheckState == CheckState.Checked)
             {
-                generalSettings["ReferralLink"] = tbxReferralLink.Text;
-
-                using (StreamWriter sw = new StreamWriter(path: Properties.Settings.Default.GeneralSettings))
-                {
-                    foreach (KeyValuePair<string, string> setting in generalSettings)
-                    {
-                        sw.WriteLine(setting.Key + "=" + setting.Value);
-                    }
-                }
-                MessageBox.Show("Referans linki güncellendi!", "Bilgi",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
-                generalSettings.Add("ReferralLink", tbxReferralLink.Text);
-
-                using (StreamWriter sw = new StreamWriter(path: Properties.Settings.Default.GeneralSettings))
-                {
-                    foreach (KeyValuePair<string, string> setting in generalSettings)
-                    {
-                        sw.WriteLine(setting.Key + "=" + setting.Value);
-                    }
-                }
-
-                MessageBox.Show("Referans linki kaydedildi!", "Bilgi",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-
-            LoadGeneralSettings();
-        }
-
-        private void btnUpdateReferralId_Click(object sender, EventArgs e)
-        {
-            var generalSettings = GetGeneralSettings();
-
-            if (generalSettings.ContainsKey("ReferralId"))
-            {
-                generalSettings["ReferralId"] = tbxReferralId.Text;
-
-                using (StreamWriter sw = new StreamWriter(path: Properties.Settings.Default.GeneralSettings))
-                {
-                    foreach (KeyValuePair<string, string> setting in generalSettings)
-                    {
-                        sw.WriteLine(setting.Key + "=" + setting.Value);
-                    }
-                }
-                MessageBox.Show("Referans id güncellendi!", "Bilgi",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
-                generalSettings.Add("ReferralId", tbxReferralId.Text);
-
-                using (StreamWriter sw = new StreamWriter(path: Properties.Settings.Default.GeneralSettings))
-                {
-                    foreach (KeyValuePair<string, string> setting in generalSettings)
-                    {
-                        sw.WriteLine(setting.Key + "=" + setting.Value);
-                    }
-                }
-
-                MessageBox.Show("Referans id kaydedildi!", "Bilgi",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            LoadGeneralSettings();
-        }
-
-        private void chckReferralLink_CheckedChanged(object sender, EventArgs e)
-        {
-            if (chckReferralLink.CheckState == CheckState.Checked)
-            {
+                cbxExchanges.Enabled = true;
+                cbxCurrencyPairList.Enabled = true;
                 tbxReferralLink.Enabled = true;
-                btnUpdateReferralLink.Enabled = true;
-            }
-            else
-            {
-                tbxReferralLink.Enabled = false;
-                btnUpdateReferralLink.Enabled = false;
-            }
-        }
-
-        private void chckReferralId_CheckedChanged(object sender, EventArgs e)
-        {
-            if (chckReferralId.CheckState == CheckState.Checked)
-            {
                 tbxReferralId.Enabled = true;
-                btnUpdateReferralId.Enabled = true;
+                tbxMakerCommission.Enabled = true;
+                tbxTakerCommission.Enabled = true;
+                btnSaveGeneralInformationEntries.Enabled = true;
             }
             else
             {
+                cbxExchanges.Enabled = false;
+                cbxCurrencyPairList.Enabled = false;
+                tbxReferralLink.Enabled = false;
                 tbxReferralId.Enabled = false;
-                btnUpdateReferralId.Enabled = false;
+                tbxMakerCommission.Enabled = false;
+                tbxTakerCommission.Enabled = false;
+                btnSaveGeneralInformationEntries.Enabled = false;
             }
         }
 
-        private void LoadGeneralSettings()
+        private void btnSaveGeneralInformationEntries_Click(object sender, EventArgs e)
         {
-            var generalSettings = GetGeneralSettings();
+            if (!string.IsNullOrEmpty(cbxListOfTradeXmls.Text))
+            {
+                var xmlFilePath = GeneralHelper.GetXmlFilePath(cbxListOfTradeXmls.Text);
 
-            if (generalSettings.ContainsKey("ReferralLink"))
-            {
-                tbxReferralLink.Text = generalSettings["ReferralLink"];
+                var generalInformation = _tradeModelManager.GetGeneralInformation(xmlFilePath);
+
+                if (!string.IsNullOrEmpty(cbxExchanges.Text))
+                {
+                    generalInformation.Exchange = cbxExchanges.Text;
+                }
+
+                if (!string.IsNullOrEmpty(cbxCurrencyPairList.Text))
+                {
+                    generalInformation.CurrencyPair = cbxCurrencyPairList.Text;
+                }
+
+                if (!string.IsNullOrEmpty(tbxReferralLink.Text))
+                {
+                    generalInformation.ReferralLink = tbxReferralLink.Text;
+                }
+                if (!string.IsNullOrEmpty(tbxReferralId.Text))
+                {
+                    generalInformation.ReferralId = tbxReferralId.Text;
+                }
+
+                generalInformation.TakerCommission = Convert.ToDecimal(tbxTakerCommission.Text.Replace(".", ","));
+                generalInformation.MakerCommission = Convert.ToDecimal(tbxMakerCommission.Text.Replace(".", ","));
+
+
+                _tradeModelManager.UpdateGeneralInformation(generalInformation, xmlFilePath);
+
+                MessageBox.Show("Genel ayarlar kaydedildi!", "Bilgi",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                tbxTakerCommission.Enabled = false;
+                btnSaveGeneralInformationEntries.Enabled = false;
+                chckGeneralInformationEntries.Checked = false;
+
+                LoadGeneralInformation();
             }
-            if (generalSettings.ContainsKey("ReferralId"))
+            else
             {
-                tbxReferralId.Text = generalSettings["ReferralId"];
+                MessageBox.Show("Lütfen trade listesini seçiniz!", "Uyarı",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+
+        }
+
+        private void dgvTradeList_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            //if (e.RowIndex < 0)
+            //    return;
+
+            ////I supposed your button column is at index 0
+            //if (e.ColumnIndex == 0)
+            //{
+            //    e.Paint(e.CellBounds, DataGridViewPaintParts.All);
+
+            //    var w = Properties.Resources.SomeImage.Width;
+            //    var h = Properties.Resources.SomeImage.Height;
+            //    var x = e.CellBounds.Left + (e.CellBounds.Width - w) / 2;
+            //    var y = e.CellBounds.Top + (e.CellBounds.Height - h) / 2;
+
+            //    e.Graphics.DrawImage(someImage, new Rectangle(x, y, w, h));
+            //    e.Handled = true;
+            //}
         }
     }
 }

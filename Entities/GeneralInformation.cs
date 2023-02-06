@@ -4,6 +4,19 @@ namespace TradeNote
 {
     public class GeneralInformation
     {
+
+        [DisplayName("Borsa")]
+        public string Exchange { get; set; }
+
+        [DisplayName("Kriptopara")]
+        public string CurrencyPair { get; set; }
+
+        [DisplayName("Referans Linki")]
+        public string ReferralLink { get; set; }
+
+        [DisplayName("Referral Id")]
+        public string ReferralId { get; set; }
+
         [DisplayName("Başlangıç Bakiyesi")]
         public decimal StartingBalance { get; set; }
 
