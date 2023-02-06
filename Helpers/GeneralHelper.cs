@@ -1,10 +1,16 @@
-﻿using System;
+﻿using iTextSharp.text.pdf.qrcode;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Net.NetworkInformation;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ZXing;
 
 namespace TradeNote.Helpers
 {
@@ -36,8 +42,27 @@ namespace TradeNote.Helpers
             {
                 Directory.CreateDirectory(subDirectory);
             }
-
             return subDirectory;
         }
+
+        public static Image GenerateQrCodeImageByGivenString(string text)
+        {
+            var qrCodeWriter = new BarcodeWriter
+            {
+                Format = BarcodeFormat.QR_CODE,
+                Options = new ZXing.QrCode.QrCodeEncodingOptions
+                {
+                    Width = 120,
+                    Height = 120,
+                    Margin = 1
+                }
+            };
+            var qrCode = qrCodeWriter.Write(text);
+            qrCode.Save("qrcode.png", ImageFormat.Png);
+
+            return qrCode;
+        }
+
+
     }
 }

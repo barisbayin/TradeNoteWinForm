@@ -34,5 +34,20 @@ namespace TradeNote.Properties {
                 this["CheckedListBoxFile"] = value;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("GeneralSettings.txt")]
+        public string GeneralSettings
+        {
+            get
+            {
+                return ((string)(this["GeneralSettings"]));
+            }
+            set
+            {
+                this["GeneralSettings"] = value;
+            }
+        }
     }
 }

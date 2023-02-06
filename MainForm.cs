@@ -15,7 +15,9 @@ using TradeNote.Business;
 using TradeNote.Entities;
 using TradeNote.Enums;
 using TradeNote.Helpers;
+using TradeNote.Properties;
 using TradeNote.Repositories;
+using ZXing;
 using Excel = Microsoft.Office.Interop.Excel;
 
 namespace TradeNote
@@ -39,6 +41,7 @@ namespace TradeNote
         {
             PopulateComboBoxWithXmlFiles();
             LoadTradeCheckedListBoxCheckStates();
+            LoadGeneralSettings();
         }
 
 
@@ -613,19 +616,14 @@ namespace TradeNote
                         }
                         else
                         {
+
                             foundTrade.FundingFeeSum = Convert.ToDecimal(tbxTotalFundingFee.Text.Replace(".", ","));
                             _tradeModelManager.UpdateTrade(foundTrade, xmlFilePath);
                             var calculatedTrade = _tradeModelManager.CalculateTrade(foundTrade.Id, xmlFilePath);
                             _tradeModelManager.UpdateTrade(calculatedTrade, xmlFilePath);
 
-                            if (cbxPositionSide.Text != foundTrade.PositionSide.ToString())
-                            {
-                                MessageBox.Show("İşlem başladıktan sonra posizyon yönü değiştirilemez!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                return;
-                            }
+                            MessageBox.Show("İşlem girişi yapıldıktan sonra sadece fonlama maliyeti güncellenebilir!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
-
-
                     }
 
                 }
@@ -981,12 +979,12 @@ namespace TradeNote
 
         private void TradeList_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Control && e.KeyCode == Keys.F9)
-            {
-                var settingsForm = new SettingsForm();
-                settingsForm.Show();
-                
-            }
+            //if (e.Control && e.KeyCode == Keys.F9)
+            //{
+            //    var settingsForm = new SettingsForm();
+            //    settingsForm.Show();
+
+            //}
         }
 
 
@@ -1371,7 +1369,32 @@ namespace TradeNote
 
         private void tsmiExportTradeStatistics_Click(object sender, EventArgs e)
         {
+            var settingsForm = new SettingsForm();
+            SettingsForm.ListOfTradeXmls = cbxListOfTradeXmls.Text;
 
+            if (!string.IsNullOrEmpty(lblTradeIdLabel.Text))
+            {
+                SettingsForm.SelectedTrade = Convert.ToInt32(lblTradeIdLabel.Text);
+            }
+            else
+            {
+                MessageBox.Show("Lütfen çıktı almak istediğiniz trade'i satırına tıklayarak seçiniz!", "Uyarı",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+            var generalSettings = GetGeneralSettings();
+
+            if (generalSettings.ContainsKey("ReferralLink"))
+            {
+                SettingsForm.ReferralLink = generalSettings["ReferralLink"];
+            }
+            if (generalSettings.ContainsKey("ReferralId"))
+            {
+                SettingsForm.ReferralId = generalSettings["ReferralId"];
+            }
+
+
+            settingsForm.Show();
         }
 
 
@@ -1419,6 +1442,7 @@ namespace TradeNote
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             LoadTradeCheckedListBoxCheckStates();
+
             if (!string.IsNullOrEmpty(cbxListOfTradeXmls.Text))
             {
                 LoadTradeDataGridView();
@@ -1445,5 +1469,139 @@ namespace TradeNote
             }
         }
 
+        private Dictionary<string, string> GetGeneralSettings()
+        {
+            Dictionary<string, string> generalSettings = new Dictionary<string, string>();
+
+            using (var reader = new StreamReader(Properties.Settings.Default.GeneralSettings))
+            {
+                while (!reader.EndOfStream)
+                {
+                    string line = reader.ReadLine();
+                    string[] lineData = line.Split('=');
+                    string key = lineData[0];
+                    string value = lineData[1];
+
+                    generalSettings.Add(key, value);
+
+                }
+                return generalSettings;
+            }
+        }
+
+        private void btnUpdateReferralLink_Click(object sender, EventArgs e)
+        {
+            var generalSettings = GetGeneralSettings();
+
+            if (generalSettings.ContainsKey("ReferralLink"))
+            {
+                generalSettings["ReferralLink"] = tbxReferralLink.Text;
+
+                using (StreamWriter sw = new StreamWriter(path: Properties.Settings.Default.GeneralSettings))
+                {
+                    foreach (KeyValuePair<string, string> setting in generalSettings)
+                    {
+                        sw.WriteLine(setting.Key + "=" + setting.Value);
+                    }
+                }
+                MessageBox.Show("Referans linki güncellendi!", "Bilgi",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                generalSettings.Add("ReferralLink", tbxReferralLink.Text);
+
+                using (StreamWriter sw = new StreamWriter(path: Properties.Settings.Default.GeneralSettings))
+                {
+                    foreach (KeyValuePair<string, string> setting in generalSettings)
+                    {
+                        sw.WriteLine(setting.Key + "=" + setting.Value);
+                    }
+                }
+
+                MessageBox.Show("Referans linki kaydedildi!", "Bilgi",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+            LoadGeneralSettings();
+        }
+
+        private void btnUpdateReferralId_Click(object sender, EventArgs e)
+        {
+            var generalSettings = GetGeneralSettings();
+
+            if (generalSettings.ContainsKey("ReferralId"))
+            {
+                generalSettings["ReferralId"] = tbxReferralId.Text;
+
+                using (StreamWriter sw = new StreamWriter(path: Properties.Settings.Default.GeneralSettings))
+                {
+                    foreach (KeyValuePair<string, string> setting in generalSettings)
+                    {
+                        sw.WriteLine(setting.Key + "=" + setting.Value);
+                    }
+                }
+                MessageBox.Show("Referans id güncellendi!", "Bilgi",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                generalSettings.Add("ReferralId", tbxReferralId.Text);
+
+                using (StreamWriter sw = new StreamWriter(path: Properties.Settings.Default.GeneralSettings))
+                {
+                    foreach (KeyValuePair<string, string> setting in generalSettings)
+                    {
+                        sw.WriteLine(setting.Key + "=" + setting.Value);
+                    }
+                }
+
+                MessageBox.Show("Referans id kaydedildi!", "Bilgi",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            LoadGeneralSettings();
+        }
+
+        private void chckReferralLink_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chckReferralLink.CheckState == CheckState.Checked)
+            {
+                tbxReferralLink.Enabled = true;
+                btnUpdateReferralLink.Enabled = true;
+            }
+            else
+            {
+                tbxReferralLink.Enabled = false;
+                btnUpdateReferralLink.Enabled = false;
+            }
+        }
+
+        private void chckReferralId_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chckReferralId.CheckState == CheckState.Checked)
+            {
+                tbxReferralId.Enabled = true;
+                btnUpdateReferralId.Enabled = true;
+            }
+            else
+            {
+                tbxReferralId.Enabled = false;
+                btnUpdateReferralId.Enabled = false;
+            }
+        }
+
+        private void LoadGeneralSettings()
+        {
+            var generalSettings = GetGeneralSettings();
+
+            if (generalSettings.ContainsKey("ReferralLink"))
+            {
+                tbxReferralLink.Text = generalSettings["ReferralLink"];
+            }
+            if (generalSettings.ContainsKey("ReferralId"))
+            {
+                tbxReferralId.Text = generalSettings["ReferralId"];
+            }
+        }
     }
 }

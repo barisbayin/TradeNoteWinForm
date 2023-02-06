@@ -121,6 +121,14 @@
             this.lblStartBalanceText = new System.Windows.Forms.Label();
             this.lblStartBalance = new System.Windows.Forms.Label();
             this.tpgSettings = new System.Windows.Forms.TabPage();
+            this.lblReferralId = new System.Windows.Forms.Label();
+            this.lblReferralLink = new System.Windows.Forms.Label();
+            this.btnUpdateReferralId = new System.Windows.Forms.Button();
+            this.chckReferralId = new System.Windows.Forms.CheckBox();
+            this.tbxReferralId = new System.Windows.Forms.TextBox();
+            this.btnUpdateReferralLink = new System.Windows.Forms.Button();
+            this.chckReferralLink = new System.Windows.Forms.CheckBox();
+            this.tbxReferralLink = new System.Windows.Forms.TextBox();
             this.btnSaveTradeCheckedListBox = new System.Windows.Forms.Button();
             this.chcklbTradeColumns = new System.Windows.Forms.CheckedListBox();
             this.btnUpdateTakerCommission = new System.Windows.Forms.Button();
@@ -1218,6 +1226,14 @@
             // 
             // tpgSettings
             // 
+            this.tpgSettings.Controls.Add(this.lblReferralId);
+            this.tpgSettings.Controls.Add(this.lblReferralLink);
+            this.tpgSettings.Controls.Add(this.btnUpdateReferralId);
+            this.tpgSettings.Controls.Add(this.chckReferralId);
+            this.tpgSettings.Controls.Add(this.tbxReferralId);
+            this.tpgSettings.Controls.Add(this.btnUpdateReferralLink);
+            this.tpgSettings.Controls.Add(this.chckReferralLink);
+            this.tpgSettings.Controls.Add(this.tbxReferralLink);
             this.tpgSettings.Controls.Add(this.btnSaveTradeCheckedListBox);
             this.tpgSettings.Controls.Add(this.chcklbTradeColumns);
             this.tpgSettings.Controls.Add(this.btnUpdateTakerCommission);
@@ -1235,12 +1251,100 @@
             this.tpgSettings.TabIndex = 1;
             this.tpgSettings.Text = "Ayarlar";
             // 
+            // lblReferralId
+            // 
+            this.lblReferralId.AutoSize = true;
+            this.lblReferralId.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblReferralId.Location = new System.Drawing.Point(58, 104);
+            this.lblReferralId.Name = "lblReferralId";
+            this.lblReferralId.Size = new System.Drawing.Size(44, 13);
+            this.lblReferralId.TabIndex = 266;
+            this.lblReferralId.Text = "Ref ID :";
+            // 
+            // lblReferralLink
+            // 
+            this.lblReferralLink.AutoSize = true;
+            this.lblReferralLink.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblReferralLink.Location = new System.Drawing.Point(49, 74);
+            this.lblReferralLink.Name = "lblReferralLink";
+            this.lblReferralLink.Size = new System.Drawing.Size(53, 13);
+            this.lblReferralLink.TabIndex = 265;
+            this.lblReferralLink.Text = "Ref Link :";
+            // 
+            // btnUpdateReferralId
+            // 
+            this.btnUpdateReferralId.Enabled = false;
+            this.btnUpdateReferralId.Image = ((System.Drawing.Image)(resources.GetObject("btnUpdateReferralId.Image")));
+            this.btnUpdateReferralId.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnUpdateReferralId.Location = new System.Drawing.Point(252, 98);
+            this.btnUpdateReferralId.Name = "btnUpdateReferralId";
+            this.btnUpdateReferralId.Size = new System.Drawing.Size(76, 24);
+            this.btnUpdateReferralId.TabIndex = 264;
+            this.btnUpdateReferralId.Text = "Güncelle";
+            this.btnUpdateReferralId.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnUpdateReferralId.UseVisualStyleBackColor = true;
+            this.btnUpdateReferralId.Click += new System.EventHandler(this.btnUpdateReferralId_Click);
+            // 
+            // chckReferralId
+            // 
+            this.chckReferralId.AutoSize = true;
+            this.chckReferralId.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.chckReferralId.Location = new System.Drawing.Point(231, 105);
+            this.chckReferralId.Name = "chckReferralId";
+            this.chckReferralId.Size = new System.Drawing.Size(15, 14);
+            this.chckReferralId.TabIndex = 263;
+            this.chckReferralId.UseVisualStyleBackColor = true;
+            this.chckReferralId.CheckedChanged += new System.EventHandler(this.chckReferralId_CheckedChanged);
+            // 
+            // tbxReferralId
+            // 
+            this.tbxReferralId.Enabled = false;
+            this.tbxReferralId.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.tbxReferralId.Location = new System.Drawing.Point(108, 100);
+            this.tbxReferralId.Name = "tbxReferralId";
+            this.tbxReferralId.Size = new System.Drawing.Size(107, 20);
+            this.tbxReferralId.TabIndex = 262;
+            // 
+            // btnUpdateReferralLink
+            // 
+            this.btnUpdateReferralLink.Enabled = false;
+            this.btnUpdateReferralLink.Image = ((System.Drawing.Image)(resources.GetObject("btnUpdateReferralLink.Image")));
+            this.btnUpdateReferralLink.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnUpdateReferralLink.Location = new System.Drawing.Point(252, 68);
+            this.btnUpdateReferralLink.Name = "btnUpdateReferralLink";
+            this.btnUpdateReferralLink.Size = new System.Drawing.Size(76, 24);
+            this.btnUpdateReferralLink.TabIndex = 261;
+            this.btnUpdateReferralLink.Text = "Güncelle";
+            this.btnUpdateReferralLink.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnUpdateReferralLink.UseVisualStyleBackColor = true;
+            this.btnUpdateReferralLink.Click += new System.EventHandler(this.btnUpdateReferralLink_Click);
+            // 
+            // chckReferralLink
+            // 
+            this.chckReferralLink.AutoSize = true;
+            this.chckReferralLink.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.chckReferralLink.Location = new System.Drawing.Point(231, 75);
+            this.chckReferralLink.Name = "chckReferralLink";
+            this.chckReferralLink.Size = new System.Drawing.Size(15, 14);
+            this.chckReferralLink.TabIndex = 260;
+            this.chckReferralLink.UseVisualStyleBackColor = true;
+            this.chckReferralLink.CheckedChanged += new System.EventHandler(this.chckReferralLink_CheckedChanged);
+            // 
+            // tbxReferralLink
+            // 
+            this.tbxReferralLink.Enabled = false;
+            this.tbxReferralLink.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.tbxReferralLink.Location = new System.Drawing.Point(108, 70);
+            this.tbxReferralLink.Name = "tbxReferralLink";
+            this.tbxReferralLink.Size = new System.Drawing.Size(107, 20);
+            this.tbxReferralLink.TabIndex = 259;
+            // 
             // btnSaveTradeCheckedListBox
             // 
             this.btnSaveTradeCheckedListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.btnSaveTradeCheckedListBox.Image = ((System.Drawing.Image)(resources.GetObject("btnSaveTradeCheckedListBox.Image")));
             this.btnSaveTradeCheckedListBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSaveTradeCheckedListBox.Location = new System.Drawing.Point(264, 466);
+            this.btnSaveTradeCheckedListBox.Location = new System.Drawing.Point(264, 535);
             this.btnSaveTradeCheckedListBox.Name = "btnSaveTradeCheckedListBox";
             this.btnSaveTradeCheckedListBox.Size = new System.Drawing.Size(64, 28);
             this.btnSaveTradeCheckedListBox.TabIndex = 258;
@@ -1279,7 +1383,7 @@
             "Toplam Fonlama Maliyeti",
             "Notlar",
             "Trade Sonlandı Mı?"});
-            this.chcklbTradeColumns.Location = new System.Drawing.Point(50, 66);
+            this.chcklbTradeColumns.Location = new System.Drawing.Point(50, 135);
             this.chcklbTradeColumns.Name = "chcklbTradeColumns";
             this.chcklbTradeColumns.Size = new System.Drawing.Size(278, 394);
             this.chcklbTradeColumns.TabIndex = 231;
@@ -1380,7 +1484,7 @@
             this.tsmiExportStatisticsImage,
             this.tsmiExportTradeStatistics});
             this.cmsExport.Name = "cmsExport";
-            this.cmsExport.Size = new System.Drawing.Size(195, 114);
+            this.cmsExport.Size = new System.Drawing.Size(195, 92);
             // 
             // tsmiExportToExcel
             // 
@@ -1560,6 +1664,14 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiExportStatisticsImage;
         private System.Windows.Forms.ToolStripMenuItem tsmiExportTradeStatistics;
         private System.Windows.Forms.Button btnSaveTradeCheckedListBox;
+        private System.Windows.Forms.Label lblReferralId;
+        private System.Windows.Forms.Label lblReferralLink;
+        private System.Windows.Forms.Button btnUpdateReferralId;
+        private System.Windows.Forms.CheckBox chckReferralId;
+        private System.Windows.Forms.TextBox tbxReferralId;
+        private System.Windows.Forms.Button btnUpdateReferralLink;
+        private System.Windows.Forms.CheckBox chckReferralLink;
+        private System.Windows.Forms.TextBox tbxReferralLink;
     }
 }
 
