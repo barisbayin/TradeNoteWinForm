@@ -224,16 +224,12 @@ namespace TradeNote
                         {
                             dgvTradeList.Columns["EndTrade"].Visible = columnSetting.Value;
                         }
+
+
                     }
 
-                    DataGridViewButtonColumn shareButtonColumn = new DataGridViewButtonColumn();
 
-                    shareButtonColumn.HeaderText = "Paylaş";
-                    shareButtonColumn.Name = "shareImageButton";
-                    shareButtonColumn.Text = "Paylaş";
-                    shareButtonColumn.DefaultCellStyle.SelectionBackColor = Color.Transparent;
-                    shareButtonColumn.UseColumnTextForButtonValue = true;
-                    dgvTradeList.Columns.Add(shareButtonColumn);
+
 
                     //dgvTradeList.Columns["AverageEntryBalance"].DefaultCellStyle.Format = "$#.##";
                     //dgvTradeList.Columns["TargetedEntryPrice"].DefaultCellStyle.Format = "$#.##";
@@ -249,6 +245,20 @@ namespace TradeNote
 
                     // _tradeModelManager.CalculateGeneralInformation(xmlFilePath);
                     // LoadGeneralInformation(GetGeneralInformation());
+                }
+
+                bool columnExists = dgvTradeList.Columns.Cast<DataGridViewColumn>().Any(column => column.Name == "shareImageButton");
+
+                if (!columnExists)
+                {
+                    DataGridViewButtonColumn shareButtonColumn = new DataGridViewButtonColumn();
+
+                    shareButtonColumn.HeaderText = "Paylaş";
+                    shareButtonColumn.Name = "shareImageButton";
+                    shareButtonColumn.Text = "Paylaş";
+                    shareButtonColumn.DefaultCellStyle.SelectionBackColor = Color.Transparent;
+                    shareButtonColumn.UseColumnTextForButtonValue = true;
+                    dgvTradeList.Columns.Add(shareButtonColumn);
                 }
 
                 ClearTrade();
@@ -351,31 +361,19 @@ namespace TradeNote
 
             if (dgvTradeList.Columns[e.ColumnIndex].Name == "shareImageButton")
             {
+                int tradeId = (int)dgvTradeList.Rows[e.RowIndex].Cells["Id"].Value;
+
                 var settingsForm = new ImageForm();
                 ImageForm.ListOfTradeXmls = cbxListOfTradeXmls.Text;
 
-                if (!string.IsNullOrEmpty(lblTradeIdLabel.Text))
-                {
-                    ImageForm.SelectedTrade = Convert.ToInt32(lblTradeIdLabel.Text);
-                }
-                else
-                {
-                    MessageBox.Show("Lütfen çıktı almak istediğiniz trade'i satırına tıklayarak seçiniz!", "Uyarı",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
+                ImageForm.SelectedTrade = tradeId;
 
                 var generalInformation = _tradeModelManager.GetGeneralInformation(xmlFilePath);
 
-
                 ImageForm.ReferralLink = generalInformation.ReferralLink;
-
-
                 ImageForm.ReferralId = generalInformation.ReferralId;
-
                 ImageForm.Exchange = generalInformation.Exchange;
-
                 ImageForm.CurrencyPair = generalInformation.CurrencyPair;
-
 
                 settingsForm.Show();
             }

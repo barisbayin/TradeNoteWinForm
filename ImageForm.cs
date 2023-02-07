@@ -73,7 +73,7 @@ namespace TradeNote
             decimal averageEntryPrice = 0;
             decimal averageClosePrice = 0;
 
-            if (string.IsNullOrEmpty(ListOfTradeXmls) || string.IsNullOrEmpty(SelectedTrade.ToString())) return;
+            if (string.IsNullOrEmpty(ListOfTradeXmls) && string.IsNullOrEmpty(SelectedTrade.ToString())) return;
 
             var xmlFilePath = GeneralHelper.GetXmlFilePath(ListOfTradeXmls);
 
