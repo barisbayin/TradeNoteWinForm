@@ -129,7 +129,7 @@ namespace TradeNote.Business
 
                 totalProfitOrLoss = profitSum + lossSum - totalCommission - totalFundingFee;
 
-                lastBalance = Math.Round(Convert.ToDecimal(currentGeneralInformation.StartingBalance + totalProfitOrLoss - totalCommission - totalFundingFee), 2);
+                lastBalance = Math.Round(Convert.ToDecimal(currentGeneralInformation.StartingBalance + totalProfitOrLoss - totalCommission), 2);
 
                 totalPnlPercent = Math.Round(Convert.ToDecimal((lastBalance / currentGeneralInformation.StartingBalance - 1) * 100), 2);
 

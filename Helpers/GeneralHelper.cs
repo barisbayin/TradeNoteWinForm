@@ -52,8 +52,8 @@ namespace TradeNote.Helpers
                 Format = BarcodeFormat.QR_CODE,
                 Options = new ZXing.QrCode.QrCodeEncodingOptions
                 {
-                    Width = 120,
-                    Height = 120,
+                    Width = 90,
+                    Height = 90,
                     Margin = 1
                 }
             };
