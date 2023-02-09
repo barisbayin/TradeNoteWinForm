@@ -154,6 +154,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icons8-cash-in-hand-94.ico" />
+    <None Include="Resources\icons8-graph-80.png" />
     <None Include="Resources\pnl_base.jpg" />
     <None Include="Resources\istockphoto-1299714007-612x612.png" />
   </ItemGroup>

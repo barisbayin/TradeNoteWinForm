@@ -323,6 +323,7 @@ namespace TradeNote
 
                     ClearTrade();
                     ClearTradeDetails();
+                    ClearGeneralInformation();
                     dgvTradeList.DataSource = null;
                     dgvTradeDetails.DataSource = null;
                     cbxListOfTradeXmls.Text = "";
@@ -488,6 +489,23 @@ namespace TradeNote
             tbxTradeEntryBalance.Text = "";
             tbxTradeEntryPrice.Text = "";
             tbxTradeEntryLotCount.Text = "";
+        }
+
+        private void ClearGeneralInformation()
+        {
+            lblStartBalanceText.Text = "";
+            lblLastBalanceLabel.Text = "";
+            lblInTradeBalanceLabel.Text = "";
+            lblAvailableBalanceLabel.Text = "";
+            lblProfitsSumLabel.Text = "";
+            lblLossesSumLabel.Text = "";
+            lblTotalCommissionLabel.Text = "";
+            lblTotalFundingFeeLabel.Text = "";
+            lblTotalPnLLabel.Text = "";
+            lblTotalPnLPercentLabel.Text = "";
+            lblWinCountLabel.Text = "";
+            lblLossCountLabel.Text = "";
+            lblWinrateLabel.Text = "";
         }
 
 
@@ -1541,5 +1559,6 @@ namespace TradeNote
             //    e.Handled = true;
             //}
         }
+
     }
 }

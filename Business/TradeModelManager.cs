@@ -91,7 +91,7 @@ namespace TradeNote.Business
             _tradeModelXmlRepository.UpdateGeneralInformation(currentGeneralInformation, xmlFilePath);
         }
 
-        public void CalculateGeneralInformation(string xmlFilePath)
+        public void CalculateGeneralInformation(string xmlFilePath )
         {
             decimal profitSum;
             decimal lossSum;
