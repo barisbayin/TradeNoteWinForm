@@ -76,9 +76,8 @@ namespace TradeNote.Repositories
 
             // Update the properties of the GeneralInformation object
             tradeModel.GeneralInformation.Exchange = updatedGeneralInformation.Exchange;
-            tradeModel.GeneralInformation.CurrencyPair= updatedGeneralInformation.CurrencyPair;
-            tradeModel.GeneralInformation.ReferralLink= updatedGeneralInformation.ReferralLink;
-            tradeModel.GeneralInformation.ReferralId=   updatedGeneralInformation.ReferralId;
+            tradeModel.GeneralInformation.ReferralLink = updatedGeneralInformation.ReferralLink;
+            tradeModel.GeneralInformation.ReferralId = updatedGeneralInformation.ReferralId;
             tradeModel.GeneralInformation.StartingBalance = updatedGeneralInformation.StartingBalance;
             tradeModel.GeneralInformation.LastBalance = updatedGeneralInformation.LastBalance;
             tradeModel.GeneralInformation.InTradeBalance = updatedGeneralInformation.InTradeBalance;
@@ -144,6 +143,7 @@ namespace TradeNote.Repositories
             if (trade != null)
             {
                 // Update the properties of the Trade object
+                trade.CurrencyPair = updatedTrade.CurrencyPair;
                 trade.TradeStartDate = updatedTrade.TradeStartDate;
                 trade.TradeEndDate = updatedTrade.TradeEndDate;
                 trade.PositionSide = updatedTrade.PositionSide;

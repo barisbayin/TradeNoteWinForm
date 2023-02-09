@@ -224,12 +224,7 @@ namespace TradeNote
                         {
                             dgvTradeList.Columns["EndTrade"].Visible = columnSetting.Value;
                         }
-
-
                     }
-
-
-
 
                     //dgvTradeList.Columns["AverageEntryBalance"].DefaultCellStyle.Format = "$#.##";
                     //dgvTradeList.Columns["TargetedEntryPrice"].DefaultCellStyle.Format = "$#.##";
@@ -373,7 +368,6 @@ namespace TradeNote
                 ImageForm.ReferralLink = generalInformation.ReferralLink;
                 ImageForm.ReferralId = generalInformation.ReferralId;
                 ImageForm.Exchange = generalInformation.Exchange;
-                ImageForm.CurrencyPair = generalInformation.CurrencyPair;
 
                 settingsForm.Show();
             }
@@ -522,7 +516,6 @@ namespace TradeNote
             var generalInformation = GetGeneralInformation();
 
             cbxExchanges.Text = generalInformation.Exchange;
-            cbxCurrencyPairList.Text = generalInformation.CurrencyPair;
             tbxReferralLink.Text = generalInformation.ReferralLink;
             tbxReferralId.Text = generalInformation.ReferralId;
             lblStartBalanceText.Text = "$" + generalInformation.StartingBalance.ToString(CultureInfo.InvariantCulture);
@@ -585,6 +578,7 @@ namespace TradeNote
                     {
                         Trade newTrade = new Trade();
 
+                        newTrade.CurrencyPair = cbxCurrencyPairList.Text;
                         newTrade.TradeStartDate = DateTime.Now;
                         newTrade.PositionSide = (PositionSide)Enum.Parse(typeof(PositionSide), cbxPositionSide.Text);
                         newTrade.AverageEntryBalance = 0;
@@ -629,6 +623,7 @@ namespace TradeNote
 
                         if (foundTrade.TradeDetails.Count == 0)
                         {
+                            foundTrade.CurrencyPair = cbxCurrencyPairList.Text;
                             foundTrade.Leverage = Convert.ToInt32(cbxLeverage.Text);
                             foundTrade.TargetedEntryPrice = Convert.ToDecimal(tbxTargetedEntryPrice.Text.Replace(".", ","));
                             foundTrade.StopLossPrice = Convert.ToDecimal(tbxStopPrice.Text.Replace(".", ","));
@@ -1493,11 +1488,6 @@ namespace TradeNote
                 if (!string.IsNullOrEmpty(cbxExchanges.Text))
                 {
                     generalInformation.Exchange = cbxExchanges.Text;
-                }
-
-                if (!string.IsNullOrEmpty(cbxCurrencyPairList.Text))
-                {
-                    generalInformation.CurrencyPair = cbxCurrencyPairList.Text;
                 }
 
                 if (!string.IsNullOrEmpty(tbxReferralLink.Text))

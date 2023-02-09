@@ -79,6 +79,8 @@ namespace TradeNote
 
             var selectedTrade = _tradeModelManager.GetTradeById(SelectedTrade, xmlFilePath);
 
+            CurrencyPair = selectedTrade.CurrencyPair;
+
             if (selectedTrade.AverageEntryPrice < 1)
             {
                 averageEntryPrice = Math.Round(selectedTrade.AverageEntryPrice, 5);
@@ -138,7 +140,7 @@ namespace TradeNote
                 g.DrawString("Close Price:  " + averageClosePrice, font: new Font("Hell Finland", 16), Brushes.Black,
                     new PointF(200, 235));
 
-                g.DrawString("Start Date: " + selectedTrade.TradeStartDate.ToString("dd/MM/yyyy HH:mm") + "  |  " + "End Date: " +Convert.ToDateTime(selectedTrade.TradeEndDate).ToString("dd/MM/yyyy HH:mm"), font: new Font("Hell Finland", 12), Brushes.DarkGray,
+                g.DrawString("Start Date: " + selectedTrade.TradeStartDate.ToString("dd/MM/yyyy HH:mm") + "  |  " + "End Date: " + Convert.ToDateTime(selectedTrade.TradeEndDate).ToString("dd/MM/yyyy HH:mm"), font: new Font("Hell Finland", 12), Brushes.DarkGray,
                     new PointF(100, 275));
 
                 g.DrawImage(referralLinkQrCode, new PointF(40, 350));

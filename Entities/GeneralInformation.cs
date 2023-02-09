@@ -8,9 +8,6 @@ namespace TradeNote
         [DisplayName("Borsa")]
         public string Exchange { get; set; }
 
-        [DisplayName("Kriptopara")]
-        public string CurrencyPair { get; set; }
-
         [DisplayName("Referans Linki")]
         public string ReferralLink { get; set; }
 

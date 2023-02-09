@@ -13,6 +13,9 @@ namespace TradeNote
         [DisplayName("ID")]
         public int Id { get; set; }
 
+        [DisplayName("Kriptopara")]
+        public string CurrencyPair { get; set; }
+
         [DisplayName("Baş. Tarihi")]
         public DateTime TradeStartDate { get; set; }
 
