@@ -150,6 +150,26 @@ namespace TradeNote.Repositories
 
         }
 
+        public void AddCurrencyPairStatisticForCurrencyPair(string currencyPair, string xmlFilePath)
+        {
+            TradeModel tradeModel = DeserializeTradeModel(xmlFilePath);
+
+            var alreadyAdded = tradeModel.CurrencyPairStatistics.FirstOrDefault(x => x.CurrencyPair == currencyPair);
+
+            if (alreadyAdded == null)
+            {
+                tradeModel.CurrencyPairStatistics.Add(new CurrencyPairStatistic());
+            }
+
+            XmlSerializer serializer = new XmlSerializer(typeof(TradeModel));
+
+            using (TextWriter writer = new StreamWriter(xmlFilePath))
+            {
+                serializer.Serialize(writer, tradeModel);
+            }
+
+        }
+
         public void UpdateCurrencyPairStatisticByCurrencyPair(CurrencyPairStatistic updatedCurrencyPairStatistic, string xmlFilePath)
         {
             // Deserialize the XML file to a TradeModel object
@@ -162,14 +182,12 @@ namespace TradeNote.Repositories
             currencyPairStatistic.InTradeBalance = updatedCurrencyPairStatistic.InTradeBalance;
             currencyPairStatistic.ProfitsSum = updatedCurrencyPairStatistic.ProfitsSum;
             currencyPairStatistic.LossesSum = updatedCurrencyPairStatistic.ProfitsSum;
-            currencyPairStatistic.TotalPnL = updatedCurrencyPairStatistic.InTradeBalance;
+            currencyPairStatistic.TotalPnL = updatedCurrencyPairStatistic.TotalPnL;
             currencyPairStatistic.TotalPnLPercent = updatedCurrencyPairStatistic.TotalPnLPercent;
             currencyPairStatistic.TotalTradeCount = updatedCurrencyPairStatistic.TotalTradeCount;
             currencyPairStatistic.WinCount = updatedCurrencyPairStatistic.WinCount;
             currencyPairStatistic.LossCount = updatedCurrencyPairStatistic.LossCount;
             currencyPairStatistic.TradeWinRate = updatedCurrencyPairStatistic.TradeWinRate;
-            currencyPairStatistic.MakerCommission = updatedCurrencyPairStatistic.MakerCommission;
-            currencyPairStatistic.TakerCommission = updatedCurrencyPairStatistic.TakerCommission;
             currencyPairStatistic.TotalCommission = updatedCurrencyPairStatistic.TotalCommission;
             currencyPairStatistic.TotalFundingFee = updatedCurrencyPairStatistic.TotalFundingFee;
 
@@ -454,6 +472,20 @@ namespace TradeNote.Repositories
             int newTradeDetailId = trade.TradeDetails.Max(t => t.Id) + 1;
 
             return newTradeDetailId;
+        }
+        public int GetNewCurrencyPairStatisticId(string xmlFilePath)
+        {
+            TradeModel tradeModel = DeserializeTradeModel(xmlFilePath);
+
+            if (tradeModel.CurrencyPairStatistics.Count == 0)
+            {
+                return 1;
+            }
+
+            // Find the highest existing Trade Id
+            int newTradeId = tradeModel.CurrencyPairStatistics.Max(t => t.Id) + 1;
+
+            return newTradeId;
         }
 
 

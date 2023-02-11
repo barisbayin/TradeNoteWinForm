@@ -364,6 +364,9 @@ namespace TradeNote.Business
 
         public void AddCurrencyPairStatistic(CurrencyPairStatistic currencyPairStatistic, string xmlFilePath)
         {
+            int currencyPairStatisticId = _tradeModelXmlRepository.GetNewCurrencyPairStatisticId(xmlFilePath);
+
+            currencyPairStatistic.Id = currencyPairStatisticId;
             _tradeModelXmlRepository.AddCurrencyPairStatistic(currencyPairStatistic, xmlFilePath);
         }
 
@@ -427,12 +430,12 @@ namespace TradeNote.Business
 
                 totalEntryBalance = Math.Round(Convert.ToDecimal(dataList.Where(x => x.EndTrade && x.CurrencyPair == currencyPair).Sum(x => x.AverageEntryBalance)), 2);
 
+                totalPnlPercent = totalEntryBalance != 0 ? Math.Round(Convert.ToDecimal((totalClosedBalance / totalEntryBalance - 1) * 100), 2) : 0;
 
-                totalPnlPercent = Math.Round(Convert.ToDecimal((totalClosedBalance / totalEntryBalance - 1) * 100), 2);
-
-                inTradeBalance = totalEntryBalance - totalClosedBalance;
+                inTradeBalance = Math.Round(Convert.ToDecimal(dataList.Where(x => x.EndTrade == false && x.CurrencyPair == currencyPair).Sum(x => x.AverageEntryBalance)), 2);
 
                 currentCurrencyPairStatistic.InTradeBalance = inTradeBalance;
+                currentCurrencyPairStatistic.TotalTradeCount = totalTradeCount;
                 currentCurrencyPairStatistic.LossCount = lossTradeCount;
                 currentCurrencyPairStatistic.WinCount = wonTradeCount;
                 currentCurrencyPairStatistic.ProfitsSum = profitSum;

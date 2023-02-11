@@ -124,6 +124,12 @@ namespace TradeNote
                         {
                             dgvTradeList.Columns["Id"].Visible = columnSetting.Value;
                         }
+
+                        if (columnSetting.Key == "İşlem Çifti")
+                        {
+                            dgvTradeList.Columns["CurrencyPair"].Visible = columnSetting.Value;
+                        }
+
                         if (columnSetting.Key == "Trade Başlangıç Tarihi")
                         {
                             dgvTradeList.Columns["TradeStartDate"].Visible = columnSetting.Value;
@@ -324,6 +330,7 @@ namespace TradeNote
                     ClearTrade();
                     ClearTradeDetails();
                     ClearGeneralInformation();
+                    ClearCurrencyPairStatistic();
                     dgvTradeList.DataSource = null;
                     dgvTradeDetails.DataSource = null;
                     cbxListOfTradeXmls.Text = "";
@@ -383,6 +390,8 @@ namespace TradeNote
                 var tradeData = _tradeModelManager.GetTradeById(tradeId, xmlFilePath);
 
                 lblTradeIdLabel.Text = tradeData.Id.ToString();
+                cbxCurrencyPairList.Text = tradeData.CurrencyPair;
+                cbxCurrencyPairList2.Text = tradeData.CurrencyPair;
                 cbxPositionSide.Text = tradeData.PositionSide.ToString();
                 cbxLeverage.Text = tradeData.Leverage.ToString();
                 tbxTargetedEntryPrice.Text = tradeData.TargetedEntryPrice.ToString();
@@ -391,6 +400,7 @@ namespace TradeNote
                 tbxTotalFundingFee.Text = tradeData.FundingFeeSum.ToString(CultureInfo.InvariantCulture);
                 rtbxTradeNote.Text = tradeData.Note;
                 lblTradeDetailTradeIdLabel.Text = tradeData.Id.ToString();
+                gbCurrencyPairStatistics.Text = tradeData.CurrencyPair + " İST..";
 
                 LoadTradeDetailDataGridView(tradeData.Id);
 
@@ -480,6 +490,7 @@ namespace TradeNote
             tbxTakeProfitPrice.Text = "";
             tbxTotalFundingFee.Text = "";
             rtbxTradeNote.Text = "";
+            cbxCurrencyPairList.Text = "";
         }
         private void ClearTradeDetails()
         {
@@ -508,6 +519,20 @@ namespace TradeNote
             lblWinCountLabel.Text = "";
             lblLossCountLabel.Text = "";
             lblWinrateLabel.Text = "";
+        }
+
+        private void ClearCurrencyPairStatistic()
+        {
+            lblCurrencyPairInTradeBalanceLabel.Text = "";
+            lblCurrencyPairProfitSumLabel.Text = "";
+            lblCurrencyPairLosesSumLabel.Text = "";
+            lblCurrencyPairTotalPnLLabel.Text = "";
+            lblCurrencyPairWinTradeCountLabel.Text = "";
+            lblCurrencyPairLoseTradeCountLabel.Text = "";
+            lblCurrencyPairWinRateLabel.Text = "";
+            lblCurrencyPairTotalPnLPercentLabel.Text = "";
+            lblCurrencyPairCommissionSumLabel.Text = "";
+            lblCurrencyPairFundingFeeSumLabel.Text = "";
         }
 
 
@@ -580,7 +605,7 @@ namespace TradeNote
             var xmlFilePath = GeneralHelper.GetXmlFilePath(cbxListOfTradeXmls.Text);
             var currencyPairStatistic = _tradeModelManager.GetCurrencyPairStatisticByCurrencyPair(currencyPair, xmlFilePath);
 
-       
+
             lblCurrencyPairInTradeBalanceLabel.Text = "$" + currencyPairStatistic.InTradeBalance.ToString(CultureInfo.InvariantCulture);
             lblCurrencyPairProfitSumLabel.Text = "$" + currencyPairStatistic.ProfitsSum.ToString(CultureInfo.InvariantCulture);
             lblCurrencyPairLosesSumLabel.Text = "$" + currencyPairStatistic.LossesSum.ToString(CultureInfo.InvariantCulture);
@@ -594,22 +619,22 @@ namespace TradeNote
 
             if (currencyPairStatistic.TotalPnL >= 0)
             {
-                lblTotalPnLLabel.ForeColor = Color.SeaGreen;
-                lblTotalPnLPercentLabel.ForeColor = Color.SeaGreen;
+                lblCurrencyPairTotalPnLLabel.ForeColor = Color.SeaGreen;
+                lblCurrencyPairTotalPnLPercentLabel.ForeColor = Color.SeaGreen;
             }
             else
             {
-                lblTotalPnLLabel.ForeColor = Color.IndianRed;
-                lblTotalPnLPercentLabel.ForeColor = Color.IndianRed;
+                lblCurrencyPairTotalPnLLabel.ForeColor = Color.IndianRed;
+                lblCurrencyPairTotalPnLPercentLabel.ForeColor = Color.IndianRed;
             }
 
             if (currencyPairStatistic.TradeWinRate >= 50)
             {
-                lblWinrateLabel.ForeColor = Color.SeaGreen;
+                lblCurrencyPairWinRateLabel.ForeColor = Color.SeaGreen;
             }
             else
             {
-                lblWinrateLabel.ForeColor = Color.IndianRed;
+                lblCurrencyPairWinRateLabel.ForeColor = Color.IndianRed;
             }
         }
 
@@ -672,8 +697,26 @@ namespace TradeNote
 
                         _tradeModelManager.AddTrade(newTrade, xmlFilePath);
 
+                        _tradeModelManager.AddCurrencyPairStatistic(new CurrencyPairStatistic()
+                        {
+                            CurrencyPair = newTrade.CurrencyPair,
+                            InTradeBalance = 0,
+                            LossCount = 0,
+                            LossesSum = 0,
+                            ProfitsSum = 0,
+                            TotalCommission = 0,
+                            TotalFundingFee = 0,
+                            TotalPnL = 0,
+                            TotalPnLPercent = 0,
+                            TotalTradeCount = 0,
+                            TradeWinRate = 0,
+                            WinCount = 0
 
+                        }, xmlFilePath);
 
+                        _tradeModelManager.CalculateCurrencyPairStatisticByCurrencyPair(newTrade.CurrencyPair, xmlFilePath);
+
+                        LoadCurrencyPairStatistic(newTrade.CurrencyPair);
                     }
                     else
                     {
@@ -741,44 +784,12 @@ namespace TradeNote
         }
 
 
-        private void btnPlusMinus_Click_1(object sender, EventArgs e)
-        {
-            string xmlFilePath = GeneralHelper.GetXmlFilePath(cbxListOfTradeXmls.Text);
-            try
-            {
-                var currentGeneralInformation = GetGeneralInformation();
-
-                var newStartingBalance = Convert.ToDecimal(currentGeneralInformation.StartingBalance) +
-                                         Convert.ToDecimal(tbxPlusMinus.Text.Replace(".", ","));
-
-                if (newStartingBalance > 0)
-                {
-                    currentGeneralInformation.StartingBalance = newStartingBalance;
-
-
-                    _tradeModelManager.UpdateGeneralInformation(currentGeneralInformation, xmlFilePath);
-                    _tradeModelManager.CalculateGeneralInformation(xmlFilePath);
-                    LoadGeneralInformation();
-
-                    tbxPlusMinus.Text = "";
-                    chckPlusMinus.CheckState = CheckState.Unchecked;
-                }
-                else
-                {
-                    MessageBox.Show("Başlangıç bakiyesi 0'dan küçük olamaz", "Uyarı!", MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Hata!", MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-            }
-        }
-
         private void btnNewTrade_Click_1(object sender, EventArgs e)
         {
             ClearTrade();
+            ClearTradeDetails();
+            dgvTradeDetails.DataSource = null;
+            ClearCurrencyPairStatistic();
             MakeEnableComponents();
         }
 
@@ -828,6 +839,7 @@ namespace TradeNote
         {
             string xmlFilePath = GeneralHelper.GetXmlFilePath(cbxListOfTradeXmls.Text);
 
+
             try
             {
                 int tradeId = 0;
@@ -840,21 +852,12 @@ namespace TradeNote
                     return;
                 }
 
+
                 tradeId = Convert.ToInt32(lblTradeDetailTradeIdLabel.Text);
 
                 var tradeData = _tradeModelManager.GetTradeById(tradeId, xmlFilePath);
                 var generalInformation = GetGeneralInformation();
 
-                if (cbxTradeType.Text == "OpenLong" || cbxTradeType.Text == "OpenShort")
-                {
-                    var entryBalance = Convert.ToDecimal(tbxTradeEntryBalance.Text);
-                    var availableBalance = generalInformation.AvailableBalance;
-                    if (availableBalance - entryBalance < 0)
-                    {
-                        MessageBox.Show("Mevcut işlem bakiyeniz: $" + tbxTradeEntryBalance.Text + "\n" + "Boştaki bakiyeniz: $" + availableBalance + "\n" + "İşlem bakiyeniz boştaki bakiyenizden büyük olamaz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-                }
 
                 if (cbxTradeType.Text == "CloseLong" || cbxTradeType.Text == "CloseShort")
                 {
@@ -865,8 +868,6 @@ namespace TradeNote
                     }
                 }
 
-
-
                 if (!string.IsNullOrEmpty(lblTradeDetailIdLabel.Text))
                 {
                     tradeDetailId = Convert.ToInt32(lblTradeDetailIdLabel.Text);
@@ -876,6 +877,22 @@ namespace TradeNote
 
                 if (string.IsNullOrEmpty(lblTradeDetailIdLabel.Text))
                 {
+                    if (string.IsNullOrEmpty(tbxTradeEntryPrice.Text) || string.IsNullOrEmpty(cbxTradeType.Text))
+                    {
+                        MessageBox.Show("Lütfen gerekli tüm bilgileri giriniz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    if (cbxTradeType.Text == "OpenLong" || cbxTradeType.Text == "OpenShort")
+                    {
+                        var entryBalance = Convert.ToDecimal(tbxTradeEntryBalance.Text);
+                        var availableBalance = generalInformation.AvailableBalance;
+                        if (availableBalance - entryBalance < 0)
+                        {
+                            MessageBox.Show("Mevcut işlem bakiyeniz: $" + tbxTradeEntryBalance.Text + "\n" + "Boştaki bakiyeniz: $" + availableBalance + "\n" + "İşlem bakiyeniz boştaki bakiyenizden büyük olamaz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+                    }
 
                     newTradeDetail.TradeId = Convert.ToInt32(lblTradeDetailTradeIdLabel.Text);
                     newTradeDetail.TradeDate = Convert.ToDateTime(dateTradeDetailDate.Value);
@@ -932,8 +949,6 @@ namespace TradeNote
                                 }
                         }
 
-
-
                         tradeData.EndTrade = true;
                         _tradeModelManager.UpdateTrade(tradeData, xmlFilePath);
                     }
@@ -943,16 +958,29 @@ namespace TradeNote
                     var updatedTrade = _tradeModelManager.CalculateTrade(tradeId, xmlFilePath);
 
                     _tradeModelManager.UpdateTrade(updatedTrade, xmlFilePath);
+
                 }
                 else
                 {
+
                     TradeDetail foundTradeDetail = _tradeModelManager.GetTradeDetailById(tradeId, tradeDetailId, xmlFilePath);
+
+                    if (cbxTradeType.Text == "OpenLong" || cbxTradeType.Text == "OpenShort")
+                    {
+                        var entryBalance = Convert.ToDecimal(tbxTradeEntryBalance.Text);
+                        var availableBalance = generalInformation.AvailableBalance + foundTradeDetail.EntryBalance;
+                        if (availableBalance - entryBalance < 0)
+                        {
+                            MessageBox.Show("Mevcut işlem bakiyeniz: $" + tbxTradeEntryBalance.Text + "\n" + "Boştaki bakiyeniz: $" + (availableBalance - foundTradeDetail.EntryBalance) + "\n" + "İşlem bakiyeniz boştaki bakiyenizden büyük olamaz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+                    }
 
                     foundTradeDetail.TradeId = Convert.ToInt32(lblTradeDetailTradeIdLabel.Text);
                     foundTradeDetail.TradeDate = Convert.ToDateTime(dateTradeDetailDate.Value);
                     foundTradeDetail.TradeType = (TradeType)Enum.Parse(typeof(TradeType), cbxTradeType.Text);
                     foundTradeDetail.EntryPrice = Convert.ToDecimal(tbxTradeEntryPrice.Text.Replace(".", ","));
-                    newTradeDetail.OrderType = (OrderType)Enum.Parse(typeof(OrderType), cbxOrderType.Text);
+                    foundTradeDetail.OrderType = (OrderType)Enum.Parse(typeof(OrderType), cbxOrderType.Text);
 
                     if (!chckEntryLotCount.Checked)
                     {
@@ -972,13 +1000,18 @@ namespace TradeNote
                     var updatedTrade = _tradeModelManager.CalculateTrade(tradeId, xmlFilePath);
 
                     _tradeModelManager.UpdateTrade(updatedTrade, xmlFilePath);
+
+
                 }
+
+                _tradeModelManager.CalculateCurrencyPairStatisticByCurrencyPair(tradeData.CurrencyPair, xmlFilePath);
 
                 chckEndTrade.CheckState = CheckState.Unchecked;
                 LoadTradeDataGridView();
                 LoadTradeDetailDataGridView(tradeId);
                 _tradeModelManager.CalculateGeneralInformation(xmlFilePath);
                 LoadGeneralInformation();
+                LoadCurrencyPairStatistic(tradeData.CurrencyPair);
             }
             catch (Exception exception)
             {
@@ -990,19 +1023,6 @@ namespace TradeNote
             ClearTradeDetails();
         }
 
-        private void chckPlusMinus_CheckedChanged_1(object sender, EventArgs e)
-        {
-            if (chckPlusMinus.CheckState == CheckState.Checked)
-            {
-                tbxPlusMinus.Enabled = true;
-                btnPlusMinus.Enabled = true;
-            }
-            else
-            {
-                tbxPlusMinus.Enabled = false;
-                btnPlusMinus.Enabled = false;
-            }
-        }
 
         private void chckEntryLotCount_CheckedChanged(object sender, EventArgs e)
         {
@@ -1176,14 +1196,6 @@ namespace TradeNote
                 MessageBox.Show("Lütfen işlem yapmak istediğiniz trade satırına tıklayınız!", "Uyarı",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-        }
-
-
-        private void btnUpdateMakerCommission_Click(object sender, EventArgs e)
-        {
-
-
-
         }
 
 
@@ -1600,5 +1612,53 @@ namespace TradeNote
             //}
         }
 
+        private void chckPlusMinus_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chckPlusMinus.CheckState == CheckState.Checked)
+            {
+                tbxPlusMinus.Enabled = true;
+                btnPlusMinus.Enabled = true;
+            }
+            else
+            {
+                tbxPlusMinus.Enabled = false;
+                btnPlusMinus.Enabled = false;
+            }
+        }
+
+        private void btnPlusMinus_Click(object sender, EventArgs e)
+        {
+            string xmlFilePath = GeneralHelper.GetXmlFilePath(cbxListOfTradeXmls.Text);
+            try
+            {
+                var currentGeneralInformation = GetGeneralInformation();
+
+                var newStartingBalance = Convert.ToDecimal(currentGeneralInformation.StartingBalance) +
+                                         Convert.ToDecimal(tbxPlusMinus.Text.Replace(".", ","));
+
+                if (newStartingBalance > 0)
+                {
+                    currentGeneralInformation.StartingBalance = newStartingBalance;
+
+
+                    _tradeModelManager.UpdateGeneralInformation(currentGeneralInformation, xmlFilePath);
+                    _tradeModelManager.CalculateGeneralInformation(xmlFilePath);
+                    LoadGeneralInformation();
+
+                    tbxPlusMinus.Text = "";
+                    chckPlusMinus.CheckState = CheckState.Unchecked;
+                }
+                else
+                {
+                    MessageBox.Show("Başlangıç bakiyesi 0'dan küçük olamaz", "Uyarı!", MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Hata!", MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+        }
     }
 }

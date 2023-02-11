@@ -31,9 +31,20 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TradeList));
             this.pnlNavBar = new System.Windows.Forms.Panel();
+            this.btnExport = new System.Windows.Forms.Button();
+            this.btnDeleteXmlFile = new System.Windows.Forms.Button();
+            this.btnRefresh = new System.Windows.Forms.Button();
+            this.btnSaveTradeXml = new System.Windows.Forms.Button();
+            this.btnCancelToSaveTradeXml = new System.Windows.Forms.Button();
+            this.btnNewTradeXml = new System.Windows.Forms.Button();
             this.tbxNewTradeXmlName = new System.Windows.Forms.TextBox();
             this.cbxListOfTradeXmls = new System.Windows.Forms.ComboBox();
             this.scMainMenu = new System.Windows.Forms.SplitContainer();
+            this.gbForList = new System.Windows.Forms.GroupBox();
+            this.scForTradeReport = new System.Windows.Forms.SplitContainer();
+            this.dgvTradeList = new System.Windows.Forms.DataGridView();
+            this.gbTradeDetails = new System.Windows.Forms.GroupBox();
+            this.dgvTradeDetails = new System.Windows.Forms.DataGridView();
             this.tcMainMenu = new System.Windows.Forms.TabControl();
             this.tpgTrade = new System.Windows.Forms.TabPage();
             this.lblStatisticInformation = new System.Windows.Forms.Label();
@@ -98,6 +109,9 @@
             this.chckEntryLotCount = new System.Windows.Forms.CheckBox();
             this.tbxTargetedEntryPrice = new System.Windows.Forms.TextBox();
             this.lblTargetedEntryPrice = new System.Windows.Forms.Label();
+            this.btnDeleteTradeDetail = new System.Windows.Forms.Button();
+            this.btnSaveTradeDetail = new System.Windows.Forms.Button();
+            this.btnNewTradeDetail = new System.Windows.Forms.Button();
             this.tbxTradeEntryLotCount = new System.Windows.Forms.TextBox();
             this.lblTradeEntryLotCount = new System.Windows.Forms.Label();
             this.lblTradeType = new System.Windows.Forms.Label();
@@ -113,6 +127,9 @@
             this.lblTradeIdLabel = new System.Windows.Forms.Label();
             this.lblTradeId = new System.Windows.Forms.Label();
             this.chckEndTrade = new System.Windows.Forms.CheckBox();
+            this.btnTradeDelete = new System.Windows.Forms.Button();
+            this.btnSaveTrade = new System.Windows.Forms.Button();
+            this.btnNewTrade = new System.Windows.Forms.Button();
             this.lblTradeNote = new System.Windows.Forms.Label();
             this.rtbxTradeNote = new System.Windows.Forms.RichTextBox();
             this.tbxTradeEntryPrice = new System.Windows.Forms.TextBox();
@@ -128,6 +145,7 @@
             this.lblPositionSide = new System.Windows.Forms.Label();
             this.cbxPositionSide = new System.Windows.Forms.ComboBox();
             this.tpgSettings = new System.Windows.Forms.TabPage();
+            this.btnPlusMinus = new System.Windows.Forms.Button();
             this.chckPlusMinus = new System.Windows.Forms.CheckBox();
             this.tbxPlusMinus = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
@@ -138,33 +156,15 @@
             this.lblReferralLink = new System.Windows.Forms.Label();
             this.tbxReferralId = new System.Windows.Forms.TextBox();
             this.tbxReferralLink = new System.Windows.Forms.TextBox();
+            this.btnSaveTradeCheckedListBox = new System.Windows.Forms.Button();
             this.chcklbTradeColumns = new System.Windows.Forms.CheckedListBox();
             this.chckGeneralInformationEntries = new System.Windows.Forms.CheckBox();
             this.tbxTakerCommission = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tbxMakerCommission = new System.Windows.Forms.TextBox();
             this.lblMakerCommission = new System.Windows.Forms.Label();
-            this.cmsExport = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.gbForList = new System.Windows.Forms.GroupBox();
-            this.scForTradeReport = new System.Windows.Forms.SplitContainer();
-            this.dgvTradeList = new System.Windows.Forms.DataGridView();
-            this.gbTradeDetails = new System.Windows.Forms.GroupBox();
-            this.dgvTradeDetails = new System.Windows.Forms.DataGridView();
-            this.btnDeleteTradeDetail = new System.Windows.Forms.Button();
-            this.btnSaveTradeDetail = new System.Windows.Forms.Button();
-            this.btnNewTradeDetail = new System.Windows.Forms.Button();
-            this.btnTradeDelete = new System.Windows.Forms.Button();
-            this.btnSaveTrade = new System.Windows.Forms.Button();
-            this.btnNewTrade = new System.Windows.Forms.Button();
-            this.btnPlusMinus = new System.Windows.Forms.Button();
-            this.btnSaveTradeCheckedListBox = new System.Windows.Forms.Button();
             this.btnSaveGeneralInformationEntries = new System.Windows.Forms.Button();
-            this.btnExport = new System.Windows.Forms.Button();
-            this.btnDeleteXmlFile = new System.Windows.Forms.Button();
-            this.btnRefresh = new System.Windows.Forms.Button();
-            this.btnSaveTradeXml = new System.Windows.Forms.Button();
-            this.btnCancelToSaveTradeXml = new System.Windows.Forms.Button();
-            this.btnNewTradeXml = new System.Windows.Forms.Button();
+            this.cmsExport = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiExportToExcel = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiExportToPdf = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiExportStatisticsImage = new System.Windows.Forms.ToolStripMenuItem();
@@ -174,12 +174,6 @@
             this.scMainMenu.Panel1.SuspendLayout();
             this.scMainMenu.Panel2.SuspendLayout();
             this.scMainMenu.SuspendLayout();
-            this.tcMainMenu.SuspendLayout();
-            this.tpgTrade.SuspendLayout();
-            this.gbGeneralStatistics.SuspendLayout();
-            this.gbCurrencyPairStatistics.SuspendLayout();
-            this.tpgSettings.SuspendLayout();
-            this.cmsExport.SuspendLayout();
             this.gbForList.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.scForTradeReport)).BeginInit();
             this.scForTradeReport.Panel1.SuspendLayout();
@@ -188,6 +182,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvTradeList)).BeginInit();
             this.gbTradeDetails.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTradeDetails)).BeginInit();
+            this.tcMainMenu.SuspendLayout();
+            this.tpgTrade.SuspendLayout();
+            this.gbGeneralStatistics.SuspendLayout();
+            this.gbCurrencyPairStatistics.SuspendLayout();
+            this.tpgSettings.SuspendLayout();
+            this.cmsExport.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlNavBar
@@ -207,6 +207,86 @@
             this.pnlNavBar.Name = "pnlNavBar";
             this.pnlNavBar.Size = new System.Drawing.Size(1179, 46);
             this.pnlNavBar.TabIndex = 0;
+            // 
+            // btnExport
+            // 
+            this.btnExport.Image = ((System.Drawing.Image)(resources.GetObject("btnExport.Image")));
+            this.btnExport.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnExport.Location = new System.Drawing.Point(755, 3);
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(53, 37);
+            this.btnExport.TabIndex = 7;
+            this.btnExport.Text = "Aktar";
+            this.btnExport.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnExport.UseVisualStyleBackColor = true;
+            this.btnExport.Click += new System.EventHandler(this.btnExportToExcel_Click);
+            // 
+            // btnDeleteXmlFile
+            // 
+            this.btnDeleteXmlFile.Image = ((System.Drawing.Image)(resources.GetObject("btnDeleteXmlFile.Image")));
+            this.btnDeleteXmlFile.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnDeleteXmlFile.Location = new System.Drawing.Point(696, 3);
+            this.btnDeleteXmlFile.Name = "btnDeleteXmlFile";
+            this.btnDeleteXmlFile.Size = new System.Drawing.Size(53, 37);
+            this.btnDeleteXmlFile.TabIndex = 6;
+            this.btnDeleteXmlFile.Text = "Delete";
+            this.btnDeleteXmlFile.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnDeleteXmlFile.UseVisualStyleBackColor = true;
+            this.btnDeleteXmlFile.Click += new System.EventHandler(this.btnDeleteXmlFile_Click);
+            // 
+            // btnRefresh
+            // 
+            this.btnRefresh.Image = ((System.Drawing.Image)(resources.GetObject("btnRefresh.Image")));
+            this.btnRefresh.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnRefresh.Location = new System.Drawing.Point(10, 3);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(53, 37);
+            this.btnRefresh.TabIndex = 5;
+            this.btnRefresh.Text = "Yenile";
+            this.btnRefresh.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+            // 
+            // btnSaveTradeXml
+            // 
+            this.btnSaveTradeXml.Enabled = false;
+            this.btnSaveTradeXml.Image = ((System.Drawing.Image)(resources.GetObject("btnSaveTradeXml.Image")));
+            this.btnSaveTradeXml.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnSaveTradeXml.Location = new System.Drawing.Point(637, 3);
+            this.btnSaveTradeXml.Name = "btnSaveTradeXml";
+            this.btnSaveTradeXml.Size = new System.Drawing.Size(53, 37);
+            this.btnSaveTradeXml.TabIndex = 4;
+            this.btnSaveTradeXml.Text = "Kaydet";
+            this.btnSaveTradeXml.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnSaveTradeXml.UseVisualStyleBackColor = true;
+            this.btnSaveTradeXml.Click += new System.EventHandler(this.btnSaveTradeXml_Click_1);
+            // 
+            // btnCancelToSaveTradeXml
+            // 
+            this.btnCancelToSaveTradeXml.Enabled = false;
+            this.btnCancelToSaveTradeXml.Image = ((System.Drawing.Image)(resources.GetObject("btnCancelToSaveTradeXml.Image")));
+            this.btnCancelToSaveTradeXml.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnCancelToSaveTradeXml.Location = new System.Drawing.Point(578, 3);
+            this.btnCancelToSaveTradeXml.Name = "btnCancelToSaveTradeXml";
+            this.btnCancelToSaveTradeXml.Size = new System.Drawing.Size(53, 37);
+            this.btnCancelToSaveTradeXml.TabIndex = 3;
+            this.btnCancelToSaveTradeXml.Text = "Vazgeç";
+            this.btnCancelToSaveTradeXml.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnCancelToSaveTradeXml.UseVisualStyleBackColor = true;
+            this.btnCancelToSaveTradeXml.Click += new System.EventHandler(this.btnCancelToSaveTradeXml_Click);
+            // 
+            // btnNewTradeXml
+            // 
+            this.btnNewTradeXml.Image = ((System.Drawing.Image)(resources.GetObject("btnNewTradeXml.Image")));
+            this.btnNewTradeXml.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnNewTradeXml.Location = new System.Drawing.Point(519, 3);
+            this.btnNewTradeXml.Name = "btnNewTradeXml";
+            this.btnNewTradeXml.Size = new System.Drawing.Size(53, 37);
+            this.btnNewTradeXml.TabIndex = 2;
+            this.btnNewTradeXml.Text = "Yeni";
+            this.btnNewTradeXml.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnNewTradeXml.UseVisualStyleBackColor = true;
+            this.btnNewTradeXml.Click += new System.EventHandler(this.btnNewTradeXml_Click_1);
             // 
             // tbxNewTradeXmlName
             // 
@@ -248,6 +328,82 @@
             this.scMainMenu.Size = new System.Drawing.Size(1179, 924);
             this.scMainMenu.SplitterDistance = 795;
             this.scMainMenu.TabIndex = 1;
+            // 
+            // gbForList
+            // 
+            this.gbForList.BackColor = System.Drawing.Color.AliceBlue;
+            this.gbForList.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("gbForList.BackgroundImage")));
+            this.gbForList.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.gbForList.Controls.Add(this.scForTradeReport);
+            this.gbForList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbForList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.gbForList.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.gbForList.Location = new System.Drawing.Point(0, 0);
+            this.gbForList.Name = "gbForList";
+            this.gbForList.Size = new System.Drawing.Size(795, 924);
+            this.gbForList.TabIndex = 0;
+            this.gbForList.TabStop = false;
+            this.gbForList.Text = "İşlem Listesi";
+            // 
+            // scForTradeReport
+            // 
+            this.scForTradeReport.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.scForTradeReport.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.scForTradeReport.Location = new System.Drawing.Point(3, 16);
+            this.scForTradeReport.Name = "scForTradeReport";
+            this.scForTradeReport.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // scForTradeReport.Panel1
+            // 
+            this.scForTradeReport.Panel1.Controls.Add(this.dgvTradeList);
+            // 
+            // scForTradeReport.Panel2
+            // 
+            this.scForTradeReport.Panel2.Controls.Add(this.gbTradeDetails);
+            this.scForTradeReport.Panel2MinSize = 300;
+            this.scForTradeReport.Size = new System.Drawing.Size(789, 905);
+            this.scForTradeReport.SplitterDistance = 601;
+            this.scForTradeReport.TabIndex = 0;
+            // 
+            // dgvTradeList
+            // 
+            this.dgvTradeList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvTradeList.BackgroundColor = System.Drawing.Color.WhiteSmoke;
+            this.dgvTradeList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvTradeList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvTradeList.Location = new System.Drawing.Point(0, 0);
+            this.dgvTradeList.Name = "dgvTradeList";
+            this.dgvTradeList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvTradeList.Size = new System.Drawing.Size(789, 601);
+            this.dgvTradeList.TabIndex = 1;
+            this.dgvTradeList.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTradeList_CellClick_1);
+            this.dgvTradeList.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvTradeList_CellPainting);
+            this.dgvTradeList.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dgvTradeList_RowPrePaint_1);
+            // 
+            // gbTradeDetails
+            // 
+            this.gbTradeDetails.Controls.Add(this.dgvTradeDetails);
+            this.gbTradeDetails.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbTradeDetails.Location = new System.Drawing.Point(0, 0);
+            this.gbTradeDetails.Name = "gbTradeDetails";
+            this.gbTradeDetails.Size = new System.Drawing.Size(789, 300);
+            this.gbTradeDetails.TabIndex = 0;
+            this.gbTradeDetails.TabStop = false;
+            this.gbTradeDetails.Text = "İşlem Detayları:";
+            // 
+            // dgvTradeDetails
+            // 
+            this.dgvTradeDetails.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvTradeDetails.BackgroundColor = System.Drawing.Color.WhiteSmoke;
+            this.dgvTradeDetails.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvTradeDetails.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvTradeDetails.Location = new System.Drawing.Point(3, 16);
+            this.dgvTradeDetails.Name = "dgvTradeDetails";
+            this.dgvTradeDetails.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvTradeDetails.Size = new System.Drawing.Size(783, 281);
+            this.dgvTradeDetails.TabIndex = 3;
+            this.dgvTradeDetails.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTradeDetails_CellClick);
+            this.dgvTradeDetails.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dgvTradeDetails_RowPrePaint);
             // 
             // tcMainMenu
             // 
@@ -625,22 +781,183 @@
             // 
             // cbxCurrencyPairList2
             // 
-            this.cbxCurrencyPairList2.Enabled = false;
             this.cbxCurrencyPairList2.FormattingEnabled = true;
-            this.cbxCurrencyPairList2.Location = new System.Drawing.Point(261, 22);
+            this.cbxCurrencyPairList2.Items.AddRange(new object[] {
+            "1000LUNCUSDTPERP",
+            "1000SHIBUSDTPERP",
+            "1000XECUSDTPERP",
+            "1INCHUSDTPERP",
+            "AAVEUSDTPERP",
+            "ADAUSDTPERP",
+            "ALGOUSDTPERP",
+            "ALICEUSDTPERP",
+            "ALPHAUSDTPERP",
+            "ANKRUSDTPERP",
+            "ANTUSDTPERP",
+            "APEUSDTPERP",
+            "API3USDTPERP",
+            "APTUSDTPERP",
+            "ARPAUSDTPERP",
+            "ARUSDTPERP",
+            "ATAUSDTPERP",
+            "ATOMUSDTPERP",
+            "AUDIOUSDTPERP",
+            "AVAXUSDTPERP",
+            "AXSUSDTPERP",
+            "BAKEUSDTPERP",
+            "BALUSDTPERP",
+            "BANDUSDTPERP",
+            "BATUSDTPERP",
+            "BCHUSDTPERP",
+            "BELUSDTPERP",
+            "BLUEBIRDUSDTPERP",
+            "BLZUSDTPERP",
+            "BNBUSDTPERP",
+            "BNXUSDTPERP",
+            "BTCDOMUSDTPERP",
+            "BTCSTUSDTPERP",
+            "BTCUSDTPERP",
+            "BTSUSDTPERP",
+            "C98USDTPERP",
+            "CELOUSDTPERP",
+            "CELRUSDTPERP",
+            "CHRUSDTPERP",
+            "CHZUSDTPERP",
+            "COMPUSDTPERP",
+            "COTIUSDTPERP",
+            "CRVUSDTPERP",
+            "CTKUSDTPERP",
+            "CTSIUSDTPERP",
+            "CVCUSDTPERP",
+            "CVXUSDTPERP",
+            "DARUSDTPERP",
+            "DASHUSDTPERP",
+            "DEFIUSDTPERP",
+            "DENTUSDTPERP",
+            "DGBUSDTPERP",
+            "DOGEUSDTPERP",
+            "DOTUSDTPERP",
+            "DUSKUSDTPERP",
+            "DYDXUSDTPERP",
+            "EGLDUSDTPERP",
+            "ENJUSDTPERP",
+            "ENSUSDTPERP",
+            "EOSUSDTPERP",
+            "ETCUSDTPERP",
+            "ETHUSDTPERP",
+            "FETUSDTPERP",
+            "FILUSDTPERP",
+            "FLMUSDTPERP",
+            "FLOWUSDTPERP",
+            "FOOTBALLUSDTPERP",
+            "FTMUSDTPERP",
+            "FTTUSDTPERP",
+            "FXSUSDTPERP",
+            "GALAUSDTPERP",
+            "GALUSDTPERP",
+            "GMTUSDTPERP",
+            "GRTUSDTPERP",
+            "GTCUSDTPERP",
+            "HBARUSDTPERP",
+            "HNTUSDTPERP",
+            "HOOKUSDTPERP",
+            "HOTUSDTPERP",
+            "ICPUSDTPERP",
+            "ICXUSDTPERP",
+            "IMXUSDTPERP",
+            "INJUSDTPERP",
+            "IOSTUSDTPERP",
+            "IOTAUSDTPERP",
+            "IOTXUSDTPERP",
+            "JASMYUSDTPERP",
+            "KAVAUSDTPERP",
+            "KLAYUSDTPERP",
+            "KNCUSDTPERP",
+            "KSMUSDTPERP",
+            "LDOUSDTPERP",
+            "LINAUSDTPERP",
+            "LINKUSDTPERP",
+            "LITUSDTPERP",
+            "LPTUSDTPERP",
+            "LRCUSDTPERP",
+            "LTCUSDTPERP",
+            "LUNA2USDTPERP",
+            "MAGICUSDTPERP",
+            "MANAUSDTPERP",
+            "MASKUSDTPERP",
+            "MATICUSDTPERP",
+            "MINAUSDTPERP",
+            "MKRUSDTPERP",
+            "MTLUSDTPERP",
+            "NEARUSDTPERP",
+            "NEOUSDTPERP",
+            "NKNUSDTPERP",
+            "OCEANUSDTPERP",
+            "OGNUSDTPERP",
+            "OMGUSDTPERP",
+            "ONEUSDTPERP",
+            "ONTUSDTPERP",
+            "OPUSDTPERP",
+            "PEOPLEUSDTPERP",
+            "QNTUSDTPERP",
+            "QTUMUSDTPERP",
+            "RAYUSDTPERP",
+            "REEFUSDTPERP",
+            "RENUSDTPERP",
+            "RLCUSDTPERP",
+            "RNDRUSDTPERP",
+            "ROSEUSDTPERP",
+            "RSRUSDTPERP",
+            "RUNEUSDTPERP",
+            "RVNUSDTPERP",
+            "SANDUSDTPERP",
+            "SCUSDTPERP",
+            "SFPUSDTPERP",
+            "SKLUSDTPERP",
+            "SNXUSDTPERP",
+            "SOLUSDTPERP",
+            "SPELLUSDTPERP",
+            "SRMUSDTPERP",
+            "STGUSDTPERP",
+            "STMXUSDTPERP",
+            "STORJUSDTPERP",
+            "SUSHIUSDTPERP",
+            "SXPUSDTPERP",
+            "THETAUSDTPERP",
+            "TLMUSDTPERP",
+            "TOMOUSDTPERP",
+            "TRBUSDTPERP",
+            "TRXUSDTPERP",
+            "TUSDTPERP",
+            "UNFIUSDTPERP",
+            "UNIUSDTPERP",
+            "VETUSDTPERP",
+            "WAVESUSDTPERP",
+            "WOOUSDTPERP",
+            "XEMUSDTPERP",
+            "XLMUSDTPERP",
+            "XMRUSDTPERP",
+            "XRPUSDTPERP",
+            "XTZUSDTPERP",
+            "YFIUSDTPERP",
+            "ZECUSDTPERP",
+            "ZENUSDTPERP",
+            "ZILUSDTPERP",
+            "ZRXUSDTPERP"});
+            this.cbxCurrencyPairList2.Location = new System.Drawing.Point(242, 22);
             this.cbxCurrencyPairList2.Name = "cbxCurrencyPairList2";
-            this.cbxCurrencyPairList2.Size = new System.Drawing.Size(102, 21);
+            this.cbxCurrencyPairList2.Size = new System.Drawing.Size(121, 21);
             this.cbxCurrencyPairList2.TabIndex = 294;
             // 
             // lblCurrencyPair2
             // 
             this.lblCurrencyPair2.AutoSize = true;
             this.lblCurrencyPair2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblCurrencyPair2.Location = new System.Drawing.Point(198, 25);
+            this.lblCurrencyPair2.Location = new System.Drawing.Point(193, 26);
             this.lblCurrencyPair2.Name = "lblCurrencyPair2";
-            this.lblCurrencyPair2.Size = new System.Drawing.Size(57, 13);
+            this.lblCurrencyPair2.Size = new System.Drawing.Size(51, 13);
             this.lblCurrencyPair2.TabIndex = 293;
-            this.lblCurrencyPair2.Text = "İşlem Çifti :";
+            this.lblCurrencyPair2.Text = "İşlem Çifti";
             // 
             // gbCurrencyPairStatistics
             // 
@@ -871,38 +1188,27 @@
             // 
             // cbxCurrencyPairList
             // 
-            this.cbxCurrencyPairList.Enabled = false;
             this.cbxCurrencyPairList.FormattingEnabled = true;
             this.cbxCurrencyPairList.Items.AddRange(new object[] {
-            "1000LUNCBUSDPERP",
             "1000LUNCUSDTPERP",
-            "1000SHIBBUSDPERP",
             "1000SHIBUSDTPERP",
             "1000XECUSDTPERP",
             "1INCHUSDTPERP",
             "AAVEUSDTPERP",
-            "ADABUSDPERP",
             "ADAUSDTPERP",
-            "AGIXBUSDPERP",
             "ALGOUSDTPERP",
             "ALICEUSDTPERP",
             "ALPHAUSDTPERP",
-            "AMBBUSDPERP",
-            "ANCBUSDPERP",
             "ANKRUSDTPERP",
             "ANTUSDTPERP",
-            "APEBUSDPERP",
             "APEUSDTPERP",
             "API3USDTPERP",
-            "APTBUSDPERP",
             "APTUSDTPERP",
             "ARPAUSDTPERP",
             "ARUSDTPERP",
             "ATAUSDTPERP",
             "ATOMUSDTPERP",
-            "AUCTIONBUSDPERP",
             "AUDIOUSDTPERP",
-            "AVAXBUSDPERP",
             "AVAXUSDTPERP",
             "AXSUSDTPERP",
             "BAKEUSDTPERP",
@@ -913,10 +1219,8 @@
             "BELUSDTPERP",
             "BLUEBIRDUSDTPERP",
             "BLZUSDTPERP",
-            "BNBBUSDPERP",
             "BNBUSDTPERP",
             "BNXUSDTPERP",
-            "BTCBUSDPERP",
             "BTCDOMUSDTPERP",
             "BTCSTUSDTPERP",
             "BTCUSDTPERP",
@@ -932,17 +1236,13 @@
             "CTKUSDTPERP",
             "CTSIUSDTPERP",
             "CVCUSDTPERP",
-            "CVXBUSDPERP",
             "CVXUSDTPERP",
             "DARUSDTPERP",
             "DASHUSDTPERP",
             "DEFIUSDTPERP",
             "DENTUSDTPERP",
             "DGBUSDTPERP",
-            "DODOBUSDPERP",
-            "DOGEBUSDPERP",
             "DOGEUSDTPERP",
-            "DOTBUSDPERP",
             "DOTUSDTPERP",
             "DUSKUSDTPERP",
             "DYDXUSDTPERP",
@@ -950,26 +1250,18 @@
             "ENJUSDTPERP",
             "ENSUSDTPERP",
             "EOSUSDTPERP",
-            "ETCBUSDPERP",
             "ETCUSDTPERP",
-            "ETHBUSDPERP",
             "ETHUSDTPERP",
             "FETUSDTPERP",
-            "FILBUSDPERP",
             "FILUSDTPERP",
             "FLMUSDTPERP",
             "FLOWUSDTPERP",
             "FOOTBALLUSDTPERP",
-            "FTMBUSDPERP",
             "FTMUSDTPERP",
-            "FTTBUSDPERP",
             "FTTUSDTPERP",
             "FXSUSDTPERP",
-            "GALABUSDPERP",
             "GALAUSDTPERP",
-            "GALBUSDPERP",
             "GALUSDTPERP",
-            "GMTBUSDPERP",
             "GMTUSDTPERP",
             "GRTUSDTPERP",
             "GTCUSDTPERP",
@@ -977,7 +1269,6 @@
             "HNTUSDTPERP",
             "HOOKUSDTPERP",
             "HOTUSDTPERP",
-            "ICPBUSDPERP",
             "ICPUSDTPERP",
             "ICXUSDTPERP",
             "IMXUSDTPERP",
@@ -990,28 +1281,21 @@
             "KLAYUSDTPERP",
             "KNCUSDTPERP",
             "KSMUSDTPERP",
-            "LDOBUSDPERP",
             "LDOUSDTPERP",
-            "LEVERBUSDPERP",
             "LINAUSDTPERP",
-            "LINKBUSDPERP",
             "LINKUSDTPERP",
             "LITUSDTPERP",
             "LPTUSDTPERP",
             "LRCUSDTPERP",
-            "LTCBUSDPERP",
             "LTCUSDTPERP",
-            "LUNA2BUSDPERP",
             "LUNA2USDTPERP",
             "MAGICUSDTPERP",
             "MANAUSDTPERP",
             "MASKUSDTPERP",
-            "MATICBUSDPERP",
             "MATICUSDTPERP",
             "MINAUSDTPERP",
             "MKRUSDTPERP",
             "MTLUSDTPERP",
-            "NEARBUSDPERP",
             "NEARUSDTPERP",
             "NEOUSDTPERP",
             "NKNUSDTPERP",
@@ -1022,7 +1306,6 @@
             "ONTUSDTPERP",
             "OPUSDTPERP",
             "PEOPLEUSDTPERP",
-            "PHBBUSDPERP",
             "QNTUSDTPERP",
             "QTUMUSDTPERP",
             "RAYUSDTPERP",
@@ -1034,13 +1317,11 @@
             "RSRUSDTPERP",
             "RUNEUSDTPERP",
             "RVNUSDTPERP",
-            "SANDBUSDPERP",
             "SANDUSDTPERP",
             "SCUSDTPERP",
             "SFPUSDTPERP",
             "SKLUSDTPERP",
             "SNXUSDTPERP",
-            "SOLBUSDPERP",
             "SOLUSDTPERP",
             "SPELLUSDTPERP",
             "SRMUSDTPERP",
@@ -1050,24 +1331,19 @@
             "SUSHIUSDTPERP",
             "SXPUSDTPERP",
             "THETAUSDTPERP",
-            "TLMBUSDPERP",
             "TLMUSDTPERP",
             "TOMOUSDTPERP",
             "TRBUSDTPERP",
-            "TRXBUSDPERP",
             "TRXUSDTPERP",
             "TUSDTPERP",
             "UNFIUSDTPERP",
-            "UNIBUSDPERP",
             "UNIUSDTPERP",
             "VETUSDTPERP",
-            "WAVESBUSDPERP",
             "WAVESUSDTPERP",
             "WOOUSDTPERP",
             "XEMUSDTPERP",
             "XLMUSDTPERP",
             "XMRUSDTPERP",
-            "XRPBUSDPERP",
             "XRPUSDTPERP",
             "XTZUSDTPERP",
             "YFIUSDTPERP",
@@ -1180,6 +1456,48 @@
             this.lblTargetedEntryPrice.Size = new System.Drawing.Size(115, 13);
             this.lblTargetedEntryPrice.TabIndex = 277;
             this.lblTargetedEntryPrice.Text = "Hedeflenen Giriş Fiyatı:";
+            // 
+            // btnDeleteTradeDetail
+            // 
+            this.btnDeleteTradeDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnDeleteTradeDetail.Image = ((System.Drawing.Image)(resources.GetObject("btnDeleteTradeDetail.Image")));
+            this.btnDeleteTradeDetail.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnDeleteTradeDetail.Location = new System.Drawing.Point(203, 853);
+            this.btnDeleteTradeDetail.Name = "btnDeleteTradeDetail";
+            this.btnDeleteTradeDetail.Size = new System.Drawing.Size(64, 28);
+            this.btnDeleteTradeDetail.TabIndex = 276;
+            this.btnDeleteTradeDetail.Text = "Sil";
+            this.btnDeleteTradeDetail.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnDeleteTradeDetail.UseVisualStyleBackColor = true;
+            this.btnDeleteTradeDetail.Click += new System.EventHandler(this.btnDeleteTradeDetail_Click);
+            // 
+            // btnSaveTradeDetail
+            // 
+            this.btnSaveTradeDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnSaveTradeDetail.Image = ((System.Drawing.Image)(resources.GetObject("btnSaveTradeDetail.Image")));
+            this.btnSaveTradeDetail.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSaveTradeDetail.Location = new System.Drawing.Point(271, 853);
+            this.btnSaveTradeDetail.Name = "btnSaveTradeDetail";
+            this.btnSaveTradeDetail.Size = new System.Drawing.Size(64, 28);
+            this.btnSaveTradeDetail.TabIndex = 275;
+            this.btnSaveTradeDetail.Text = "Kaydet";
+            this.btnSaveTradeDetail.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnSaveTradeDetail.UseVisualStyleBackColor = true;
+            this.btnSaveTradeDetail.Click += new System.EventHandler(this.btnSaveTradeDetail_Click_1);
+            // 
+            // btnNewTradeDetail
+            // 
+            this.btnNewTradeDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnNewTradeDetail.Image = ((System.Drawing.Image)(resources.GetObject("btnNewTradeDetail.Image")));
+            this.btnNewTradeDetail.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnNewTradeDetail.Location = new System.Drawing.Point(134, 853);
+            this.btnNewTradeDetail.Name = "btnNewTradeDetail";
+            this.btnNewTradeDetail.Size = new System.Drawing.Size(64, 28);
+            this.btnNewTradeDetail.TabIndex = 274;
+            this.btnNewTradeDetail.Text = "Yeni";
+            this.btnNewTradeDetail.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnNewTradeDetail.UseVisualStyleBackColor = true;
+            this.btnNewTradeDetail.Click += new System.EventHandler(this.btnNewTradeDetail_Click_1);
             // 
             // tbxTradeEntryLotCount
             // 
@@ -1327,6 +1645,48 @@
             this.chckEndTrade.Text = "Trade\'i Sonlandır";
             this.chckEndTrade.UseVisualStyleBackColor = true;
             this.chckEndTrade.CheckedChanged += new System.EventHandler(this.chckEndTrade_CheckedChanged);
+            // 
+            // btnTradeDelete
+            // 
+            this.btnTradeDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnTradeDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnTradeDelete.Image")));
+            this.btnTradeDelete.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnTradeDelete.Location = new System.Drawing.Point(203, 568);
+            this.btnTradeDelete.Name = "btnTradeDelete";
+            this.btnTradeDelete.Size = new System.Drawing.Size(64, 28);
+            this.btnTradeDelete.TabIndex = 258;
+            this.btnTradeDelete.Text = "Sil";
+            this.btnTradeDelete.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnTradeDelete.UseVisualStyleBackColor = true;
+            this.btnTradeDelete.Click += new System.EventHandler(this.btnTradeDelete_Click);
+            // 
+            // btnSaveTrade
+            // 
+            this.btnSaveTrade.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnSaveTrade.Image = ((System.Drawing.Image)(resources.GetObject("btnSaveTrade.Image")));
+            this.btnSaveTrade.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSaveTrade.Location = new System.Drawing.Point(271, 568);
+            this.btnSaveTrade.Name = "btnSaveTrade";
+            this.btnSaveTrade.Size = new System.Drawing.Size(64, 28);
+            this.btnSaveTrade.TabIndex = 257;
+            this.btnSaveTrade.Text = "Kaydet";
+            this.btnSaveTrade.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnSaveTrade.UseVisualStyleBackColor = true;
+            this.btnSaveTrade.Click += new System.EventHandler(this.btnSaveTrade_Click);
+            // 
+            // btnNewTrade
+            // 
+            this.btnNewTrade.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnNewTrade.Image = ((System.Drawing.Image)(resources.GetObject("btnNewTrade.Image")));
+            this.btnNewTrade.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnNewTrade.Location = new System.Drawing.Point(134, 568);
+            this.btnNewTrade.Name = "btnNewTrade";
+            this.btnNewTrade.Size = new System.Drawing.Size(64, 28);
+            this.btnNewTrade.TabIndex = 256;
+            this.btnNewTrade.Text = "Yeni";
+            this.btnNewTrade.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnNewTrade.UseVisualStyleBackColor = true;
+            this.btnNewTrade.Click += new System.EventHandler(this.btnNewTrade_Click_1);
             // 
             // lblTradeNote
             // 
@@ -1500,6 +1860,20 @@
             this.tpgSettings.TabIndex = 1;
             this.tpgSettings.Text = "Ayarlar";
             // 
+            // btnPlusMinus
+            // 
+            this.btnPlusMinus.Enabled = false;
+            this.btnPlusMinus.Image = ((System.Drawing.Image)(resources.GetObject("btnPlusMinus.Image")));
+            this.btnPlusMinus.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnPlusMinus.Location = new System.Drawing.Point(264, 182);
+            this.btnPlusMinus.Name = "btnPlusMinus";
+            this.btnPlusMinus.Size = new System.Drawing.Size(76, 24);
+            this.btnPlusMinus.TabIndex = 284;
+            this.btnPlusMinus.Text = "Ek/Az";
+            this.btnPlusMinus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnPlusMinus.UseVisualStyleBackColor = true;
+            this.btnPlusMinus.Click += new System.EventHandler(this.btnPlusMinus_Click);
+            // 
             // chckPlusMinus
             // 
             this.chckPlusMinus.AutoSize = true;
@@ -1509,6 +1883,7 @@
             this.chckPlusMinus.Size = new System.Drawing.Size(15, 14);
             this.chckPlusMinus.TabIndex = 283;
             this.chckPlusMinus.UseVisualStyleBackColor = true;
+            this.chckPlusMinus.CheckedChanged += new System.EventHandler(this.chckPlusMinus_CheckedChanged);
             // 
             // tbxPlusMinus
             // 
@@ -1602,11 +1977,26 @@
             this.tbxReferralLink.Size = new System.Drawing.Size(215, 20);
             this.tbxReferralLink.TabIndex = 259;
             // 
+            // btnSaveTradeCheckedListBox
+            // 
+            this.btnSaveTradeCheckedListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnSaveTradeCheckedListBox.Image = ((System.Drawing.Image)(resources.GetObject("btnSaveTradeCheckedListBox.Image")));
+            this.btnSaveTradeCheckedListBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSaveTradeCheckedListBox.Location = new System.Drawing.Point(276, 631);
+            this.btnSaveTradeCheckedListBox.Name = "btnSaveTradeCheckedListBox";
+            this.btnSaveTradeCheckedListBox.Size = new System.Drawing.Size(64, 28);
+            this.btnSaveTradeCheckedListBox.TabIndex = 258;
+            this.btnSaveTradeCheckedListBox.Text = "Kaydet";
+            this.btnSaveTradeCheckedListBox.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnSaveTradeCheckedListBox.UseVisualStyleBackColor = true;
+            this.btnSaveTradeCheckedListBox.Click += new System.EventHandler(this.btnsaveTradeCheckedListBox_Click);
+            // 
             // chcklbTradeColumns
             // 
             this.chcklbTradeColumns.FormattingEnabled = true;
             this.chcklbTradeColumns.Items.AddRange(new object[] {
             "Id",
+            "İşlem Çifti",
             "Trade Başlangıç Tarihi",
             "Trade Bitiş Tarihi",
             "Posizyon Yönü",
@@ -1634,7 +2024,7 @@
             "Trade Sonlandı Mı?"});
             this.chcklbTradeColumns.Location = new System.Drawing.Point(62, 216);
             this.chcklbTradeColumns.Name = "chcklbTradeColumns";
-            this.chcklbTradeColumns.Size = new System.Drawing.Size(278, 394);
+            this.chcklbTradeColumns.Size = new System.Drawing.Size(278, 409);
             this.chcklbTradeColumns.TabIndex = 231;
             // 
             // chckGeneralInformationEntries
@@ -1686,203 +2076,6 @@
             this.lblMakerCommission.TabIndex = 222;
             this.lblMakerCommission.Text = "Maker Komisyon % :";
             // 
-            // cmsExport
-            // 
-            this.cmsExport.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmiExportToExcel,
-            this.tsmiExportToPdf,
-            this.tsmiExportStatisticsImage,
-            this.tsmiExportTradeStatistics});
-            this.cmsExport.Name = "cmsExport";
-            this.cmsExport.Size = new System.Drawing.Size(195, 92);
-            // 
-            // gbForList
-            // 
-            this.gbForList.BackColor = System.Drawing.Color.AliceBlue;
-            this.gbForList.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("gbForList.BackgroundImage")));
-            this.gbForList.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.gbForList.Controls.Add(this.scForTradeReport);
-            this.gbForList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbForList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.gbForList.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.gbForList.Location = new System.Drawing.Point(0, 0);
-            this.gbForList.Name = "gbForList";
-            this.gbForList.Size = new System.Drawing.Size(795, 924);
-            this.gbForList.TabIndex = 0;
-            this.gbForList.TabStop = false;
-            this.gbForList.Text = "İşlem Listesi";
-            // 
-            // scForTradeReport
-            // 
-            this.scForTradeReport.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.scForTradeReport.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-            this.scForTradeReport.Location = new System.Drawing.Point(3, 16);
-            this.scForTradeReport.Name = "scForTradeReport";
-            this.scForTradeReport.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // scForTradeReport.Panel1
-            // 
-            this.scForTradeReport.Panel1.Controls.Add(this.dgvTradeList);
-            // 
-            // scForTradeReport.Panel2
-            // 
-            this.scForTradeReport.Panel2.Controls.Add(this.gbTradeDetails);
-            this.scForTradeReport.Panel2MinSize = 300;
-            this.scForTradeReport.Size = new System.Drawing.Size(789, 905);
-            this.scForTradeReport.SplitterDistance = 601;
-            this.scForTradeReport.TabIndex = 0;
-            // 
-            // dgvTradeList
-            // 
-            this.dgvTradeList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvTradeList.BackgroundColor = System.Drawing.Color.WhiteSmoke;
-            this.dgvTradeList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvTradeList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvTradeList.Location = new System.Drawing.Point(0, 0);
-            this.dgvTradeList.Name = "dgvTradeList";
-            this.dgvTradeList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvTradeList.Size = new System.Drawing.Size(789, 601);
-            this.dgvTradeList.TabIndex = 1;
-            this.dgvTradeList.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTradeList_CellClick_1);
-            this.dgvTradeList.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvTradeList_CellPainting);
-            this.dgvTradeList.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dgvTradeList_RowPrePaint_1);
-            // 
-            // gbTradeDetails
-            // 
-            this.gbTradeDetails.Controls.Add(this.dgvTradeDetails);
-            this.gbTradeDetails.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbTradeDetails.Location = new System.Drawing.Point(0, 0);
-            this.gbTradeDetails.Name = "gbTradeDetails";
-            this.gbTradeDetails.Size = new System.Drawing.Size(789, 300);
-            this.gbTradeDetails.TabIndex = 0;
-            this.gbTradeDetails.TabStop = false;
-            this.gbTradeDetails.Text = "İşlem Detayları:";
-            // 
-            // dgvTradeDetails
-            // 
-            this.dgvTradeDetails.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvTradeDetails.BackgroundColor = System.Drawing.Color.WhiteSmoke;
-            this.dgvTradeDetails.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvTradeDetails.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvTradeDetails.Location = new System.Drawing.Point(3, 16);
-            this.dgvTradeDetails.Name = "dgvTradeDetails";
-            this.dgvTradeDetails.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvTradeDetails.Size = new System.Drawing.Size(783, 281);
-            this.dgvTradeDetails.TabIndex = 3;
-            this.dgvTradeDetails.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTradeDetails_CellClick);
-            this.dgvTradeDetails.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dgvTradeDetails_RowPrePaint);
-            // 
-            // btnDeleteTradeDetail
-            // 
-            this.btnDeleteTradeDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnDeleteTradeDetail.Image = ((System.Drawing.Image)(resources.GetObject("btnDeleteTradeDetail.Image")));
-            this.btnDeleteTradeDetail.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnDeleteTradeDetail.Location = new System.Drawing.Point(203, 853);
-            this.btnDeleteTradeDetail.Name = "btnDeleteTradeDetail";
-            this.btnDeleteTradeDetail.Size = new System.Drawing.Size(64, 28);
-            this.btnDeleteTradeDetail.TabIndex = 276;
-            this.btnDeleteTradeDetail.Text = "Sil";
-            this.btnDeleteTradeDetail.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnDeleteTradeDetail.UseVisualStyleBackColor = true;
-            this.btnDeleteTradeDetail.Click += new System.EventHandler(this.btnDeleteTradeDetail_Click);
-            // 
-            // btnSaveTradeDetail
-            // 
-            this.btnSaveTradeDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnSaveTradeDetail.Image = ((System.Drawing.Image)(resources.GetObject("btnSaveTradeDetail.Image")));
-            this.btnSaveTradeDetail.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSaveTradeDetail.Location = new System.Drawing.Point(271, 853);
-            this.btnSaveTradeDetail.Name = "btnSaveTradeDetail";
-            this.btnSaveTradeDetail.Size = new System.Drawing.Size(64, 28);
-            this.btnSaveTradeDetail.TabIndex = 275;
-            this.btnSaveTradeDetail.Text = "Kaydet";
-            this.btnSaveTradeDetail.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnSaveTradeDetail.UseVisualStyleBackColor = true;
-            this.btnSaveTradeDetail.Click += new System.EventHandler(this.btnSaveTradeDetail_Click_1);
-            // 
-            // btnNewTradeDetail
-            // 
-            this.btnNewTradeDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnNewTradeDetail.Image = ((System.Drawing.Image)(resources.GetObject("btnNewTradeDetail.Image")));
-            this.btnNewTradeDetail.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnNewTradeDetail.Location = new System.Drawing.Point(134, 853);
-            this.btnNewTradeDetail.Name = "btnNewTradeDetail";
-            this.btnNewTradeDetail.Size = new System.Drawing.Size(64, 28);
-            this.btnNewTradeDetail.TabIndex = 274;
-            this.btnNewTradeDetail.Text = "Yeni";
-            this.btnNewTradeDetail.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnNewTradeDetail.UseVisualStyleBackColor = true;
-            this.btnNewTradeDetail.Click += new System.EventHandler(this.btnNewTradeDetail_Click_1);
-            // 
-            // btnTradeDelete
-            // 
-            this.btnTradeDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnTradeDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnTradeDelete.Image")));
-            this.btnTradeDelete.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnTradeDelete.Location = new System.Drawing.Point(203, 568);
-            this.btnTradeDelete.Name = "btnTradeDelete";
-            this.btnTradeDelete.Size = new System.Drawing.Size(64, 28);
-            this.btnTradeDelete.TabIndex = 258;
-            this.btnTradeDelete.Text = "Sil";
-            this.btnTradeDelete.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnTradeDelete.UseVisualStyleBackColor = true;
-            this.btnTradeDelete.Click += new System.EventHandler(this.btnTradeDelete_Click);
-            // 
-            // btnSaveTrade
-            // 
-            this.btnSaveTrade.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnSaveTrade.Image = ((System.Drawing.Image)(resources.GetObject("btnSaveTrade.Image")));
-            this.btnSaveTrade.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSaveTrade.Location = new System.Drawing.Point(271, 568);
-            this.btnSaveTrade.Name = "btnSaveTrade";
-            this.btnSaveTrade.Size = new System.Drawing.Size(64, 28);
-            this.btnSaveTrade.TabIndex = 257;
-            this.btnSaveTrade.Text = "Kaydet";
-            this.btnSaveTrade.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnSaveTrade.UseVisualStyleBackColor = true;
-            this.btnSaveTrade.Click += new System.EventHandler(this.btnSaveTrade_Click);
-            // 
-            // btnNewTrade
-            // 
-            this.btnNewTrade.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnNewTrade.Image = ((System.Drawing.Image)(resources.GetObject("btnNewTrade.Image")));
-            this.btnNewTrade.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnNewTrade.Location = new System.Drawing.Point(134, 568);
-            this.btnNewTrade.Name = "btnNewTrade";
-            this.btnNewTrade.Size = new System.Drawing.Size(64, 28);
-            this.btnNewTrade.TabIndex = 256;
-            this.btnNewTrade.Text = "Yeni";
-            this.btnNewTrade.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnNewTrade.UseVisualStyleBackColor = true;
-            this.btnNewTrade.Click += new System.EventHandler(this.btnNewTrade_Click_1);
-            // 
-            // btnPlusMinus
-            // 
-            this.btnPlusMinus.Enabled = false;
-            this.btnPlusMinus.Image = ((System.Drawing.Image)(resources.GetObject("btnPlusMinus.Image")));
-            this.btnPlusMinus.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnPlusMinus.Location = new System.Drawing.Point(264, 182);
-            this.btnPlusMinus.Name = "btnPlusMinus";
-            this.btnPlusMinus.Size = new System.Drawing.Size(76, 24);
-            this.btnPlusMinus.TabIndex = 284;
-            this.btnPlusMinus.Text = "Ek/Az";
-            this.btnPlusMinus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnPlusMinus.UseVisualStyleBackColor = true;
-            // 
-            // btnSaveTradeCheckedListBox
-            // 
-            this.btnSaveTradeCheckedListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnSaveTradeCheckedListBox.Image = ((System.Drawing.Image)(resources.GetObject("btnSaveTradeCheckedListBox.Image")));
-            this.btnSaveTradeCheckedListBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSaveTradeCheckedListBox.Location = new System.Drawing.Point(276, 616);
-            this.btnSaveTradeCheckedListBox.Name = "btnSaveTradeCheckedListBox";
-            this.btnSaveTradeCheckedListBox.Size = new System.Drawing.Size(64, 28);
-            this.btnSaveTradeCheckedListBox.TabIndex = 258;
-            this.btnSaveTradeCheckedListBox.Text = "Kaydet";
-            this.btnSaveTradeCheckedListBox.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnSaveTradeCheckedListBox.UseVisualStyleBackColor = true;
-            this.btnSaveTradeCheckedListBox.Click += new System.EventHandler(this.btnsaveTradeCheckedListBox_Click);
-            // 
             // btnSaveGeneralInformationEntries
             // 
             this.btnSaveGeneralInformationEntries.Enabled = false;
@@ -1897,85 +2090,15 @@
             this.btnSaveGeneralInformationEntries.UseVisualStyleBackColor = true;
             this.btnSaveGeneralInformationEntries.Click += new System.EventHandler(this.btnSaveGeneralInformationEntries_Click);
             // 
-            // btnExport
+            // cmsExport
             // 
-            this.btnExport.Image = ((System.Drawing.Image)(resources.GetObject("btnExport.Image")));
-            this.btnExport.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnExport.Location = new System.Drawing.Point(755, 3);
-            this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(53, 37);
-            this.btnExport.TabIndex = 7;
-            this.btnExport.Text = "Aktar";
-            this.btnExport.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnExport.UseVisualStyleBackColor = true;
-            this.btnExport.Click += new System.EventHandler(this.btnExportToExcel_Click);
-            // 
-            // btnDeleteXmlFile
-            // 
-            this.btnDeleteXmlFile.Image = ((System.Drawing.Image)(resources.GetObject("btnDeleteXmlFile.Image")));
-            this.btnDeleteXmlFile.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnDeleteXmlFile.Location = new System.Drawing.Point(696, 3);
-            this.btnDeleteXmlFile.Name = "btnDeleteXmlFile";
-            this.btnDeleteXmlFile.Size = new System.Drawing.Size(53, 37);
-            this.btnDeleteXmlFile.TabIndex = 6;
-            this.btnDeleteXmlFile.Text = "Delete";
-            this.btnDeleteXmlFile.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnDeleteXmlFile.UseVisualStyleBackColor = true;
-            this.btnDeleteXmlFile.Click += new System.EventHandler(this.btnDeleteXmlFile_Click);
-            // 
-            // btnRefresh
-            // 
-            this.btnRefresh.Image = ((System.Drawing.Image)(resources.GetObject("btnRefresh.Image")));
-            this.btnRefresh.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnRefresh.Location = new System.Drawing.Point(10, 3);
-            this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(53, 37);
-            this.btnRefresh.TabIndex = 5;
-            this.btnRefresh.Text = "Yenile";
-            this.btnRefresh.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnRefresh.UseVisualStyleBackColor = true;
-            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
-            // 
-            // btnSaveTradeXml
-            // 
-            this.btnSaveTradeXml.Enabled = false;
-            this.btnSaveTradeXml.Image = ((System.Drawing.Image)(resources.GetObject("btnSaveTradeXml.Image")));
-            this.btnSaveTradeXml.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnSaveTradeXml.Location = new System.Drawing.Point(637, 3);
-            this.btnSaveTradeXml.Name = "btnSaveTradeXml";
-            this.btnSaveTradeXml.Size = new System.Drawing.Size(53, 37);
-            this.btnSaveTradeXml.TabIndex = 4;
-            this.btnSaveTradeXml.Text = "Kaydet";
-            this.btnSaveTradeXml.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnSaveTradeXml.UseVisualStyleBackColor = true;
-            this.btnSaveTradeXml.Click += new System.EventHandler(this.btnSaveTradeXml_Click_1);
-            // 
-            // btnCancelToSaveTradeXml
-            // 
-            this.btnCancelToSaveTradeXml.Enabled = false;
-            this.btnCancelToSaveTradeXml.Image = ((System.Drawing.Image)(resources.GetObject("btnCancelToSaveTradeXml.Image")));
-            this.btnCancelToSaveTradeXml.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnCancelToSaveTradeXml.Location = new System.Drawing.Point(578, 3);
-            this.btnCancelToSaveTradeXml.Name = "btnCancelToSaveTradeXml";
-            this.btnCancelToSaveTradeXml.Size = new System.Drawing.Size(53, 37);
-            this.btnCancelToSaveTradeXml.TabIndex = 3;
-            this.btnCancelToSaveTradeXml.Text = "Vazgeç";
-            this.btnCancelToSaveTradeXml.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnCancelToSaveTradeXml.UseVisualStyleBackColor = true;
-            this.btnCancelToSaveTradeXml.Click += new System.EventHandler(this.btnCancelToSaveTradeXml_Click);
-            // 
-            // btnNewTradeXml
-            // 
-            this.btnNewTradeXml.Image = ((System.Drawing.Image)(resources.GetObject("btnNewTradeXml.Image")));
-            this.btnNewTradeXml.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnNewTradeXml.Location = new System.Drawing.Point(519, 3);
-            this.btnNewTradeXml.Name = "btnNewTradeXml";
-            this.btnNewTradeXml.Size = new System.Drawing.Size(53, 37);
-            this.btnNewTradeXml.TabIndex = 2;
-            this.btnNewTradeXml.Text = "Yeni";
-            this.btnNewTradeXml.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnNewTradeXml.UseVisualStyleBackColor = true;
-            this.btnNewTradeXml.Click += new System.EventHandler(this.btnNewTradeXml_Click_1);
+            this.cmsExport.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiExportToExcel,
+            this.tsmiExportToPdf,
+            this.tsmiExportStatisticsImage,
+            this.tsmiExportTradeStatistics});
+            this.cmsExport.Name = "cmsExport";
+            this.cmsExport.Size = new System.Drawing.Size(195, 92);
             // 
             // tsmiExportToExcel
             // 
@@ -2029,6 +2152,14 @@
             this.scMainMenu.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.scMainMenu)).EndInit();
             this.scMainMenu.ResumeLayout(false);
+            this.gbForList.ResumeLayout(false);
+            this.scForTradeReport.Panel1.ResumeLayout(false);
+            this.scForTradeReport.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.scForTradeReport)).EndInit();
+            this.scForTradeReport.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvTradeList)).EndInit();
+            this.gbTradeDetails.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvTradeDetails)).EndInit();
             this.tcMainMenu.ResumeLayout(false);
             this.tpgTrade.ResumeLayout(false);
             this.tpgTrade.PerformLayout();
@@ -2039,14 +2170,6 @@
             this.tpgSettings.ResumeLayout(false);
             this.tpgSettings.PerformLayout();
             this.cmsExport.ResumeLayout(false);
-            this.gbForList.ResumeLayout(false);
-            this.scForTradeReport.Panel1.ResumeLayout(false);
-            this.scForTradeReport.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.scForTradeReport)).EndInit();
-            this.scForTradeReport.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvTradeList)).EndInit();
-            this.gbTradeDetails.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvTradeDetails)).EndInit();
             this.ResumeLayout(false);
 
         }
