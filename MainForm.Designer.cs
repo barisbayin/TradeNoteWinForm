@@ -146,7 +146,7 @@
             this.btnPlusMinus = new System.Windows.Forms.Button();
             this.chckPlusMinus = new System.Windows.Forms.CheckBox();
             this.tbxPlusMinus = new System.Windows.Forms.TextBox();
-            this.label16 = new System.Windows.Forms.Label();
+            this.lblStartingBalanceLabel2 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.cbxExchanges = new System.Windows.Forms.ComboBox();
             this.lblExchange = new System.Windows.Forms.Label();
@@ -1815,7 +1815,7 @@
             this.tpgSettings.Controls.Add(this.btnPlusMinus);
             this.tpgSettings.Controls.Add(this.chckPlusMinus);
             this.tpgSettings.Controls.Add(this.tbxPlusMinus);
-            this.tpgSettings.Controls.Add(this.label16);
+            this.tpgSettings.Controls.Add(this.lblStartingBalanceLabel2);
             this.tpgSettings.Controls.Add(this.label17);
             this.tpgSettings.Controls.Add(this.cbxExchanges);
             this.tpgSettings.Controls.Add(this.lblExchange);
@@ -1856,7 +1856,7 @@
             // 
             this.chckPlusMinus.AutoSize = true;
             this.chckPlusMinus.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.chckPlusMinus.Location = new System.Drawing.Point(177, 191);
+            this.chckPlusMinus.Location = new System.Drawing.Point(177, 190);
             this.chckPlusMinus.Name = "chckPlusMinus";
             this.chckPlusMinus.Size = new System.Drawing.Size(15, 14);
             this.chckPlusMinus.TabIndex = 283;
@@ -1872,20 +1872,20 @@
             this.tbxPlusMinus.Size = new System.Drawing.Size(60, 20);
             this.tbxPlusMinus.TabIndex = 282;
             // 
-            // label16
+            // lblStartingBalanceLabel2
             // 
-            this.label16.AutoSize = true;
-            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label16.Location = new System.Drawing.Point(126, 188);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(0, 13);
-            this.label16.TabIndex = 278;
+            this.lblStartingBalanceLabel2.AutoSize = true;
+            this.lblStartingBalanceLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblStartingBalanceLabel2.Location = new System.Drawing.Point(120, 189);
+            this.lblStartingBalanceLabel2.Name = "lblStartingBalanceLabel2";
+            this.lblStartingBalanceLabel2.Size = new System.Drawing.Size(0, 13);
+            this.lblStartingBalanceLabel2.TabIndex = 278;
             // 
             // label17
             // 
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label17.Location = new System.Drawing.Point(28, 188);
+            this.label17.Location = new System.Drawing.Point(16, 189);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(98, 13);
             this.label17.TabIndex = 277;
@@ -2276,7 +2276,7 @@
         private System.Windows.Forms.Button btnPlusMinus;
         private System.Windows.Forms.CheckBox chckPlusMinus;
         private System.Windows.Forms.TextBox tbxPlusMinus;
-        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label lblStartingBalanceLabel2;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label lblStatisticInformation;
         private System.Windows.Forms.Label lblCurrencyPairFundingFeeSumLabel;

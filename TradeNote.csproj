@@ -97,6 +97,7 @@
   <ItemGroup>
     <Compile Include="Business\TradeModelManager.cs" />
     <Compile Include="Entities\CurrencyPairStatistic.cs" />
+    <Compile Include="Entities\GeneralSettings.cs" />
     <Compile Include="Entities\TradeDetail.cs" />
     <Compile Include="Enums\OrderType.cs" />
     <Compile Include="Enums\TradeType.cs" />

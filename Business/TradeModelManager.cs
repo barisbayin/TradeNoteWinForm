@@ -85,11 +85,23 @@ namespace TradeNote.Business
 
             return generalInformation;
         }
-
         public void UpdateGeneralInformation(GeneralInformation currentGeneralInformation, string xmlFilePath)
         {
             _tradeModelXmlRepository.UpdateGeneralInformation(currentGeneralInformation, xmlFilePath);
         }
+
+        public GeneralSettings GetGeneralSettings(string xmlFilePath)
+        {
+            var generalSettings = _tradeModelXmlRepository.GetGeneralSettings(xmlFilePath);
+
+            return generalSettings;
+        }
+
+        public void UpdateGeneralSettings(GeneralSettings currentGeneralSettings, string xmlFilePath)
+        {
+            _tradeModelXmlRepository.UpdateGeneralSettings(currentGeneralSettings, xmlFilePath);
+        }
+
 
         public void CalculateGeneralInformation(string xmlFilePath)
         {
@@ -160,6 +172,7 @@ namespace TradeNote.Business
         public Trade CalculateTrade(int tradeId, string xmlFilePath)
         {
             var generalInformation = _tradeModelXmlRepository.GetGeneralInformation(xmlFilePath);
+            var generalSettings = _tradeModelXmlRepository.GetGeneralSettings(xmlFilePath);
 
             var willCalculatedTrade = _tradeModelXmlRepository.GetTradeById(tradeId, xmlFilePath);
 
@@ -310,7 +323,7 @@ namespace TradeNote.Business
                 willCalculatedTrade.AverageEntryLotCount = entryTotalCount;
 
 
-                commissionSum = entryBalanceMaker * willCalculatedTrade.Leverage * generalInformation.MakerCommission / 100 + entryBalanceTaker * willCalculatedTrade.Leverage * generalInformation.TakerCommission / 100 + closeBalanceMaker * willCalculatedTrade.Leverage * generalInformation.MakerCommission / 100 + closeBalanceTaker * willCalculatedTrade.Leverage * generalInformation.TakerCommission / 100;
+                commissionSum = entryBalanceMaker * willCalculatedTrade.Leverage * generalSettings.MakerCommission / 100 + entryBalanceTaker * willCalculatedTrade.Leverage * generalSettings.TakerCommission / 100 + closeBalanceMaker * willCalculatedTrade.Leverage * generalSettings.MakerCommission / 100 + closeBalanceTaker * willCalculatedTrade.Leverage * generalSettings.TakerCommission / 100;
 
                 willCalculatedTrade.CommissionSum = commissionSum;
 

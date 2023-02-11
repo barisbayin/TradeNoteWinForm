@@ -376,11 +376,11 @@ namespace TradeNote
 
                 ImageForm.SelectedTradeId = tradeId;
 
-                var generalInformation = _tradeModelManager.GetGeneralInformation(xmlFilePath);
+                var generalSettings = _tradeModelManager.GetGeneralSettings(xmlFilePath);
 
-                ImageForm.ReferralLink = generalInformation.ReferralLink;
-                ImageForm.ReferralId = generalInformation.ReferralId;
-                ImageForm.Exchange = generalInformation.Exchange;
+                ImageForm.ReferralLink = generalSettings.ReferralLink;
+                ImageForm.ReferralId = generalSettings.ReferralId;
+                ImageForm.Exchange = generalSettings.Exchange;
 
                 settingsForm.Show();
             }
@@ -563,13 +563,33 @@ namespace TradeNote
 
         }
 
+        private GeneralSettings GetGeneralSettings()
+        {
+            var xmlFilePath = GeneralHelper.GetXmlFilePath(cbxListOfTradeXmls.Text);
+            var generalSettings = new GeneralSettings();
+            try
+            {
+                if (cbxListOfTradeXmls.Text != null)
+                {
+                    generalSettings = _tradeModelManager.GetGeneralSettings(xmlFilePath);
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Genel istatistik Bilgisi okunamadı." + "\nSistem Mesajı: " + e.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            return generalSettings;
+
+        }
+
         private void LoadGeneralInformation()
         {
             var generalInformation = GetGeneralInformation();
+            var generalSettings = GetGeneralSettings();
 
-            cbxExchanges.Text = generalInformation.Exchange;
-            tbxReferralLink.Text = generalInformation.ReferralLink;
-            tbxReferralId.Text = generalInformation.ReferralId;
+            cbxExchanges.Text = generalSettings.Exchange;
+            tbxReferralLink.Text = generalSettings.ReferralLink;
+            tbxReferralId.Text = generalSettings.ReferralId;
             lblStartBalanceText.Text = "$" + generalInformation.StartingBalance.ToString(CultureInfo.InvariantCulture);
             lblLastBalanceLabel.Text = "$" + generalInformation.LastBalance.ToString(CultureInfo.InvariantCulture);
             lblInTradeBalanceLabel.Text = "$" + generalInformation.InTradeBalance.ToString(CultureInfo.InvariantCulture);
@@ -581,10 +601,11 @@ namespace TradeNote
             lblLossCountLabel.Text = generalInformation.LossCount.ToString();
             lblWinrateLabel.Text = "%" + generalInformation.TradeWinRate.ToString(CultureInfo.InvariantCulture);
             lblTotalPnLPercentLabel.Text = "%" + generalInformation.TotalPnLPercent.ToString(CultureInfo.InvariantCulture);
-            tbxMakerCommission.Text = generalInformation.MakerCommission.ToString(CultureInfo.InvariantCulture);
-            tbxTakerCommission.Text = generalInformation.TakerCommission.ToString(CultureInfo.InvariantCulture);
+            tbxMakerCommission.Text = generalSettings.MakerCommission.ToString(CultureInfo.InvariantCulture);
+            tbxTakerCommission.Text = generalSettings.TakerCommission.ToString(CultureInfo.InvariantCulture);
             lblTotalCommissionLabel.Text = "$" + generalInformation.TotalCommission.ToString(CultureInfo.InvariantCulture);
             lblTotalFundingFeeLabel.Text = "$" + generalInformation.TotalFundingFee.ToString(CultureInfo.InvariantCulture);
+            lblStartingBalanceLabel2.Text = "$" + generalInformation.StartingBalance.ToString(CultureInfo.InvariantCulture);
 
             if (generalInformation.TotalPnL >= 0)
             {
@@ -1422,7 +1443,7 @@ namespace TradeNote
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
-            var generalSettings = GetGeneralSettings();
+            var generalSettings = GetGeneralSettingsFromTextFile();
 
             if (generalSettings.ContainsKey("ReferralLink"))
             {
@@ -1509,7 +1530,7 @@ namespace TradeNote
             }
         }
 
-        private Dictionary<string, string> GetGeneralSettings()
+        private Dictionary<string, string> GetGeneralSettingsFromTextFile()
         {
             Dictionary<string, string> generalSettings = new Dictionary<string, string>();
 
@@ -1560,27 +1581,27 @@ namespace TradeNote
             {
                 var xmlFilePath = GeneralHelper.GetXmlFilePath(cbxListOfTradeXmls.Text);
 
-                var generalInformation = _tradeModelManager.GetGeneralInformation(xmlFilePath);
+                var generalSettings = _tradeModelManager.GetGeneralSettings(xmlFilePath);
 
                 if (!string.IsNullOrEmpty(cbxExchanges.Text))
                 {
-                    generalInformation.Exchange = cbxExchanges.Text;
+                    generalSettings.Exchange = cbxExchanges.Text;
                 }
 
                 if (!string.IsNullOrEmpty(tbxReferralLink.Text))
                 {
-                    generalInformation.ReferralLink = tbxReferralLink.Text;
+                    generalSettings.ReferralLink = tbxReferralLink.Text;
                 }
                 if (!string.IsNullOrEmpty(tbxReferralId.Text))
                 {
-                    generalInformation.ReferralId = tbxReferralId.Text;
+                    generalSettings.ReferralId = tbxReferralId.Text;
                 }
 
-                generalInformation.TakerCommission = Convert.ToDecimal(tbxTakerCommission.Text.Replace(".", ","));
-                generalInformation.MakerCommission = Convert.ToDecimal(tbxMakerCommission.Text.Replace(".", ","));
+                generalSettings.TakerCommission = Convert.ToDecimal(tbxTakerCommission.Text.Replace(".", ","));
+                generalSettings.MakerCommission = Convert.ToDecimal(tbxMakerCommission.Text.Replace(".", ","));
 
 
-                _tradeModelManager.UpdateGeneralInformation(generalInformation, xmlFilePath);
+                _tradeModelManager.UpdateGeneralSettings(generalSettings, xmlFilePath);
 
                 MessageBox.Show("Genel ayarlar kaydedildi!", "Bilgi",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);

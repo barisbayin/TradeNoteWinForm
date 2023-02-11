@@ -5,15 +5,6 @@ namespace TradeNote
     public class GeneralInformation
     {
 
-        [DisplayName("Borsa")]
-        public string Exchange { get; set; }
-
-        [DisplayName("Referans Linki")]
-        public string ReferralLink { get; set; }
-
-        [DisplayName("Referral Id")]
-        public string ReferralId { get; set; }
-
         [DisplayName("Başlangıç Bakiyesi")]
         public decimal StartingBalance { get; set; }
 
@@ -46,12 +37,6 @@ namespace TradeNote
 
         [DisplayName("Kazanma Yüzdesi")]
         public decimal TradeWinRate { get; set; }
-
-        [DisplayName("Maker Komisyon")]
-        public decimal MakerCommission { get; set; }
-
-        [DisplayName("Taker Komisyon")]
-        public decimal TakerCommission { get; set; }
 
         [DisplayName("Komisyon")]
         public decimal TotalCommission { get; set; }

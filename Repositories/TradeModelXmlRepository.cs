@@ -24,6 +24,7 @@ namespace TradeNote.Repositories
             {
                 TradeModel tradeModel = new TradeModel
                 {
+                    GeneralSettings = new GeneralSettings(),
                     GeneralInformation = new GeneralInformation(),
                     CurrencyPairStatistics = new List<CurrencyPairStatistic>(),
                     Trades = new List<Trade>()
@@ -76,9 +77,6 @@ namespace TradeNote.Repositories
             TradeModel tradeModel = DeserializeTradeModel(xmlFilePath);
 
             // Update the properties of the GeneralInformation object
-            tradeModel.GeneralInformation.Exchange = updatedGeneralInformation.Exchange;
-            tradeModel.GeneralInformation.ReferralLink = updatedGeneralInformation.ReferralLink;
-            tradeModel.GeneralInformation.ReferralId = updatedGeneralInformation.ReferralId;
             tradeModel.GeneralInformation.StartingBalance = updatedGeneralInformation.StartingBalance;
             tradeModel.GeneralInformation.LastBalance = updatedGeneralInformation.LastBalance;
             tradeModel.GeneralInformation.InTradeBalance = updatedGeneralInformation.InTradeBalance;
@@ -90,8 +88,6 @@ namespace TradeNote.Repositories
             tradeModel.GeneralInformation.WinCount = updatedGeneralInformation.WinCount;
             tradeModel.GeneralInformation.LossCount = updatedGeneralInformation.LossCount;
             tradeModel.GeneralInformation.TradeWinRate = updatedGeneralInformation.TradeWinRate;
-            tradeModel.GeneralInformation.MakerCommission = updatedGeneralInformation.MakerCommission;
-            tradeModel.GeneralInformation.TakerCommission = updatedGeneralInformation.TakerCommission;
             tradeModel.GeneralInformation.TotalCommission = updatedGeneralInformation.TotalCommission;
             tradeModel.GeneralInformation.TotalFundingFee = updatedGeneralInformation.TotalFundingFee;
 
@@ -102,6 +98,35 @@ namespace TradeNote.Repositories
             {
                 serializer.Serialize(writer, tradeModel);
             }
+        }
+
+        public void UpdateGeneralSettings(GeneralSettings updatedGeneralSettings, string xmlFilePath)
+        {
+            // Deserialize the XML file to a TradeModel object
+            TradeModel tradeModel = DeserializeTradeModel(xmlFilePath);
+
+            // Update the properties of the GeneralInformation object
+            tradeModel.GeneralSettings.Exchange = updatedGeneralSettings.Exchange;
+            tradeModel.GeneralSettings.ReferralLink = updatedGeneralSettings.ReferralLink;
+            tradeModel.GeneralSettings.ReferralId = updatedGeneralSettings.ReferralId;
+            tradeModel.GeneralSettings.MakerCommission = updatedGeneralSettings.MakerCommission;
+            tradeModel.GeneralSettings.TakerCommission = updatedGeneralSettings.TakerCommission;
+
+            // Serialize the updated TradeModel object back to the XML file
+            XmlSerializer serializer = new XmlSerializer(typeof(TradeModel));
+
+            using (TextWriter writer = new StreamWriter(xmlFilePath))
+            {
+                serializer.Serialize(writer, tradeModel);
+            }
+        }
+
+        public GeneralSettings GetGeneralSettings(string xmlFilePath)
+        {
+            // Deserialize the XML file to a TradeModel object
+            TradeModel tradeModel = DeserializeTradeModel(xmlFilePath);
+
+            return tradeModel.GeneralSettings;
         }
 
         public GeneralInformation GetGeneralInformation(string xmlFilePath)
