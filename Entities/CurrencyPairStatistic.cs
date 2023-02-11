@@ -27,9 +27,6 @@ namespace TradeNote.Entities
         [DisplayName("Toplam K/Z $")]
         public decimal TotalPnL { get; set; }
 
-        [DisplayName("Toplam K/Z %")]
-        public decimal TotalPnLPercent { get; set; }
-
         [DisplayName("İşlem Sayısı")]
         public int TotalTradeCount { get; set; }
 

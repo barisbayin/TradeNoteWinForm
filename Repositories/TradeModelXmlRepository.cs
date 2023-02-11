@@ -181,9 +181,8 @@ namespace TradeNote.Repositories
 
             currencyPairStatistic.InTradeBalance = updatedCurrencyPairStatistic.InTradeBalance;
             currencyPairStatistic.ProfitsSum = updatedCurrencyPairStatistic.ProfitsSum;
-            currencyPairStatistic.LossesSum = updatedCurrencyPairStatistic.ProfitsSum;
+            currencyPairStatistic.LossesSum = updatedCurrencyPairStatistic.LossesSum;
             currencyPairStatistic.TotalPnL = updatedCurrencyPairStatistic.TotalPnL;
-            currencyPairStatistic.TotalPnLPercent = updatedCurrencyPairStatistic.TotalPnLPercent;
             currencyPairStatistic.TotalTradeCount = updatedCurrencyPairStatistic.TotalTradeCount;
             currencyPairStatistic.WinCount = updatedCurrencyPairStatistic.WinCount;
             currencyPairStatistic.LossCount = updatedCurrencyPairStatistic.LossCount;

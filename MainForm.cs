@@ -353,6 +353,11 @@ namespace TradeNote
                 _tradeModelManager.CalculateGeneralInformation(xmlFilePath);
                 LoadGeneralInformation();
                 GetWithXmlFilesIntoComboBox();
+                ClearCurrencyPairStatistic();
+                ClearTradeDetails();
+                ClearTrade();
+                dgvTradeDetails.DataSource = null;
+                MakeEnableComponents();
             }
 
 
@@ -448,6 +453,7 @@ namespace TradeNote
             tbxStopPrice.Enabled = false;
             tbxTakeProfitPrice.Enabled = false;
             rtbxTradeNote.Enabled = false;
+            cbxCurrencyPairList.Enabled = false;
 
             cbxTradeType.Enabled = false;
             cbxOrderType.Enabled = false;
@@ -530,9 +536,10 @@ namespace TradeNote
             lblCurrencyPairWinTradeCountLabel.Text = "";
             lblCurrencyPairLoseTradeCountLabel.Text = "";
             lblCurrencyPairWinRateLabel.Text = "";
-            lblCurrencyPairTotalPnLPercentLabel.Text = "";
             lblCurrencyPairCommissionSumLabel.Text = "";
             lblCurrencyPairFundingFeeSumLabel.Text = "";
+            cbxCurrencyPairList2.Text = "";
+            gbCurrencyPairStatistics.Text = "İşlem Çifti İstatistiği..";
         }
 
 
@@ -613,19 +620,16 @@ namespace TradeNote
             lblCurrencyPairWinTradeCountLabel.Text = currencyPairStatistic.WinCount.ToString();
             lblCurrencyPairLoseTradeCountLabel.Text = currencyPairStatistic.LossCount.ToString();
             lblCurrencyPairWinRateLabel.Text = "%" + currencyPairStatistic.TradeWinRate.ToString(CultureInfo.InvariantCulture);
-            lblCurrencyPairTotalPnLPercentLabel.Text = "%" + currencyPairStatistic.TotalPnLPercent.ToString(CultureInfo.InvariantCulture);
             lblCurrencyPairCommissionSumLabel.Text = "$" + currencyPairStatistic.TotalCommission.ToString(CultureInfo.InvariantCulture);
             lblCurrencyPairFundingFeeSumLabel.Text = "$" + currencyPairStatistic.TotalFundingFee.ToString(CultureInfo.InvariantCulture);
 
             if (currencyPairStatistic.TotalPnL >= 0)
             {
                 lblCurrencyPairTotalPnLLabel.ForeColor = Color.SeaGreen;
-                lblCurrencyPairTotalPnLPercentLabel.ForeColor = Color.SeaGreen;
             }
             else
             {
                 lblCurrencyPairTotalPnLLabel.ForeColor = Color.IndianRed;
-                lblCurrencyPairTotalPnLPercentLabel.ForeColor = Color.IndianRed;
             }
 
             if (currencyPairStatistic.TradeWinRate >= 50)
@@ -707,7 +711,6 @@ namespace TradeNote
                             TotalCommission = 0,
                             TotalFundingFee = 0,
                             TotalPnL = 0,
-                            TotalPnLPercent = 0,
                             TotalTradeCount = 0,
                             TradeWinRate = 0,
                             WinCount = 0
@@ -765,6 +768,10 @@ namespace TradeNote
 
                             MessageBox.Show("İşlem girişi yapıldıktan sonra sadece fonlama maliyeti güncellenebilir!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
+
+                        _tradeModelManager.CalculateCurrencyPairStatisticByCurrencyPair(foundTrade.CurrencyPair, xmlFilePath);
+
+                        LoadCurrencyPairStatistic(foundTrade.CurrencyPair);
                     }
 
                 }
@@ -1658,6 +1665,32 @@ namespace TradeNote
             {
                 MessageBox.Show(ex.Message, "Hata!", MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
+            }
+        }
+
+        private void cbxCurrencyPairList2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(cbxListOfTradeXmls.Text))
+            {
+                string xmlFilePath = GeneralHelper.GetXmlFilePath(cbxListOfTradeXmls.Text);
+                string currencyPair = cbxCurrencyPairList2.Text;
+
+                var currencyPairStatistic = _tradeModelManager.GetCurrencyPairStatisticByCurrencyPair(currencyPair, xmlFilePath);
+
+
+                if (currencyPairStatistic != null)
+                {
+                    LoadCurrencyPairStatistic(currencyPair);
+                }
+                else
+                {
+                    ClearCurrencyPairStatistic();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Lütfen trade listesini seçiniz!", "Uyarı",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }

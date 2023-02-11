@@ -105,6 +105,7 @@ namespace TradeNote.Business
             decimal totalFundingFee;
             decimal inTradeBalance;
             decimal availableBalance;
+            decimal totalTradeCount;
 
             var currentGeneralInformation = GetGeneralInformation(xmlFilePath);
 
@@ -114,10 +115,11 @@ namespace TradeNote.Business
             {
                 wonTradeCount = dataList.Count(x => x.PositionResult == PositionResult.TP);
                 lossTradeCount = dataList.Count(x => x.PositionResult == PositionResult.SL);
+                totalTradeCount = wonTradeCount + lossTradeCount;
 
                 if (wonTradeCount != 0)
                 {
-                    winRate = Math.Round(Convert.ToDecimal(wonTradeCount) / (Convert.ToDecimal(wonTradeCount) + Convert.ToDecimal(lossTradeCount)) * 100, 2);
+                    winRate = Math.Round(Convert.ToDecimal(wonTradeCount) / Convert.ToDecimal(totalTradeCount) * 100, 2);
                 }
 
 
@@ -413,9 +415,9 @@ namespace TradeNote.Business
                 lossTradeCount = dataList.Count(x => x.PositionResult == PositionResult.SL);
                 totalTradeCount = wonTradeCount + lossTradeCount;
 
-                if (wonTradeCount != 0)
+                if (totalTradeCount != 0)
                 {
-                    winRate = Math.Round(Convert.ToDecimal(wonTradeCount) / (Convert.ToDecimal(wonTradeCount) + Convert.ToDecimal(lossTradeCount)) * 100, 2);
+                    winRate = Math.Round(Convert.ToDecimal(wonTradeCount) / Convert.ToDecimal(totalTradeCount) * 100, 2);
                 }
 
                 profitSum = Math.Round(dataList.Where(x => x.PositionResult == PositionResult.TP).Sum(x => x.ProfitOrLoss), 2);
@@ -426,13 +428,15 @@ namespace TradeNote.Business
 
                 totalProfitOrLoss = profitSum + lossSum - totalCommission - totalFundingFee;
 
+                /*
                 totalClosedBalance = Math.Round(Convert.ToDecimal(dataList.Where(x => x.EndTrade && x.CurrencyPair == currencyPair).Sum(x => x.AverageCloseBalance) - totalCommission - totalFundingFee), 2);
 
                 totalEntryBalance = Math.Round(Convert.ToDecimal(dataList.Where(x => x.EndTrade && x.CurrencyPair == currencyPair).Sum(x => x.AverageEntryBalance)), 2);
 
                 totalPnlPercent = totalEntryBalance != 0 ? Math.Round(Convert.ToDecimal((totalClosedBalance / totalEntryBalance - 1) * 100), 2) : 0;
+                */
 
-                inTradeBalance = Math.Round(Convert.ToDecimal(dataList.Where(x => x.EndTrade == false && x.CurrencyPair == currencyPair).Sum(x => x.AverageEntryBalance)), 2);
+                inTradeBalance = Math.Round(Convert.ToDecimal(dataList.Where(x => x.EndTrade == false && x.CurrencyPair == currencyPair).Sum(x => x.AverageEntryBalance)) - Math.Round(Convert.ToDecimal(dataList.Where(x => x.EndTrade == false && x.CurrencyPair == currencyPair).Sum(x => x.AverageCloseBalance))), 2);
 
                 currentCurrencyPairStatistic.InTradeBalance = inTradeBalance;
                 currentCurrencyPairStatistic.TotalTradeCount = totalTradeCount;
@@ -442,7 +446,6 @@ namespace TradeNote.Business
                 currentCurrencyPairStatistic.LossesSum = lossSum;
                 currentCurrencyPairStatistic.TotalPnL = totalProfitOrLoss;
                 currentCurrencyPairStatistic.TradeWinRate = winRate;
-                currentCurrencyPairStatistic.TotalPnLPercent = totalPnlPercent;
                 currentCurrencyPairStatistic.TotalCommission = totalCommission;
                 currentCurrencyPairStatistic.TotalFundingFee = totalFundingFee;
 
