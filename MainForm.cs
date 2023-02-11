@@ -41,13 +41,13 @@ namespace TradeNote
 
         public void TradeList_Load(object sender, EventArgs e)
         {
-            PopulateComboBoxWithXmlFiles();
+            GetWithXmlFilesIntoComboBox();
             LoadTradeCheckedListBoxCheckStates();
         }
 
 
 
-        public void PopulateComboBoxWithXmlFiles()
+        public void GetWithXmlFilesIntoComboBox()
         {
             cbxListOfTradeXmls.Items.Clear();
 
@@ -89,7 +89,7 @@ namespace TradeNote
         {
             _tradeModelManager.CreateEmptyXmlFile(tbxNewTradeXmlName.Text);
 
-            MessageBox.Show(tbxNewTradeXmlName.Text + " listesi oluşturuldu. Trade işlemlerine başlamadan önce lütfen genel ayarlarınız yapınız!", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(tbxNewTradeXmlName.Text + " listesi oluşturuldu. \n Trade işlemlerine başlamadan önce lütfen genel ayarlarınız yapınız!", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             tbxNewTradeXmlName.Text = "";
             tbxNewTradeXmlName.Enabled = false;
@@ -97,7 +97,7 @@ namespace TradeNote
             btnCancelToSaveTradeXml.Enabled = false;
             btnSaveTradeXml.Enabled = false;
 
-            PopulateComboBoxWithXmlFiles();
+            GetWithXmlFilesIntoComboBox();
         }
 
         private void LoadTradeDataGridView()
@@ -319,7 +319,7 @@ namespace TradeNote
                     MessageBox.Show(cbxListOfTradeXmls.Text + " silindi!", "Bilgi",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    PopulateComboBoxWithXmlFiles();
+                    GetWithXmlFilesIntoComboBox();
 
                     ClearTrade();
                     ClearTradeDetails();
@@ -345,7 +345,7 @@ namespace TradeNote
                 LoadTradeDataGridView();
                 _tradeModelManager.CalculateGeneralInformation(xmlFilePath);
                 LoadGeneralInformation();
-                PopulateComboBoxWithXmlFiles();
+                GetWithXmlFilesIntoComboBox();
             }
 
 
@@ -362,7 +362,7 @@ namespace TradeNote
                 var settingsForm = new ImageForm();
                 ImageForm.ListOfTradeXmls = cbxListOfTradeXmls.Text;
 
-                ImageForm.SelectedTrade = tradeId;
+                ImageForm.SelectedTradeId = tradeId;
 
                 var generalInformation = _tradeModelManager.GetGeneralInformation(xmlFilePath);
 
@@ -421,6 +421,8 @@ namespace TradeNote
                 {
                     MakeEnableComponents();
                 }
+
+                LoadCurrencyPairStatistic(tradeData.CurrencyPair);
             }
             catch (Exception exception)
             {
@@ -571,8 +573,44 @@ namespace TradeNote
             {
                 lblWinrateLabel.ForeColor = Color.IndianRed;
             }
+        }
 
+        private void LoadCurrencyPairStatistic(string currencyPair)
+        {
+            var xmlFilePath = GeneralHelper.GetXmlFilePath(cbxListOfTradeXmls.Text);
+            var currencyPairStatistic = _tradeModelManager.GetCurrencyPairStatisticByCurrencyPair(currencyPair, xmlFilePath);
 
+       
+            lblCurrencyPairInTradeBalanceLabel.Text = "$" + currencyPairStatistic.InTradeBalance.ToString(CultureInfo.InvariantCulture);
+            lblCurrencyPairProfitSumLabel.Text = "$" + currencyPairStatistic.ProfitsSum.ToString(CultureInfo.InvariantCulture);
+            lblCurrencyPairLosesSumLabel.Text = "$" + currencyPairStatistic.LossesSum.ToString(CultureInfo.InvariantCulture);
+            lblCurrencyPairTotalPnLLabel.Text = "$" + currencyPairStatistic.TotalPnL.ToString(CultureInfo.InvariantCulture);
+            lblCurrencyPairWinTradeCountLabel.Text = currencyPairStatistic.WinCount.ToString();
+            lblCurrencyPairLoseTradeCountLabel.Text = currencyPairStatistic.LossCount.ToString();
+            lblCurrencyPairWinRateLabel.Text = "%" + currencyPairStatistic.TradeWinRate.ToString(CultureInfo.InvariantCulture);
+            lblCurrencyPairTotalPnLPercentLabel.Text = "%" + currencyPairStatistic.TotalPnLPercent.ToString(CultureInfo.InvariantCulture);
+            lblCurrencyPairCommissionSumLabel.Text = "$" + currencyPairStatistic.TotalCommission.ToString(CultureInfo.InvariantCulture);
+            lblCurrencyPairFundingFeeSumLabel.Text = "$" + currencyPairStatistic.TotalFundingFee.ToString(CultureInfo.InvariantCulture);
+
+            if (currencyPairStatistic.TotalPnL >= 0)
+            {
+                lblTotalPnLLabel.ForeColor = Color.SeaGreen;
+                lblTotalPnLPercentLabel.ForeColor = Color.SeaGreen;
+            }
+            else
+            {
+                lblTotalPnLLabel.ForeColor = Color.IndianRed;
+                lblTotalPnLPercentLabel.ForeColor = Color.IndianRed;
+            }
+
+            if (currencyPairStatistic.TradeWinRate >= 50)
+            {
+                lblWinrateLabel.ForeColor = Color.SeaGreen;
+            }
+            else
+            {
+                lblWinrateLabel.ForeColor = Color.IndianRed;
+            }
         }
 
         private void btnSaveTrade_Click(object sender, EventArgs e)
@@ -633,6 +671,8 @@ namespace TradeNote
                         newTrade.EndTrade = false;
 
                         _tradeModelManager.AddTrade(newTrade, xmlFilePath);
+
+
 
                     }
                     else
@@ -1355,7 +1395,7 @@ namespace TradeNote
 
             if (!string.IsNullOrEmpty(lblTradeIdLabel.Text))
             {
-                ImageForm.SelectedTrade = Convert.ToInt32(lblTradeIdLabel.Text);
+                ImageForm.SelectedTradeId = Convert.ToInt32(lblTradeIdLabel.Text);
             }
             else
             {

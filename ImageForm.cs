@@ -22,7 +22,7 @@ namespace TradeNote
         }
 
         public static string ListOfTradeXmls { get; set; }
-        public static int SelectedTrade { get; set; }
+        public static int SelectedTradeId { get; set; }
         public static string Exchange { get; set; }
         public static string CurrencyPair { get; set; }
         public static string ReferralLink { get; set; }
@@ -73,11 +73,11 @@ namespace TradeNote
             decimal averageEntryPrice = 0;
             decimal averageClosePrice = 0;
 
-            if (string.IsNullOrEmpty(ListOfTradeXmls) && string.IsNullOrEmpty(SelectedTrade.ToString())) return;
+            if (string.IsNullOrEmpty(ListOfTradeXmls) && string.IsNullOrEmpty(SelectedTradeId.ToString())) return;
 
             var xmlFilePath = GeneralHelper.GetXmlFilePath(ListOfTradeXmls);
 
-            var selectedTrade = _tradeModelManager.GetTradeById(SelectedTrade, xmlFilePath);
+            var selectedTrade = _tradeModelManager.GetTradeById(SelectedTradeId, xmlFilePath);
 
             CurrencyPair = selectedTrade.CurrencyPair;
 
