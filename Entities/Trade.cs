@@ -13,7 +13,7 @@ namespace TradeNote
         [DisplayName("ID")]
         public int Id { get; set; }
 
-        [DisplayName("Kriptopara")]
+        [DisplayName("İşlem Çifti")]
         public string CurrencyPair { get; set; }
 
         [DisplayName("Baş. Tarihi")]

@@ -91,7 +91,7 @@ namespace TradeNote.Business
             _tradeModelXmlRepository.UpdateGeneralInformation(currentGeneralInformation, xmlFilePath);
         }
 
-        public void CalculateGeneralInformation(string xmlFilePath )
+        public void CalculateGeneralInformation(string xmlFilePath)
         {
             decimal profitSum;
             decimal lossSum;
@@ -361,6 +361,92 @@ namespace TradeNote.Business
         {
             _tradeModelXmlRepository.RemoveTradeDetailById(tradeId, tradeDetailId, xmlFilePath);
         }
+
+        public void AddCurrencyPairStatistic(CurrencyPairStatistic currencyPairStatistic, string xmlFilePath)
+        {
+            _tradeModelXmlRepository.AddCurrencyPairStatistic(currencyPairStatistic, xmlFilePath);
+        }
+
+        public void UpdateCurrencyPairStatisticByCurrencyPair(CurrencyPairStatistic currencyPairStatistic, string xmlFilePath)
+        {
+            _tradeModelXmlRepository.UpdateCurrencyPairStatisticByCurrencyPair(currencyPairStatistic, xmlFilePath);
+        }
+
+        public List<CurrencyPairStatistic> GetCurrencyPairStatisticList(string xmlFilePath)
+        {
+            var currencyPairStatisticList = _tradeModelXmlRepository.GetCurrencyPairStatisticList(xmlFilePath);
+            return currencyPairStatisticList;
+        }
+
+        public CurrencyPairStatistic GetCurrencyPairStatisticByCurrencyPair(string currencyPair, string xmlFilePath)
+        {
+            var currencyPairStatistic = _tradeModelXmlRepository.GetCurrencyPairStatisticByCurrencyPair(currencyPair, xmlFilePath);
+            return currencyPairStatistic;
+        }
+
+        public void CalculateCurrencyPairStatisticByCurrencyPair(string currencyPair, string xmlFilePath)
+        {
+            decimal profitSum;
+            decimal lossSum;
+            decimal totalProfitOrLoss;
+            int wonTradeCount;
+            int lossTradeCount;
+            int totalTradeCount;
+            decimal winRate = 0;
+            decimal totalPnlPercent;
+            decimal totalCommission;
+            decimal totalFundingFee;
+            decimal inTradeBalance;
+            decimal totalClosedBalance;
+            decimal totalEntryBalance;
+
+            var currentCurrencyPairStatistic = GetCurrencyPairStatisticByCurrencyPair(currencyPair, xmlFilePath);
+
+            var dataList = GetTradeList(xmlFilePath).Where(x => x.CurrencyPair == currencyPair).ToList();
+
+            if (dataList.Count != 0)
+            {
+                wonTradeCount = dataList.Count(x => x.PositionResult == PositionResult.TP);
+                lossTradeCount = dataList.Count(x => x.PositionResult == PositionResult.SL);
+                totalTradeCount = wonTradeCount + lossTradeCount;
+
+                if (wonTradeCount != 0)
+                {
+                    winRate = Math.Round(Convert.ToDecimal(wonTradeCount) / (Convert.ToDecimal(wonTradeCount) + Convert.ToDecimal(lossTradeCount)) * 100, 2);
+                }
+
+                profitSum = Math.Round(dataList.Where(x => x.PositionResult == PositionResult.TP).Sum(x => x.ProfitOrLoss), 2);
+                lossSum = Math.Round(dataList.Where(x => x.PositionResult == PositionResult.SL).Sum(x => x.ProfitOrLoss), 2);
+
+                totalCommission = Math.Round(dataList.Where(x => x.EndTrade).Sum(x => x.CommissionSum), 2);
+                totalFundingFee = Math.Round(dataList.Where(x => x.EndTrade).Sum(x => x.FundingFeeSum), 2);
+
+                totalProfitOrLoss = profitSum + lossSum - totalCommission - totalFundingFee;
+
+                totalClosedBalance = Math.Round(Convert.ToDecimal(dataList.Where(x => x.EndTrade && x.CurrencyPair == currencyPair).Sum(x => x.AverageCloseBalance) - totalCommission - totalFundingFee), 2);
+
+                totalEntryBalance = Math.Round(Convert.ToDecimal(dataList.Where(x => x.EndTrade && x.CurrencyPair == currencyPair).Sum(x => x.AverageEntryBalance)), 2);
+
+
+                totalPnlPercent = Math.Round(Convert.ToDecimal((totalClosedBalance / totalEntryBalance - 1) * 100), 2);
+
+                inTradeBalance = totalEntryBalance - totalClosedBalance;
+
+                currentCurrencyPairStatistic.InTradeBalance = inTradeBalance;
+                currentCurrencyPairStatistic.LossCount = lossTradeCount;
+                currentCurrencyPairStatistic.WinCount = wonTradeCount;
+                currentCurrencyPairStatistic.ProfitsSum = profitSum;
+                currentCurrencyPairStatistic.LossesSum = lossSum;
+                currentCurrencyPairStatistic.TotalPnL = totalProfitOrLoss;
+                currentCurrencyPairStatistic.TradeWinRate = winRate;
+                currentCurrencyPairStatistic.TotalPnLPercent = totalPnlPercent;
+                currentCurrencyPairStatistic.TotalCommission = totalCommission;
+                currentCurrencyPairStatistic.TotalFundingFee = totalFundingFee;
+
+                UpdateCurrencyPairStatisticByCurrencyPair(currentCurrencyPairStatistic, xmlFilePath);
+            }
+        }
+
 
     }
 }

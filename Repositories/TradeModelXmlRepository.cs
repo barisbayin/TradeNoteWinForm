@@ -25,6 +25,7 @@ namespace TradeNote.Repositories
                 TradeModel tradeModel = new TradeModel
                 {
                     GeneralInformation = new GeneralInformation(),
+                    CurrencyPairStatistics = new List<CurrencyPairStatistic>(),
                     Trades = new List<Trade>()
                 };
 
@@ -108,8 +109,77 @@ namespace TradeNote.Repositories
             // Deserialize the XML file to a TradeModel object
             TradeModel tradeModel = DeserializeTradeModel(xmlFilePath);
 
-            // Return the GeneralInformation object
             return tradeModel.GeneralInformation;
+        }
+
+        public List<CurrencyPairStatistic> GetCurrencyPairStatisticList(string xmlFilePath)
+        {
+            // Deserialize the XML file to a TradeModel object
+            TradeModel tradeModel = DeserializeTradeModel(xmlFilePath);
+
+            // Return the list of Trade objects
+            return tradeModel.CurrencyPairStatistics;
+        }
+
+        public CurrencyPairStatistic GetCurrencyPairStatisticByCurrencyPair(string currencyPair, string xmlFilePath)
+        {
+            // Deserialize the XML file to a TradeModel object
+            TradeModel tradeModel = DeserializeTradeModel(xmlFilePath);
+
+            // Return the list of Trade objects
+            return tradeModel.CurrencyPairStatistics.FirstOrDefault(x => x.CurrencyPair == currencyPair);
+        }
+
+        public void AddCurrencyPairStatistic(CurrencyPairStatistic currencyPairStatistic, string xmlFilePath)
+        {
+            TradeModel tradeModel = DeserializeTradeModel(xmlFilePath);
+
+            var alreadyAdded = tradeModel.CurrencyPairStatistics.FirstOrDefault(x => x.CurrencyPair == currencyPairStatistic.CurrencyPair);
+
+            if (alreadyAdded == null)
+            {
+                tradeModel.CurrencyPairStatistics.Add(currencyPairStatistic);
+            }
+
+            XmlSerializer serializer = new XmlSerializer(typeof(TradeModel));
+
+            using (TextWriter writer = new StreamWriter(xmlFilePath))
+            {
+                serializer.Serialize(writer, tradeModel);
+            }
+
+        }
+
+        public void UpdateCurrencyPairStatisticByCurrencyPair(CurrencyPairStatistic updatedCurrencyPairStatistic, string xmlFilePath)
+        {
+            // Deserialize the XML file to a TradeModel object
+            TradeModel tradeModel = DeserializeTradeModel(xmlFilePath);
+
+            string currencyPair = updatedCurrencyPairStatistic.CurrencyPair;
+
+            CurrencyPairStatistic currencyPairStatistic = tradeModel.CurrencyPairStatistics.FirstOrDefault(t => t.CurrencyPair == currencyPair);
+
+            currencyPairStatistic.InTradeBalance = updatedCurrencyPairStatistic.InTradeBalance;
+            currencyPairStatistic.ProfitsSum = updatedCurrencyPairStatistic.ProfitsSum;
+            currencyPairStatistic.LossesSum = updatedCurrencyPairStatistic.ProfitsSum;
+            currencyPairStatistic.TotalPnL = updatedCurrencyPairStatistic.InTradeBalance;
+            currencyPairStatistic.TotalPnLPercent = updatedCurrencyPairStatistic.TotalPnLPercent;
+            currencyPairStatistic.TotalTradeCount = updatedCurrencyPairStatistic.TotalTradeCount;
+            currencyPairStatistic.WinCount = updatedCurrencyPairStatistic.WinCount;
+            currencyPairStatistic.LossCount = updatedCurrencyPairStatistic.LossCount;
+            currencyPairStatistic.TradeWinRate = updatedCurrencyPairStatistic.TradeWinRate;
+            currencyPairStatistic.MakerCommission = updatedCurrencyPairStatistic.MakerCommission;
+            currencyPairStatistic.TakerCommission = updatedCurrencyPairStatistic.TakerCommission;
+            currencyPairStatistic.TotalCommission = updatedCurrencyPairStatistic.TotalCommission;
+            currencyPairStatistic.TotalFundingFee = updatedCurrencyPairStatistic.TotalFundingFee;
+
+            // Serialize the updated TradeModel object back to the XML file
+            XmlSerializer serializer = new XmlSerializer(typeof(TradeModel));
+
+            using (TextWriter writer = new StreamWriter(xmlFilePath))
+            {
+                serializer.Serialize(writer, tradeModel);
+            }
         }
 
         public void AddTrade(Trade trade, string xmlFilePath)
