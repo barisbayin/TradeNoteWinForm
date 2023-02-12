@@ -1,26 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Printing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using System.Xml.Linq;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using TradeNote.Business;
 using TradeNote.Entities;
 using TradeNote.Enums;
 using TradeNote.Helpers;
-using TradeNote.Properties;
 using TradeNote.Repositories;
-using ZXing;
 using Excel = Microsoft.Office.Interop.Excel;
-using Image = System.Drawing.Image;
-using Rectangle = System.Drawing.Rectangle;
 
 namespace TradeNote
 {
@@ -474,6 +466,7 @@ namespace TradeNote
             tbxStopPrice.Enabled = true;
             tbxTakeProfitPrice.Enabled = true;
             rtbxTradeNote.Enabled = true;
+            cbxCurrencyPairList.Enabled = true;
 
             cbxTradeType.Enabled = true;
             cbxOrderType.Enabled = true;
@@ -1136,14 +1129,16 @@ namespace TradeNote
 
         private void btnTradeDelete_Click(object sender, EventArgs e)
         {
-            var tradeId = Convert.ToInt32(lblTradeIdLabel.Text);
-            var xmlFilePath = GeneralHelper.GetXmlFilePath(cbxListOfTradeXmls.Text);
-
+            
 
             if (!string.IsNullOrEmpty(cbxListOfTradeXmls.Text))
             {
+                var xmlFilePath = GeneralHelper.GetXmlFilePath(cbxListOfTradeXmls.Text);
+
                 if (!string.IsNullOrEmpty(lblTradeIdLabel.Text))
                 {
+                    var tradeId = Convert.ToInt32(lblTradeIdLabel.Text);
+
                     var result = MessageBox.Show(lblTradeIdLabel.Text + " numaralı trade'i silmek istiyor musunuz?", "Uyarı",
                         MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
@@ -1441,6 +1436,7 @@ namespace TradeNote
             {
                 MessageBox.Show("Lütfen çıktı almak istediğiniz trade'i satırına tıklayarak seçiniz!", "Uyarı",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
 
             var generalSettings = GetGeneralSettingsFromTextFile();
