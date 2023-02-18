@@ -466,7 +466,7 @@ namespace TradeNote
             btnNewTradeDetail.Enabled = false;
             btnDeleteTradeDetail.Enabled = false;
             btnSaveTradeDetail.Enabled = false;
-            chckLeveragedBalance.Enabled= false;
+            chckLeveragedBalance.Enabled = false;
         }
 
         private void MakeEnableComponents()
@@ -789,8 +789,7 @@ namespace TradeNote
 
                             foundTrade.FundingFeeSum = Convert.ToDecimal(tbxTotalFundingFee.Text.Replace(".", ","));
                             _tradeModelManager.UpdateTrade(foundTrade, xmlFilePath);
-                            var calculatedTrade = _tradeModelManager.CalculateTrade(foundTrade.Id, xmlFilePath);
-                            _tradeModelManager.UpdateTrade(calculatedTrade, xmlFilePath);
+                            _tradeModelManager.CalculateTrade(foundTrade.Id, xmlFilePath);
 
                             MessageBox.Show("İşlem girişi yapıldıktan sonra sadece fonlama maliyeti güncellenebilir!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
@@ -1016,10 +1015,7 @@ namespace TradeNote
                     }
 
                     _tradeModelManager.AddTradeDetail(newTradeDetail.TradeId, newTradeDetail, xmlFilePath);
-
-                    var updatedTrade = _tradeModelManager.CalculateTrade(tradeId, xmlFilePath);
-
-                    _tradeModelManager.UpdateTrade(updatedTrade, xmlFilePath);
+                    _tradeModelManager.CalculateTrade(tradeId, xmlFilePath);
 
                 }
                 else
@@ -1072,13 +1068,7 @@ namespace TradeNote
                     }
 
                     _tradeModelManager.UpdateTradeDetail(foundTradeDetail.TradeId, foundTradeDetail, xmlFilePath);
-
-
-
-                    var updatedTrade = _tradeModelManager.CalculateTrade(tradeId, xmlFilePath);
-
-                    _tradeModelManager.UpdateTrade(updatedTrade, xmlFilePath);
-
+                    _tradeModelManager.CalculateTrade(tradeId, xmlFilePath);
 
                 }
 
@@ -1260,8 +1250,7 @@ namespace TradeNote
                         MessageBox.Show(lblTradeDetailIdLabel.Text + " id numaralı işlem detayı silindi!", "Uyarı",
                             MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-                        var updatedTrade = _tradeModelManager.CalculateTrade(tradeId, xmlFilePath);
-                        _tradeModelManager.UpdateTrade(updatedTrade, xmlFilePath);
+                        _tradeModelManager.CalculateTrade(tradeId, xmlFilePath);
                         _tradeModelManager.CalculateGeneralInformation(xmlFilePath);
                         _tradeModelManager.CalculateCurrencyPairStatisticByCurrencyPair(tradeData.CurrencyPair, xmlFilePath);
 
@@ -1306,7 +1295,7 @@ namespace TradeNote
                             cbxTradeType.Enabled = false;
                             tbxTradeEntryBalance.Enabled = false;
                             chckEntryLotCount.Enabled = false;
-                            chckLeveragedBalance.Enabled=false;
+                            chckLeveragedBalance.Enabled = false;
                             break;
                         case PositionSide.Short:
                             cbxTradeType.Text = "CloseShort";

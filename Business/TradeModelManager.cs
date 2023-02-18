@@ -169,9 +169,8 @@ namespace TradeNote.Business
             }
         }
 
-        public Trade CalculateTrade(int tradeId, string xmlFilePath)
+        public void CalculateTrade(int tradeId, string xmlFilePath)
         {
-            var generalInformation = _tradeModelXmlRepository.GetGeneralInformation(xmlFilePath);
             var generalSettings = _tradeModelXmlRepository.GetGeneralSettings(xmlFilePath);
 
             var willCalculatedTrade = _tradeModelXmlRepository.GetTradeById(tradeId, xmlFilePath);
@@ -193,6 +192,8 @@ namespace TradeNote.Business
                 decimal expectedRiskValue = 0;
                 decimal expectedRewardValue = 0;
                 decimal commissionSum = 0;
+                decimal openCommissionSum = 0;
+                decimal closeCommissionSum = 0;
 
 
                 switch (willCalculatedTrade.PositionSide)
@@ -323,7 +324,13 @@ namespace TradeNote.Business
                 willCalculatedTrade.AverageEntryLotCount = entryTotalCount;
 
 
-                commissionSum = entryBalanceMaker * willCalculatedTrade.Leverage * generalSettings.MakerCommission / 100 + entryBalanceTaker * willCalculatedTrade.Leverage * generalSettings.TakerCommission / 100 + closeBalanceMaker * willCalculatedTrade.Leverage * generalSettings.MakerCommission / 100 + closeBalanceTaker * willCalculatedTrade.Leverage * generalSettings.TakerCommission / 100;
+                openCommissionSum = entryBalanceMaker * willCalculatedTrade.Leverage * generalSettings.MakerCommission / 100 +
+                                    entryBalanceTaker * willCalculatedTrade.Leverage * generalSettings.TakerCommission / 100;
+
+                closeCommissionSum = closeBalanceMaker * willCalculatedTrade.Leverage * generalSettings.MakerCommission / 100 + closeBalanceTaker * willCalculatedTrade.Leverage * generalSettings.TakerCommission / 100;
+
+                commissionSum = openCommissionSum + closeCommissionSum;
+
 
                 willCalculatedTrade.CommissionSum = commissionSum;
 
@@ -350,14 +357,14 @@ namespace TradeNote.Business
                     }
                 }
 
-                return willCalculatedTrade;
+                _tradeModelXmlRepository.UpdateTrade(willCalculatedTrade, xmlFilePath);
+
             }
             catch (Exception e)
             {
                 MessageBox.Show(e.Message, "Hata oluştu!", MessageBoxButtons.OK);
             }
 
-            return willCalculatedTrade;
         }
 
         public void RemoveTradeById(int tradeId, string xmlFilePath)
