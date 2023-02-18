@@ -167,6 +167,7 @@
             this.tsmiExportToPdf = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiExportStatisticsImage = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiExportTradeStatistics = new System.Windows.Forms.ToolStripMenuItem();
+            this.chckLeveragedBalance = new System.Windows.Forms.CheckBox();
             this.pnlNavBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.scMainMenu)).BeginInit();
             this.scMainMenu.Panel1.SuspendLayout();
@@ -227,7 +228,7 @@
             this.btnDeleteXmlFile.Name = "btnDeleteXmlFile";
             this.btnDeleteXmlFile.Size = new System.Drawing.Size(53, 37);
             this.btnDeleteXmlFile.TabIndex = 6;
-            this.btnDeleteXmlFile.Text = "Delete";
+            this.btnDeleteXmlFile.Text = "Sil";
             this.btnDeleteXmlFile.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnDeleteXmlFile.UseVisualStyleBackColor = true;
             this.btnDeleteXmlFile.Click += new System.EventHandler(this.btnDeleteXmlFile_Click);
@@ -418,6 +419,7 @@
             // 
             this.tpgTrade.AutoScroll = true;
             this.tpgTrade.BackColor = System.Drawing.SystemColors.Control;
+            this.tpgTrade.Controls.Add(this.chckLeveragedBalance);
             this.tpgTrade.Controls.Add(this.lblStatisticInformation);
             this.tpgTrade.Controls.Add(this.gbGeneralStatistics);
             this.tpgTrade.Controls.Add(this.cbxCurrencyPairList2);
@@ -1410,10 +1412,11 @@
             // 
             this.chckEntryLotCount.AutoSize = true;
             this.chckEntryLotCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.chckEntryLotCount.Location = new System.Drawing.Point(141, 803);
+            this.chckEntryLotCount.Location = new System.Drawing.Point(134, 803);
             this.chckEntryLotCount.Name = "chckEntryLotCount";
-            this.chckEntryLotCount.Size = new System.Drawing.Size(15, 14);
+            this.chckEntryLotCount.Size = new System.Drawing.Size(60, 17);
             this.chckEntryLotCount.TabIndex = 279;
+            this.chckEntryLotCount.Text = "Aktif Et";
             this.chckEntryLotCount.UseVisualStyleBackColor = true;
             this.chckEntryLotCount.CheckedChanged += new System.EventHandler(this.chckEntryLotCount_CheckedChanged);
             // 
@@ -1481,9 +1484,9 @@
             // 
             this.tbxTradeEntryLotCount.Enabled = false;
             this.tbxTradeEntryLotCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.tbxTradeEntryLotCount.Location = new System.Drawing.Point(165, 800);
+            this.tbxTradeEntryLotCount.Location = new System.Drawing.Point(205, 800);
             this.tbxTradeEntryLotCount.Name = "tbxTradeEntryLotCount";
-            this.tbxTradeEntryLotCount.Size = new System.Drawing.Size(170, 20);
+            this.tbxTradeEntryLotCount.Size = new System.Drawing.Size(130, 20);
             this.tbxTradeEntryLotCount.TabIndex = 273;
             // 
             // lblTradeEntryLotCount
@@ -1616,7 +1619,7 @@
             this.chckEndTrade.AutoSize = true;
             this.chckEndTrade.Enabled = false;
             this.chckEndTrade.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.chckEndTrade.Location = new System.Drawing.Point(141, 830);
+            this.chckEndTrade.Location = new System.Drawing.Point(134, 830);
             this.chckEndTrade.Name = "chckEndTrade";
             this.chckEndTrade.Size = new System.Drawing.Size(105, 17);
             this.chckEndTrade.TabIndex = 259;
@@ -1862,9 +1865,9 @@
             // tbxTradeEntryBalance
             // 
             this.tbxTradeEntryBalance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.tbxTradeEntryBalance.Location = new System.Drawing.Point(134, 774);
+            this.tbxTradeEntryBalance.Location = new System.Drawing.Point(205, 774);
             this.tbxTradeEntryBalance.Name = "tbxTradeEntryBalance";
-            this.tbxTradeEntryBalance.Size = new System.Drawing.Size(201, 20);
+            this.tbxTradeEntryBalance.Size = new System.Drawing.Size(130, 20);
             this.tbxTradeEntryBalance.TabIndex = 245;
             // 
             // lblTradeEntryBalance
@@ -2200,6 +2203,19 @@
             this.tsmiExportTradeStatistics.Text = "Trade İstatistik Resmi";
             this.tsmiExportTradeStatistics.Click += new System.EventHandler(this.tsmiExportTradeStatistics_Click);
             // 
+            // chckLeveragedBalance
+            // 
+            this.chckLeveragedBalance.AutoSize = true;
+            this.chckLeveragedBalance.Checked = true;
+            this.chckLeveragedBalance.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chckLeveragedBalance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.chckLeveragedBalance.Location = new System.Drawing.Point(134, 776);
+            this.chckLeveragedBalance.Name = "chckLeveragedBalance";
+            this.chckLeveragedBalance.Size = new System.Drawing.Size(68, 17);
+            this.chckLeveragedBalance.TabIndex = 297;
+            this.chckLeveragedBalance.Text = "Kaldıraçlı";
+            this.chckLeveragedBalance.UseVisualStyleBackColor = true;
+            // 
             // TradeList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2381,6 +2397,7 @@
         private System.Windows.Forms.Label lblCurrencyPairWinTradeCount;
         private System.Windows.Forms.Label lblCurrencyPairTotalPnLLabel;
         private System.Windows.Forms.Label lblCurrencyPairTotalPnL;
+        private System.Windows.Forms.CheckBox chckLeveragedBalance;
     }
 }
 

@@ -343,6 +343,7 @@ namespace TradeNote
 
                 LoadTradeDataGridView();
                 _tradeModelManager.CalculateGeneralInformation(xmlFilePath);
+                CalculateEachCurrencyPairStatistics();
                 LoadGeneralInformation();
                 GetWithXmlFilesIntoComboBox();
                 ClearCurrencyPairStatistic();
@@ -370,9 +371,18 @@ namespace TradeNote
 
                 var generalSettings = _tradeModelManager.GetGeneralSettings(xmlFilePath);
 
-                ImageForm.ReferralLink = generalSettings.ReferralLink;
-                ImageForm.ReferralId = generalSettings.ReferralId;
-                ImageForm.Exchange = generalSettings.Exchange;
+                if (!string.IsNullOrEmpty(generalSettings.ReferralLink) && !string.IsNullOrEmpty(generalSettings.ReferralId) && !string.IsNullOrEmpty(generalSettings.Exchange))
+                {
+                    ImageForm.ReferralLink = generalSettings.ReferralLink;
+                    ImageForm.ReferralId = generalSettings.ReferralId;
+                    ImageForm.Exchange = generalSettings.Exchange;
+                }
+                else
+                {
+                    MessageBox.Show("Borsa, referans linki, referans Id değelerinin tamamnı doldurunuz! ", "Uyarı!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
 
                 settingsForm.Show();
             }
@@ -456,6 +466,7 @@ namespace TradeNote
             btnNewTradeDetail.Enabled = false;
             btnDeleteTradeDetail.Enabled = false;
             btnSaveTradeDetail.Enabled = false;
+            chckLeveragedBalance.Enabled= false;
         }
 
         private void MakeEnableComponents()
@@ -477,6 +488,7 @@ namespace TradeNote
             btnNewTradeDetail.Enabled = true;
             btnDeleteTradeDetail.Enabled = true;
             btnSaveTradeDetail.Enabled = true;
+            chckLeveragedBalance.Enabled = true;
         }
 
         private void ClearTrade()
@@ -904,13 +916,26 @@ namespace TradeNote
                         return;
                     }
 
+
                     if (cbxTradeType.Text == "OpenLong" || cbxTradeType.Text == "OpenShort")
                     {
-                        var entryBalance = Convert.ToDecimal(tbxTradeEntryBalance.Text);
+                        decimal entryBalance = 0;
+
+                        switch (chckLeveragedBalance.CheckState)
+                        {
+                            case CheckState.Checked:
+                                entryBalance = Convert.ToDecimal(tbxTradeEntryBalance.Text.Replace(".", ",")) / Convert.ToDecimal(cbxLeverage.Text);
+                                break;
+                            case CheckState.Unchecked:
+                                entryBalance = Convert.ToDecimal(tbxTradeEntryBalance.Text.Replace(".", ","));
+                                break;
+                        }
+
                         var availableBalance = generalInformation.AvailableBalance;
+
                         if (availableBalance - entryBalance < 0)
                         {
-                            MessageBox.Show("Mevcut işlem bakiyeniz: $" + tbxTradeEntryBalance.Text + "\n" + "Boştaki bakiyeniz: $" + availableBalance + "\n" + "İşlem bakiyeniz boştaki bakiyenizden büyük olamaz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            MessageBox.Show("Mevcut işlem bakiyeniz: $" + entryBalance + "\n" + "Boştaki bakiyeniz: $" + availableBalance + "\n" + "İşlem bakiyeniz boştaki bakiyenizden büyük olamaz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             return;
                         }
                     }
@@ -919,17 +944,33 @@ namespace TradeNote
                     newTradeDetail.TradeDate = Convert.ToDateTime(dateTradeDetailDate.Value);
                     newTradeDetail.TradeType = (TradeType)Enum.Parse(typeof(TradeType), cbxTradeType.Text);
                     newTradeDetail.EntryPrice = Convert.ToDecimal(tbxTradeEntryPrice.Text.Replace(".", ","));
+
+
                     newTradeDetail.OrderType = (OrderType)Enum.Parse(typeof(OrderType), cbxOrderType.Text);
 
                     if (!chckEndTrade.Checked)
                     {
                         if (!chckEntryLotCount.Checked)
                         {
-                            newTradeDetail.EntryBalance = Convert.ToDecimal(tbxTradeEntryBalance.Text.Replace(".", ","));
-                            newTradeDetail.EntryLotCount = Math.Round(Convert.ToDecimal(tbxTradeEntryBalance.Text.Replace(".", ",")) / Convert.ToDecimal(tbxTradeEntryPrice.Text.Replace(".", ",")), 8);
+
+                            decimal entryBalance = 0;
+
+                            switch (chckLeveragedBalance.CheckState)
+                            {
+                                case CheckState.Checked:
+                                    entryBalance = Convert.ToDecimal(tbxTradeEntryBalance.Text.Replace(".", ",")) / Convert.ToDecimal(cbxLeverage.Text);
+                                    break;
+                                case CheckState.Unchecked:
+                                    entryBalance = Convert.ToDecimal(tbxTradeEntryBalance.Text.Replace(".", ","));
+                                    break;
+                            }
+
+                            newTradeDetail.EntryBalance = entryBalance;
+                            newTradeDetail.EntryLotCount = Math.Round(entryBalance / Convert.ToDecimal(tbxTradeEntryPrice.Text.Replace(".", ",")), 8);
                         }
                         else
                         {
+
                             newTradeDetail.EntryLotCount = Convert.ToDecimal(tbxTradeEntryLotCount.Text.Replace(".", ","));
                             newTradeDetail.EntryBalance = Math.Round(Convert.ToDecimal(tbxTradeEntryPrice.Text.Replace(".", ",")) *
                                                                      Convert.ToDecimal(tbxTradeEntryLotCount.Text.Replace(".", ",")), 2);
@@ -988,11 +1029,25 @@ namespace TradeNote
 
                     if (cbxTradeType.Text == "OpenLong" || cbxTradeType.Text == "OpenShort")
                     {
-                        var entryBalance = Convert.ToDecimal(tbxTradeEntryBalance.Text);
+                        decimal entryBalance = 0;
+
+                        switch (chckLeveragedBalance.CheckState)
+                        {
+                            case CheckState.Checked:
+                                entryBalance = Convert.ToDecimal(tbxTradeEntryBalance.Text.Replace(".", ",")) / Convert.ToDecimal(cbxLeverage.Text);
+                                break;
+                            case CheckState.Unchecked:
+                                entryBalance = Convert.ToDecimal(tbxTradeEntryBalance.Text.Replace(".", ","));
+                                break;
+                        }
+
+                        foundTradeDetail.EntryBalance = entryBalance;
+
                         var availableBalance = generalInformation.AvailableBalance + foundTradeDetail.EntryBalance;
+
                         if (availableBalance - entryBalance < 0)
                         {
-                            MessageBox.Show("Mevcut işlem bakiyeniz: $" + tbxTradeEntryBalance.Text + "\n" + "Boştaki bakiyeniz: $" + (availableBalance - foundTradeDetail.EntryBalance) + "\n" + "İşlem bakiyeniz boştaki bakiyenizden büyük olamaz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            MessageBox.Show("Mevcut işlem bakiyeniz: $" + entryBalance + "\n" + "Boştaki bakiyeniz: $" + (availableBalance - foundTradeDetail.EntryBalance) + "\n" + "İşlem bakiyeniz boştaki bakiyenizden büyük olamaz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             return;
                         }
                     }
@@ -1001,6 +1056,8 @@ namespace TradeNote
                     foundTradeDetail.TradeDate = Convert.ToDateTime(dateTradeDetailDate.Value);
                     foundTradeDetail.TradeType = (TradeType)Enum.Parse(typeof(TradeType), cbxTradeType.Text);
                     foundTradeDetail.EntryPrice = Convert.ToDecimal(tbxTradeEntryPrice.Text.Replace(".", ","));
+
+
                     foundTradeDetail.OrderType = (OrderType)Enum.Parse(typeof(OrderType), cbxOrderType.Text);
 
                     if (!chckEntryLotCount.Checked)
@@ -1129,7 +1186,7 @@ namespace TradeNote
 
         private void btnTradeDelete_Click(object sender, EventArgs e)
         {
-            
+
 
             if (!string.IsNullOrEmpty(cbxListOfTradeXmls.Text))
             {
@@ -1138,6 +1195,7 @@ namespace TradeNote
                 if (!string.IsNullOrEmpty(lblTradeIdLabel.Text))
                 {
                     var tradeId = Convert.ToInt32(lblTradeIdLabel.Text);
+                    var selectedTrade = _tradeModelManager.GetTradeById(tradeId, xmlFilePath);
 
                     var result = MessageBox.Show(lblTradeIdLabel.Text + " numaralı trade'i silmek istiyor musunuz?", "Uyarı",
                         MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
@@ -1149,10 +1207,14 @@ namespace TradeNote
                             MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                         _tradeModelManager.CalculateGeneralInformation(xmlFilePath);
+                        _tradeModelManager.CalculateCurrencyPairStatisticByCurrencyPair(selectedTrade.CurrencyPair, xmlFilePath);
+
 
                         LoadGeneralInformation();
+                        LoadCurrencyPairStatistic(selectedTrade.CurrencyPair);
                         LoadTradeDataGridView();
                         LoadTradeDetailDataGridView(tradeId);
+
                     }
 
                 }
@@ -1201,8 +1263,10 @@ namespace TradeNote
                         var updatedTrade = _tradeModelManager.CalculateTrade(tradeId, xmlFilePath);
                         _tradeModelManager.UpdateTrade(updatedTrade, xmlFilePath);
                         _tradeModelManager.CalculateGeneralInformation(xmlFilePath);
+                        _tradeModelManager.CalculateCurrencyPairStatisticByCurrencyPair(tradeData.CurrencyPair, xmlFilePath);
 
                         LoadGeneralInformation();
+                        LoadCurrencyPairStatistic(tradeData.CurrencyPair);
                         LoadTradeDataGridView();
                         LoadTradeDetailDataGridView(tradeId);
                     }
@@ -1242,12 +1306,14 @@ namespace TradeNote
                             cbxTradeType.Enabled = false;
                             tbxTradeEntryBalance.Enabled = false;
                             chckEntryLotCount.Enabled = false;
+                            chckLeveragedBalance.Enabled=false;
                             break;
                         case PositionSide.Short:
                             cbxTradeType.Text = "CloseShort";
                             cbxTradeType.Enabled = false;
                             tbxTradeEntryBalance.Enabled = false;
                             chckEntryLotCount.Enabled = false;
+                            chckLeveragedBalance.Enabled = false;
                             break;
                     }
                 }
@@ -1418,13 +1484,14 @@ namespace TradeNote
 
         private void tsmiExportStatisticsImage_Click(object sender, EventArgs e)
         {
-            var settingsForm = new ImageForm();
-            ImageForm.ListOfTradeXmls = cbxListOfTradeXmls.Text;
-            settingsForm.Show();
+            //var settingsForm = new ImageForm();
+            //ImageForm.ListOfTradeXmls = cbxListOfTradeXmls.Text;
+            //settingsForm.Show();
         }
 
         private void tsmiExportTradeStatistics_Click(object sender, EventArgs e)
         {
+            /*
             var settingsForm = new ImageForm();
             ImageForm.ListOfTradeXmls = cbxListOfTradeXmls.Text;
 
@@ -1445,6 +1512,12 @@ namespace TradeNote
             {
                 ImageForm.ReferralLink = generalSettings["ReferralLink"];
             }
+            else
+            {
+                MessageBox.Show("Lütfen çıktı almak istediğiniz trade'i satırına tıklayarak seçiniz!", "Uyarı",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             if (generalSettings.ContainsKey("ReferralId"))
             {
                 ImageForm.ReferralId = generalSettings["ReferralId"];
@@ -1452,6 +1525,7 @@ namespace TradeNote
 
 
             settingsForm.Show();
+            */
         }
 
 
@@ -1709,6 +1783,30 @@ namespace TradeNote
                 MessageBox.Show("Lütfen trade listesini seçiniz!", "Uyarı",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+
+        private void CalculateEachCurrencyPairStatistics()
+        {
+            if (!string.IsNullOrEmpty(cbxListOfTradeXmls.Text))
+            {
+                string xmlFilePath = GeneralHelper.GetXmlFilePath(cbxListOfTradeXmls.Text);
+
+                var tradeList = _tradeModelManager.GetTradeList(xmlFilePath);
+
+                var currencyPairList = tradeList.Select(x => x.CurrencyPair).Distinct().ToList();
+
+                foreach (var currencyPair in currencyPairList)
+                {
+                    _tradeModelManager.CalculateCurrencyPairStatisticByCurrencyPair(currencyPair, xmlFilePath);
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("Lütfen trade listesini seçiniz!", "Uyarı",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
         }
     }
 }

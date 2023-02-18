@@ -67,8 +67,9 @@
             this.ClientSize = new System.Drawing.Size(1020, 613);
             this.Controls.Add(this.btnSaveImage);
             this.Controls.Add(this.pBoxCummulativeStatistics);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ImageForm";
-            this.Text = "SettingsForm";
+            this.Text = "Paylaş";
             this.Load += new System.EventHandler(this.SettingsForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pBoxCummulativeStatistics)).EndInit();
             this.ResumeLayout(false);

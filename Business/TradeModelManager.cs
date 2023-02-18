@@ -346,14 +346,7 @@ namespace TradeNote.Business
                         }
 
                         willCalculatedTrade.TradeEndDate = DateTime.Now;
-                        if (profit < 0)
-                        {
-                            willCalculatedTrade.PositionResult = PositionResult.SL;
-                        }
-                        else
-                        {
-                            willCalculatedTrade.PositionResult = PositionResult.TP;
-                        }
+                        willCalculatedTrade.PositionResult = profit < 0 ? PositionResult.SL : PositionResult.TP;
                     }
                 }
 
